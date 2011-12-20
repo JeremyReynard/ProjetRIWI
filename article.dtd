@@ -1,0 +1,5 @@
+
+<!ELEMENT article (header, bdy)>
+<!ELEMENT header (title)>
+<!ELEMENT bdy (link)>
+<!ELEMENT title (#PCDATA)> 

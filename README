@@ -1,1 +1,1 @@
-blabla
+articles.dtd : contains the dtd of xml documents. You have to put it in the same directory which contains "coll" directory (not included in this repository, because of size of "coll")
