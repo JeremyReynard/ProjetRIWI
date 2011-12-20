@@ -24,6 +24,7 @@ public class ProjetRIView extends FrameView {
     public ProjetRIView(SingleFrameApplication app) {
         super(app);
 
+        // init
         initComponents();
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
