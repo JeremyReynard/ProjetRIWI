@@ -80,8 +80,8 @@ public class Extractor {
                                 // the word is already in the collection
                                 if (valueMap != null) {
                                     // the word has been already found in the current document
-                                    if (valueMap.get(0).docNum == currentDocNum) {
-                                        valueMap.get(0).nbOcc++;
+                                    if (valueMap.get(0).getDocumentNumber() == currentDocNum) {
+                                        valueMap.get(0).setNumberOccurence(valueMap.get(0).getNumberOccurence()+1);
                                     } else {
                                         //first occurrence of the word in this document									
                                         valueMap.add(0, new Couple(currentDocNum, 1));
@@ -137,7 +137,7 @@ public class Extractor {
             Iterator<Couple> it = this.collection.get(word).iterator();
 
             while (it.hasNext()) {
-                number += (it.next().nbOcc);
+                number += (it.next().getNumberOccurence());
             }
 
             return number;
