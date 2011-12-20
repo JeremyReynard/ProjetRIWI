@@ -1,5 +1,6 @@
 package extractor;
 
+import indexes.Index;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class Extractor {
 
     private String[] filesList;
     private String dirPath;
-    private Map<String, List<Couple>> collection;
+    private Index index;
     private long extractionTime;
     private int docCount;
 
@@ -27,7 +28,7 @@ public class Extractor {
 
         this.filesList = filesList;
         this.dirPath = dirPath;
-        this.collection = new HashMap<>();
+        this.index = new Index();
     }
 
     public void extract() {
@@ -75,7 +76,7 @@ public class Extractor {
 
                                 // lowercase
                                 word = word.toLowerCase();
-                                valueMap = this.collection.get(word);
+                                valueMap = this.index.getCollectionData().get(word);
 
                                 // the word is already in the collection
                                 if (valueMap != null) {
@@ -88,8 +89,8 @@ public class Extractor {
                                     }
                                 } // first occurrence of the word : add it to the collection
                                 else {
-                                    this.collection.put(word, new ArrayList<Couple>());
-                                    this.collection.get(word).add(0, new Couple(currentDocNum, 1));
+                                    this.index.getCollectionData().put(word, new ArrayList<Couple>());
+                                    this.index.getCollectionData().get(word).add(0, new Couple(currentDocNum, 1));
                                 }
                             }
                         }
@@ -116,7 +117,7 @@ public class Extractor {
         String result = "";
         result += "Temps d'indexation : " + sec + "sec\n";
         result += "Nombre de docs traités : " + this.docCount + "\n";
-        result += "Nombre de mots indéxés : " + this.collection.size() + "\n";
+        result += "Nombre de mots indéxés : " + this.index.getCollectionData().size() + "\n";
 
         return result;
     }
@@ -132,9 +133,9 @@ public class Extractor {
 
     public int getNumberOccurences(String word) {
 
-        if (this.collection.containsKey(word)) {
+        if (this.index.getCollectionData().containsKey(word)) {
             int number = 0;
-            Iterator<Couple> it = this.collection.get(word).iterator();
+            Iterator<Couple> it = this.index.getCollectionData().get(word).iterator();
 
             while (it.hasNext()) {
                 number += (it.next().getNumberOccurence());
@@ -152,7 +153,7 @@ public class Extractor {
 
     public void export() {
 
-        String export = this.docCount + " " + this.extractionTime + " (" + this.collection.size() + ")\n";
+        String export = this.docCount + " " + this.extractionTime + " (" + this.index.getCollectionData().size() + ")\n";
 
         this.export(export);
     }

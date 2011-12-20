@@ -6,6 +6,7 @@ package indexes;
 
 import extractor.Couple;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,12 @@ public class Index implements Serializable {
     public Index(Map<String, List<Couple>> collectionData) {
         this.collectionData = collectionData;
     }
+
+    public Index() {
+        this.collectionData = new HashMap<>();
+    }
     
+
     public Map<String, List<Couple>> getCollectionData() {
         return collectionData;
     }
