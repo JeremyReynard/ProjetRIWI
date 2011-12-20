@@ -1,0 +1,6 @@
+<!DOCTYPE article [
+<!ELEMENT article (header, bdy)>
+<!ELEMENT header (title)>
+<!ELEMENT bdy ()>
+<!ELEMENT title (#PCDATA)> 
+]>
