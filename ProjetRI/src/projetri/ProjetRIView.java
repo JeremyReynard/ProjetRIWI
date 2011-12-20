@@ -147,6 +147,7 @@ public class ProjetRIView extends FrameView {
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
+        aboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         aboutMenuItem.setText(resourceMap.getString("aboutMenuItem.text")); // NOI18N
         aboutMenuItem.setName("aboutMenuItem"); // NOI18N
         aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -165,10 +166,10 @@ public class ProjetRIView extends FrameView {
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         JOptionPane.showMessageDialog(
                 this.mainPanel,
-                APP_NAME + " : MichaelJeremyMickael\n" +
-                "Michael BARD <m.bard.pro@gmail.com> \n" +
-                "Mickaël LHOSTE <mickael.lhoste@gmail.com>\n" +
-                "Jérèmy REYNARD <jeremy.reynard.42@gmail.com>",
+                APP_NAME + " : MichaelJeremyMickael\n"
+                + "Michael BARD <m.bard.pro@gmail.com> \n"
+                + "Mickaël LHOSTE <mickael.lhoste@gmail.com>\n"
+                + "Jérèmy REYNARD <jeremy.reynard.42@gmail.com>",
                 "- About -",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
@@ -188,9 +189,9 @@ public class ProjetRIView extends FrameView {
     private void startExtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startExtractActionPerformed
         this.showIndexBrut.setEnabled(false);
         this.showIndexWord.setEnabled(false);
-        
+
         this.progressBar.setValue(50);
-        
+
         // add all the files in the selected directory to list
         Path directory = Paths.get(this.dirPath);
         String[] totalFilesList = directory.toFile().list();
@@ -210,6 +211,8 @@ public class ProjetRIView extends FrameView {
 
         this.showIndexBrut.setEnabled(true);
         this.showIndexWord.setEnabled(true);
+
+        this.progressBar.setValue(100);
     }//GEN-LAST:event_startExtractActionPerformed
 
     private void showIndexBrutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexBrutActionPerformed
@@ -247,7 +250,6 @@ public class ProjetRIView extends FrameView {
             System.exit(0);
         }
     }//GEN-LAST:event_exitMenuItemActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton fileChoose;
     private javax.swing.JPanel mainPanel;
@@ -260,6 +262,5 @@ public class ProjetRIView extends FrameView {
     private JDialog aboutBox;
     private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
     private Extractor extractor;
-    
     private final String APP_NAME = "Indexator&atravers";
 }
