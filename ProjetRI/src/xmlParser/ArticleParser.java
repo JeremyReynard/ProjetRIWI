@@ -1,4 +1,4 @@
-package projetri.xmlParser;
+package xmlParser;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
