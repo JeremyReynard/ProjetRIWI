@@ -190,7 +190,7 @@ public class ProjetRIView extends FrameView {
         this.showIndexBrut.setEnabled(false);
         this.showIndexWord.setEnabled(false);
 
-        this.progressBar.setValue(10);
+        this.progressBar.setValue(5);
 
         // add all the files in the selected directory to list
         Path directory = Paths.get(this.dirPath);
