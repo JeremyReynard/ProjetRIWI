@@ -8,27 +8,28 @@ import java.io.Serializable;
 public class Couple implements Serializable{
     
     /**
-     * The number of the document
+     * The document's title
      */
-    private Integer documentNumber;
+    private String documentTitle;
     
     /**
      * The number of current term occurence 
      */
     private Integer termFrequency;
 
-    public Couple(Integer documentNumber, Integer termFrequency) {
-        this.documentNumber = documentNumber;
+    public Couple(String documentTitle, Integer termFrequency) {
+        this.documentTitle = documentTitle;
         this.termFrequency = termFrequency;
     }
 
-    public Integer getDocumentNumber() {
-        return documentNumber;
+    public String getDocumentTitle() {
+        return documentTitle;
     }
 
-    public void setDocumentNumber(Integer documentNumber) {
-        this.documentNumber = documentNumber;
+    public void setDocumentTitle(String documentTitle) {
+        this.documentTitle = documentTitle;
     }
+
 
     public Integer getTermFrequency() {
         return termFrequency;
@@ -40,6 +41,6 @@ public class Couple implements Serializable{
     
     @Override
     public String toString() {
-        return "docNum=" + documentNumber + ", tf=" + termFrequency + "";
+        return "docTitle=" + documentTitle + ", tf=" + termFrequency + "";
     }
 }

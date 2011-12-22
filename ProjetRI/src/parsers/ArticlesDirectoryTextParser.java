@@ -39,7 +39,7 @@ public class ArticlesDirectoryTextParser {
         System.out.println("Fichiers (" + filesList.length + ") :");
 
         Charset UTF8 = Charset.forName("UTF-8");
-        int currentDocNum = 0;
+        String currentDocNum = "";
         String[] tabString;
         String word = null;
 
@@ -59,8 +59,8 @@ public class ArticlesDirectoryTextParser {
                     if (line.length() > 0) {
                         // docno line
                         if (line.contains("<doc><docno>")) {
-                            line = line.replace("<doc><docno>", "").replace("</docno>", "");
-                            currentDocNum = Integer.parseInt(line);
+                            currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");
+                            
                             this.docCount++;
                         } // others lines
                         else if (!(line.contains("</doc>"))) {
@@ -79,7 +79,7 @@ public class ArticlesDirectoryTextParser {
                                 // the word is already in the collection
                                 if (valueMap != null) {
                                     // the word has been already found in the current document
-                                    if (valueMap.get(0).getDocumentNumber() == currentDocNum) {
+                                    if (valueMap.get(0).getDocumentTitle().equals(currentDocNum)) {
                                         valueMap.get(0).setTermFrequency(valueMap.get(0).getTermFrequency()+1);
                                     } else {
                                         //first occurrence of the word in this document									

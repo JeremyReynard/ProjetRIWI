@@ -8,9 +8,7 @@ import index.Couple;
 import index.Index;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,7 +41,7 @@ public class ArticlesDirectoryXMLParser {
                 ArticleXMLParser articleParser = new ArticleXMLParser();
                 saxParser.parse(f.getAbsolutePath(), articleParser);
 
-                int currentDocNum = Integer.parseInt(articleParser.getId().toString());
+                String currentDocNum = articleParser.getId().toString();
 
                 String[] words = (articleParser.getText().toString()).split("\\W");
 
@@ -55,7 +53,7 @@ public class ArticlesDirectoryXMLParser {
                         if (valueMap != null) {
                             for (int i = 0; i < valueMap.size(); i++) {
                                 // the word has been already found in the current document
-                                if (valueMap.get(i).getDocumentNumber() == currentDocNum && !isTermFrequencyFound) {
+                                if (valueMap.get(i).getDocumentTitle().equals(currentDocNum) && !isTermFrequencyFound) {
                                     valueMap.get(i).setTermFrequency(valueMap.get(i).getTermFrequency() + 1);
                                     isTermFrequencyFound = true;
                                 }
@@ -84,9 +82,7 @@ public class ArticlesDirectoryXMLParser {
     public static void main(String[] args) throws FileNotFoundException, IOException {
   
         Index index = new ArticlesDirectoryXMLParser().parseDirectory("../coll");
-        
-                
-        
+
         IndexSerialization.serialize(index,"fileSerialization/index.serial");
         
         Index serializedIndex = IndexDeserialization.deserialize("fileSerialization/index.serial");
