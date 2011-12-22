@@ -15,15 +15,15 @@ public class CoupleDeserialization {
     static public void main(String ...args) {
         Couple couple = null;
         try {
-            // ouverture d'un flux d'entrée depuis le fichier "personne.serial"
+            //Open a InputStream linked "couple.serial"
             FileInputStream fis = new FileInputStream("couple.serial");
-            // création d'un "flux objet" avec le flux fichier
+            // Open an objectStream linked to the file
             ObjectInputStream ois= new ObjectInputStream(fis);
             try {
-                // désérialisation : lecture de l'objet depuis le flux d'entrée
+                // deserialization
                 couple = (Couple) ois.readObject();
             } finally {
-                // on ferme les flux
+                // Close the stream
                 try {
                     ois.close();
                 } finally {

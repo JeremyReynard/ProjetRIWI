@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestIndex{
+public class IndexSerialization{
     
     static public void main(String ...args) {
         
@@ -22,23 +22,23 @@ public class TestIndex{
             list.add(new Couple(100, 10));
             collection.put("test", list);
             
-            // création d'une personne
+            // create a new Index
             Index index = new Index(collection);
             System.out.println("creation de : " + index);
             
-            // ouverture d'un flux de sortie vers le fichier "personne.serial"
+            // Open an output stream to "index.serial"
             FileOutputStream fos = new FileOutputStream("index.serial");
             
-            // création d'un "flux objet" avec le flux fichier
+            // create an objectStream linked with the file
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             try {
-                // sérialisation : écriture de l'objet dans le flux de sortie
+                 //Serialization
                 oos.writeObject(index);
-                // on vide le tampon
+               // Trash the temporary variable
                 oos.flush();
                 System.out.println(index + " a ete serialise");
             } finally {
-                //fermeture des flux
+                //Close the Stream
                 try {
                     oos.close();
                 } finally {

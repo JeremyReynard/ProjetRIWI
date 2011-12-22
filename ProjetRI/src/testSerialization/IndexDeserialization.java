@@ -15,15 +15,15 @@ public class IndexDeserialization {
     static public void main(String ...args) {
         Index index = null;
         try {
-            // ouverture d'un flux d'entrée depuis le fichier "personne.serial"
+           //Open a InputStream linked "index.serial"
             FileInputStream fis = new FileInputStream("index.serial");
-            // création d'un "flux objet" avec le flux fichier
+            // Open an objectStream linked to the file
             ObjectInputStream ois= new ObjectInputStream(fis);
             try {
-                // désérialisation : lecture de l'objet depuis le flux d'entrée
+                // deserialization
                 index = (Index) ois.readObject();
             } finally {
-                // on ferme les flux
+                // Close the stream
                 try {
                     ois.close();
                 } finally {
