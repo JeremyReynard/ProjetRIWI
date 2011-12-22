@@ -46,7 +46,7 @@ public final class IndexSerialization {
         Map<String, List<Couple>> collection = new HashMap<>();
 
             List<Couple> list = new ArrayList<>();
-            list.add(new Couple(100, 10));
+            list.add(new Couple("100", 10));
             collection.put("test", list);
 
             // create a new Index

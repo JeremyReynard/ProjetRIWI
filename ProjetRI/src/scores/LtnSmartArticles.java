@@ -4,10 +4,34 @@
  */
 package scores;
 
+import index.Couple;
+import index.Index;
+import java.util.Iterator;
+import java.util.List;
+
 /**
- *
- * @author Michaël Bard <michael.bard@laposte.net>
+ *LtnSmart Algorithm
  */
 public class LtnSmartArticles {
     
+    
+    public Integer getTermFrequency(Index index, String word, String documentTitle){
+        
+        List<Couple> listCouple = index.getCollectionData().get(word);
+        
+        Iterator iteratorCouple = listCouple.iterator();
+        
+        while(((Couple)iteratorCouple.next()).getDocumentTitle().equals(documentTitle)){
+            
+        }
+        
+        
+        return null;
+    }
+    
+    public Integer getDocumentFrequency(Index index, String word, String document){
+        
+        //DF The number of document where word is 
+        return index.getCollectionData().get(word).size();
+    }
 }
