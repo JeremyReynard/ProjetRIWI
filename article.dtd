@@ -1,8 +1,9 @@
 
 <!ELEMENT article (header, bdy)>
-<!ELEMENT header (title, username, categories)>
-<!ELEMENT bdy (link)>
+<!ELEMENT header (title, id, username, categories)>
 <!ELEMENT title (#PCDATA)> 
+<!ELEMENT id (#PCDATA)> 
 <!ELEMENT username (#PCDATA)>
 <!ELEMENT categories (category)>
 <!ELEMENT category (#PCDATA)> 
+<!ELEMENT bdy (link)>
