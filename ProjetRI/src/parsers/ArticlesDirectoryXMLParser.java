@@ -8,9 +8,7 @@ import index.Couple;
 import index.Index;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
@@ -83,7 +81,7 @@ public class ArticlesDirectoryXMLParser {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
   
-        Index index = new ArticlesDirectoryXMLParser().parseDirectory("../coll");
+        Index index = new ArticlesDirectoryXMLParser().parseDirectory("../../coll10");
         
                 
         
