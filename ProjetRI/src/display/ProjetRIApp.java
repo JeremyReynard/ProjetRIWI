@@ -2,7 +2,7 @@
  * ProjetRIApp.java
  */
 
-package projetri;
+package display;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;

@@ -1,6 +1,7 @@
-package extractor;
+package parsers;
+import index.Couple;
 
-import indexes.Index;
+import index.Index;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,12 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-public class Extractor {
+public class ArticlesDirectoryTextParser {
 
     private String[] filesList;
     private String dirPath;
@@ -24,13 +23,14 @@ public class Extractor {
     private long extractionTime;
     private int docCount;
 
-    public Extractor(String dirPath, String[] filesList) {
+    public ArticlesDirectoryTextParser(String dirPath, String[] filesList) {
 
         this.filesList = filesList;
         this.dirPath = dirPath;
         this.index = new Index();
     }
 
+    @SuppressWarnings("CallToThreadDumpStack")
     public void extract() {
 
         this.docCount = 0;
@@ -82,7 +82,7 @@ public class Extractor {
                                 if (valueMap != null) {
                                     // the word has been already found in the current document
                                     if (valueMap.get(0).getDocumentNumber() == currentDocNum) {
-                                        valueMap.get(0).setNumberOccurence(valueMap.get(0).getNumberOccurence()+1);
+                                        valueMap.get(0).setTermFrequency(valueMap.get(0).getTermFrequency()+1);
                                     } else {
                                         //first occurrence of the word in this document									
                                         valueMap.add(0, new Couple(currentDocNum, 1));
@@ -138,7 +138,7 @@ public class Extractor {
             Iterator<Couple> it = this.index.getCollectionData().get(word).iterator();
 
             while (it.hasNext()) {
-                number += (it.next().getNumberOccurence());
+                number += (it.next().getTermFrequency());
             }
 
             return number;

@@ -5,7 +5,7 @@
 package testSerialization;
 
 
-import indexes.Index;
+import index.Index;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;

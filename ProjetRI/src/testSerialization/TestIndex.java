@@ -1,7 +1,7 @@
 package testSerialization;
 
-import extractor.Couple;
-import indexes.Index;
+import index.Couple;
+import index.Index;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

@@ -13,11 +13,11 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="startExtract" alignment="1" pref="222" max="32767" attributes="0"/>
-                      <Component id="progressBar" alignment="0" pref="222" max="32767" attributes="0"/>
-                      <Component id="showIndexWord" alignment="0" pref="222" max="32767" attributes="0"/>
-                      <Component id="showIndexBrut" alignment="0" pref="222" max="32767" attributes="0"/>
-                      <Component id="fileChoose" alignment="0" pref="222" max="32767" attributes="0"/>
+                      <Component id="startExtract" alignment="1" pref="226" max="32767" attributes="0"/>
+                      <Component id="progressBar" alignment="0" pref="226" max="32767" attributes="0"/>
+                      <Component id="showIndexWord" alignment="0" pref="226" max="32767" attributes="0"/>
+                      <Component id="showIndexBrut" alignment="0" pref="226" max="32767" attributes="0"/>
+                      <Component id="fileChoose" alignment="0" pref="226" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -27,15 +27,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="fileChoose" pref="37" max="32767" attributes="0"/>
+                  <Component id="fileChoose" pref="40" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="startExtract" pref="37" max="32767" attributes="0"/>
+                  <Component id="startExtract" pref="40" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="progressBar" pref="20" max="32767" attributes="0"/>
+                  <Component id="progressBar" pref="27" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showIndexBrut" pref="37" max="32767" attributes="0"/>
+                  <Component id="showIndexBrut" pref="40" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="showIndexWord" max="32767" attributes="0"/>
+                  <Component id="showIndexWord" pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -1,1 +1,8 @@
 articles.dtd : contains the dtd of xml documents. You have to put it in the same directory which contains "coll" directory (not included in this repository, because of size of "coll")
+
+Projects' packages :
+- display (and display.resources) : contains Swing application.
+- index : contains indexation structure.
+- parsers : contains the two parsers (Text and XML documents).
+- ponderations : contains differents methods of ponderations.
+- testSerialization : examples for serialize the index.

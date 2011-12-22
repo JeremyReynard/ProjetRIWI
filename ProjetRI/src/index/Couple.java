@@ -1,4 +1,4 @@
-package extractor;
+package index;
 
 import java.io.Serializable;
 
@@ -15,11 +15,11 @@ public class Couple implements Serializable{
     /**
      * The number of current term occurence 
      */
-    private Integer numberOccurence;
+    private Integer termFrequency;
 
-    public Couple(Integer documentNumber, Integer numberOccurence) {
+    public Couple(Integer documentNumber, Integer termFrequency) {
         this.documentNumber = documentNumber;
-        this.numberOccurence = numberOccurence;
+        this.termFrequency = termFrequency;
     }
 
     public Integer getDocumentNumber() {
@@ -30,16 +30,16 @@ public class Couple implements Serializable{
         this.documentNumber = documentNumber;
     }
 
-    public Integer getNumberOccurence() {
-        return numberOccurence;
+    public Integer getTermFrequency() {
+        return termFrequency;
     }
 
-    public void setNumberOccurence(Integer numberOccurence) {
-        this.numberOccurence = numberOccurence;
+    public void setTermFrequency(Integer numberOccurence) {
+        this.termFrequency = numberOccurence;
     }
     
     @Override
     public String toString() {
-        return "docNum=" + documentNumber + ", nbOcc=" + numberOccurence + "\n";
+        return "docNum=" + documentNumber + ", tf=" + termFrequency + "";
     }
 }

@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package indexes;
+package index;
 
-import extractor.Couple;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +15,12 @@ import java.util.Map;
  * @author Jérémy Reynard
  */
 public class Index implements Serializable {
-    
+
     /**
      * The data collection 
      */
     private Map<String, List<Couple>> collectionData;
-    
-    
+
     /**
      * The constructor 
      */
@@ -32,7 +31,6 @@ public class Index implements Serializable {
     public Index() {
         this.collectionData = new HashMap<>();
     }
-    
 
     public Map<String, List<Couple>> getCollectionData() {
         return collectionData;
@@ -40,16 +38,16 @@ public class Index implements Serializable {
 
     public void setCollectionData(Map<String, List<Couple>> collectionData) {
         this.collectionData = collectionData;
-    }   
-    
+    }
+
     @Override
     public String toString() {
-        return "Index{" + "collectionData=" + collectionData + '}';
-    }
-    
-    
-    
-    
-    
+        String s = "Index {\n" + " collectionData = \n";
 
+        for (Iterator i = collectionData.keySet().iterator(); i.hasNext();) {
+            s+= i.next().toString();
+        }
+
+        return s;
+    }
 }

@@ -1,9 +1,8 @@
 /*
  * ProjetRIView.java
  */
-package projetri;
+package display;
 
-import extractor.Extractor;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
@@ -14,6 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import parsers.ArticlesDirectoryTextParser;
 
 /**
  * The application's main frame.
@@ -60,7 +60,7 @@ public class ProjetRIView extends FrameView {
 
         mainPanel.setName("mainPanel"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(projetri.ProjetRIApp.class).getContext().getResourceMap(ProjetRIView.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(display.ProjetRIApp.class).getContext().getResourceMap(ProjetRIView.class);
         startExtract.setText(resourceMap.getString("startExtract.text")); // NOI18N
         startExtract.setName("startExtract"); // NOI18N
         startExtract.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +205,7 @@ public class ProjetRIView extends FrameView {
             for (int j = 0; j < (i + 1); ++j) {
                 filesList[j] = totalFilesList[j];
             }
-            this.extractor = new Extractor(this.dirPath, filesList);
+            this.extractor = new ArticlesDirectoryTextParser(this.dirPath, filesList);
             this.extractor.extract();
         }
 
@@ -261,6 +261,6 @@ public class ProjetRIView extends FrameView {
     // End of variables declaration//GEN-END:variables
     private JDialog aboutBox;
     private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
-    private Extractor extractor;
+    private ArticlesDirectoryTextParser extractor;
     private final String APP_NAME = "Indexator&atravers";
 }

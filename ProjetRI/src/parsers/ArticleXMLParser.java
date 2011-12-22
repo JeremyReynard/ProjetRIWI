@@ -1,7 +1,4 @@
-package xmlParser;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+package parsers;
 
 /**
  *
@@ -11,58 +8,90 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ArticleParser extends DefaultHandler {
+public class ArticleXMLParser extends DefaultHandler {
 
-    private StringBuffer accumulator;
-    
-    
-    public ArticleParser() {
-        accumulator = new StringBuffer();
+    private StringBuffer text;
+    private boolean isInTitleTag;
+    private int isInIdTag;
+    private boolean isInCategoryTag;
+    private boolean isInBodyTag;
+    private StringBuffer id;
+
+    public ArticleXMLParser() {
+        text = new StringBuffer();
+        id = new StringBuffer();
+
+        isInTitleTag = false;
+        isInIdTag = 0;
+        isInCategoryTag=false;
+        isInBodyTag=false;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equalsIgnoreCase("article")) {
-            System.out.println("New article");
+        //<header><title>
+        if (qName.equalsIgnoreCase("title")) {
+            isInTitleTag = true;
         }
-        if(qName.equalsIgnoreCase("header")){
-            System.out.println("New head");
+        //<header><id>
+        if (qName.equalsIgnoreCase("id") && isInIdTag ==0) {
+            isInIdTag = 1;
         }
-        if(qName.equalsIgnoreCase("title")){
-            accumulator.setLength(0);
+        //<header><categories><category>
+        if (qName.equalsIgnoreCase("category")) {
+            isInCategoryTag = true;
+        }
+        if (qName.equalsIgnoreCase("bdy")) {
+            isInBodyTag = true;
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        if (qName.equalsIgnoreCase("article")) {
-            System.out.println("End of article");
+        //<header></title>
+        if (qName.equalsIgnoreCase("title")) {
+            text.append(" ");
+            isInTitleTag = false;
         }
-        if(qName.equalsIgnoreCase("header")){
-            System.out.println("End of header");
+        //<header></id>
+        if (qName.equalsIgnoreCase("id")) {
+            isInIdTag = 2;
         }
-        if(qName.equalsIgnoreCase("title")){
-            System.out.println("Title = "+ accumulator.toString());
-            //TODO Add Title in Index
-            
+        //<header><categories></category>
+        if (qName.equalsIgnoreCase("category")) {
+            isInCategoryTag = false;
         }
+        if (qName.equalsIgnoreCase("bdy")) {
+            isInBodyTag = false;
+        }
+
     }
 
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
-        accumulator.append(ch, start, length);
+        if (isInTitleTag) {
+            text.append(ch, start, length);
+        }
+        if (isInIdTag==1) {
+            id.append(ch, start, length);
+        }
+        if (isInCategoryTag) {
+            text.append(ch, start, length);
+        }
+        if (isInBodyTag) {
+            text.append(ch, start, length);
+        }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Parsing du fichier");
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser saxParser;
-        try {
-            saxParser = factory.newSAXParser();
-            ArticleParser ArticleParser = new ArticleParser();
-            saxParser.parse("2166.xml", ArticleParser);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public StringBuffer getText() {
+        return text;
+    }
+
+    public StringBuffer getId() {
+        return id;
+    }
+
+    public void setId(StringBuffer id) {
+        this.id = id;
     }
 }
