@@ -59,23 +59,21 @@ public class ArticlesDirectoryTextParser {
                     if (line.length() > 0) {
                         // docno line
                         if (line.contains("<doc><docno>")) {
-                            line = line.replace("<doc><docno>", "");
-                            line = line.replace("</docno>", "");
+                            line = line.replace("<doc><docno>", "").replace("</docno>", "");
                             currentDocNum = Integer.parseInt(line);
                             this.docCount++;
                         } // others lines
                         else if (!(line.contains("</doc>"))) {
-                            line = line.trim();
-                            // Punctuation & digit
-                            line = line.replaceAll("[\\d\\W]", " ");
+                             // Punctuation & digit
+                            line = line.trim().replaceAll("[\\d\\W]", " ");
+                           
                             tabString = null;
 
                             tabString = line.split("[ ]+");
                             for (int i = 0; i < tabString.length; ++i) {
-                                word = tabString[i];
-
                                 // lowercase
-                                word = word.toLowerCase();
+                                word = tabString[i].toLowerCase();
+
                                 valueMap = this.index.getCollectionData().get(word);
 
                                 // the word is already in the collection
