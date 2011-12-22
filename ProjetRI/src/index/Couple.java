@@ -3,7 +3,6 @@ package index;
 import java.io.Serializable;
 
 /**
- * test
  * Couple class that contains the document's number and the occurence of a term in this document
  */
 public class Couple implements Serializable{
