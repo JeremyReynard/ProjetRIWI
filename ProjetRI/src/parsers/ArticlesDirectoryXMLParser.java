@@ -82,13 +82,14 @@ public class ArticlesDirectoryXMLParser {
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        Index index = new ArticlesDirectoryXMLParser().parseDirectory("../../coll");
+  
+        Index index = new ArticlesDirectoryXMLParser().parseDirectory("../coll");
         
-                System.out.println(index.toString());
+                
         
-        IndexSerialization.serialize(index,"index.serial");
+        IndexSerialization.serialize(index,"fileSerialization/index.serial");
         
-        Index serializedIndex = IndexDeserialization.deserialize("index.serial");
+        Index serializedIndex = IndexDeserialization.deserialize("fileSerialization/index.serial");
         
         System.out.println(serializedIndex.toString());
         
