@@ -88,11 +88,10 @@ public class ArticlesDirectoryXMLParser {
         
         Index index = new ArticlesDirectoryXMLParser().parseDirectory("../coll");
         
-        IndexSerialization.serialize(index,"fileSerialization/index.serial");
+        IndexSerialization.serialize(index, "fileSerialization/index.serial");
         
-        Index serializedIndex = IndexDeserialization.deserialize("fileSerialization/index.serial");
+        index = IndexDeserialization.deserialize("fileSerialization/index.serial");
         
-        System.out.println(serializedIndex.toString());
-        
+        System.out.println(index.toString());
     }
 }
