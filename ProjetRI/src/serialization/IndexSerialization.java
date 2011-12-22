@@ -1,13 +1,10 @@
 package serialization;
 
-import index.Couple;
 import index.Index;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public final class IndexSerialization {
@@ -43,11 +40,12 @@ public final class IndexSerialization {
 
     static public void main(String... args) {
 
-        Map<String, List<Couple>> collection = new HashMap<>();
+        Map<String, Map<String,Integer>> collection = new HashMap<>();
 
-            List<Couple> list = new ArrayList<>();
-            list.add(new Couple("100", 10));
-            collection.put("test", list);
+            Map<String, Integer> valueMap = new HashMap<>();
+            
+            valueMap.put("100", 10);
+            collection.put("test", valueMap);
 
             // create a new Index
             Index index = new Index(collection);

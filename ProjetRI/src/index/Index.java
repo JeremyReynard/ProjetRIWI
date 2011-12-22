@@ -7,7 +7,6 @@ package index;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,12 +18,12 @@ public class Index implements Serializable {
     /**
      * The data collection 
      */
-    private Map<String, List<Couple>> collectionData;
+    private Map<String, Map<String,Integer>> collectionData;
 
     /**
      * The constructor 
      */
-    public Index(Map<String, List<Couple>> collectionData) {
+    public Index(Map<String, Map<String,Integer>> collectionData) {
         this.collectionData = collectionData;
     }
 
@@ -32,11 +31,11 @@ public class Index implements Serializable {
         this.collectionData = new HashMap<>();
     }
 
-    public Map<String, List<Couple>> getCollectionData() {
+    public Map<String, Map<String, Integer>> getCollectionData() {
         return collectionData;
     }
 
-    public void setCollectionData(Map<String, List<Couple>> collectionData) {
+    public void setCollectionData(Map<String, Map<String, Integer>> collectionData) {
         this.collectionData = collectionData;
     }
 

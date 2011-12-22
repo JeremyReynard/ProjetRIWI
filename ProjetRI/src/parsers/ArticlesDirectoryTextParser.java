@@ -1,5 +1,4 @@
 package parsers;
-import index.Couple;
 
 import index.Index;
 import java.io.BufferedReader;
@@ -12,8 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 public class ArticlesDirectoryTextParser {
 
@@ -46,7 +47,7 @@ public class ArticlesDirectoryTextParser {
         Path currentPath = null;
         String line = null;
 
-        List<Couple> valueMap = null;
+        Map<String,Integer> valueMap = null;
 
         long startTime = System.currentTimeMillis();
         for (int f = 0; f < this.filesList.length; ++f) {
@@ -79,16 +80,16 @@ public class ArticlesDirectoryTextParser {
                                 // the word is already in the collection
                                 if (valueMap != null) {
                                     // the word has been already found in the current document
-                                    if (valueMap.get(0).getDocumentTitle().equals(currentDocNum)) {
-                                        valueMap.get(0).setTermFrequency(valueMap.get(0).getTermFrequency()+1);
+                                    if (valueMap.containsKey(currentDocNum)) {
+                                        valueMap.put(currentDocNum,valueMap.get(currentDocNum)+1);
                                     } else {
                                         //first occurrence of the word in this document									
-                                        valueMap.add(0, new Couple(currentDocNum, 1));
+                                        valueMap.put(currentDocNum, 1);
                                     }
                                 } // first occurrence of the word : add it to the collection
                                 else {
-                                    this.index.getCollectionData().put(word, new ArrayList<Couple>());
-                                    this.index.getCollectionData().get(word).add(0, new Couple(currentDocNum, 1));
+                                    this.index.getCollectionData().put(word, new HashMap<String,Integer>());
+                                    this.index.getCollectionData().get(word).put(currentDocNum, 1);
                                 }
                             }
                         }
@@ -132,11 +133,16 @@ public class ArticlesDirectoryTextParser {
     public int getNumberOccurences(String word) {
 
         if (this.index.getCollectionData().containsKey(word)) {
+           
             int number = 0;
-            Iterator<Couple> it = this.index.getCollectionData().get(word).iterator();
-
-            while (it.hasNext()) {
-                number += (it.next().getTermFrequency());
+            Map<String,Integer> valueMap = this.index.getCollectionData().get(word);
+            
+            Iterator<Integer> iteratorTF = valueMap.values().iterator();
+            
+            while(iteratorTF.hasNext()){
+                
+                number+= iteratorTF.next();
+                
             }
 
             return number;
