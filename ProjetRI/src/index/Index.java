@@ -45,7 +45,8 @@ public class Index implements Serializable {
         String s = "Index {\n" + " collectionData = \n";
 
         for (Iterator i = collectionData.keySet().iterator(); i.hasNext();) {
-            s+= i.next().toString();
+            String term=i.next().toString();
+            s += "[" + term + ":" + collectionData.get(term) + "],\n";
         }
 
         return s;
