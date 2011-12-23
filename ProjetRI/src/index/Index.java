@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Index Class thant contains the data collection
+ * Index Class that contains the data collection
  * @author Jérémy Reynard
  */
 public class Index implements Serializable {
