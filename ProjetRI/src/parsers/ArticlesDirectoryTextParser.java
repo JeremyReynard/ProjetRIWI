@@ -13,6 +13,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.List;
+import javax.swing.JProgressBar;
 
 public class ArticlesDirectoryTextParser {
 
@@ -30,12 +32,10 @@ public class ArticlesDirectoryTextParser {
     }
 
     @SuppressWarnings("CallToThreadDumpStack")
-    public void extract() {
-
+    public void extract(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {   
+        
         this.docCount = 0;
-
-        System.out.println("==================== Début de l'extraction ====================");
-        System.out.println("Fichiers (" + filesList.length + ") :");
+        int nbFiles = this.filesList.length;
 
         Charset UTF8 = Charset.forName("UTF-8");
         String currentDocNum = "";
@@ -47,13 +47,32 @@ public class ArticlesDirectoryTextParser {
 
         Map<String, Integer> valueMap = null;
 
+        int currentLine = 0;
+        int nbLines = 0;   
+        
+        int deltaPBGlobal = 0;
+        int percent = 0;
+
         long startTime = System.currentTimeMillis();
-        for (int f = 0; f < this.filesList.length; ++f) {
+        for (int f = 0; f < nbFiles; ++f) {   
+            
             currentPath = Paths.get(this.dirPath + "/" + this.filesList[f]);
-            System.out.println(currentPath);
+            jpBarFile.setString(this.filesList[f]);
+            jpBarGlobal.setString("Global : " + (f + 1) + " / " + nbFiles);
+            
             try (BufferedReader reader = Files.newBufferedReader(currentPath, UTF8)) {
                 line = null;
+                nbLines = countNBLines(currentPath);
+                
+                currentLine = 0;                
+                deltaPBGlobal = 100 * f / nbFiles;
+                
                 while ((line = reader.readLine()) != null) {
+                    percent = (100 * currentLine) / nbLines;
+                    jpBarFile.setValue(percent);
+                    jpBarGlobal.setValue(deltaPBGlobal + (percent / nbFiles) );                    
+                    currentLine++;                   
+                    
                     // if the line is just a \n do nothing
                     if (line.length() > 0) {
                         // docno line
@@ -95,17 +114,34 @@ public class ArticlesDirectoryTextParser {
                 }
 
             } catch (IOException e) {
-                System.err.println("Erreur pendant le parsing du fichier !");
-                e.printStackTrace();
+                System.err.println("Parsing error !");
+                //e.printStackTrace();
             }
         }
         index.setN(docCount);
         this.extractionTime = System.currentTimeMillis() - startTime;
 
-        System.out.println();
-        System.out.println("==================== Extraction terminée ====================");
+        //this.export();
+    }
+    
+    private int countNBLines(Path path) {
+           
+        int count = 0;
+        
+        Charset UTF8 = Charset.forName("UTF-8");
+        
+        try {
+            BufferedReader reader = Files.newBufferedReader(path, UTF8);  
+                           
+            while (reader.readLine() != null) {
+                ++count;
+            }
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
-        this.export();
+        return count;
     }
 
     public String showResults() {
@@ -113,9 +149,9 @@ public class ArticlesDirectoryTextParser {
         long sec = (this.extractionTime + 500) / 1000;
 
         String result = "";
-        result += "Temps d'indexation : " + sec + "sec\n";
-        result += "Nombre de docs traités : " + this.docCount + "\n";
-        result += "Nombre de mots indéxés : " + this.index.getCollectionData().size() + "\n";
+        result += "Indexation time " + sec + "sec\n";
+        result += "Nb docs : " + this.docCount + "\n";
+        result += "Nb words " + this.index.getCollectionData().size() + "\n";
 
         return result;
     }
@@ -124,7 +160,7 @@ public class ArticlesDirectoryTextParser {
 
         String result = "";
         int number = this.getNumberOccurences(word);
-        result += "Nb occurences total : " + number + "\n";
+        result += "Nb occurs : " + number + "\n";
 
         return result;
     }
