@@ -23,8 +23,8 @@ public class ArticleXMLParser extends DefaultHandler {
 
         isInTitleTag = false;
         isInIdTag = 0;
-        isInCategoryTag=false;
-        isInBodyTag=false;
+        isInCategoryTag = false;
+        isInBodyTag = false;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ArticleXMLParser extends DefaultHandler {
             isInTitleTag = true;
         }
         //<header><id>
-        if (qName.equalsIgnoreCase("id") && isInIdTag ==0) {
+        if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
             isInIdTag = 1;
         }
         //<header><categories><category>
@@ -72,7 +72,7 @@ public class ArticleXMLParser extends DefaultHandler {
         if (isInTitleTag) {
             text.append(ch, start, length);
         }
-        if (isInIdTag==1) {
+        if (isInIdTag == 1) {
             id.append(ch, start, length);
         }
         if (isInCategoryTag) {

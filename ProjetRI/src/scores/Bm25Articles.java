@@ -17,8 +17,6 @@ public class Bm25Articles extends Score {
 
     int k1;
     int b;
-    int avdl;
-    int N = 9804;
 
     public Bm25Articles(String request, Index index) {
         super(request, index);
@@ -54,12 +52,19 @@ public class Bm25Articles extends Score {
 
         int df = getDocumentFrequency(index, word);
 
-        double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / avdl)) + termFrequency)) * Math.log((this.N - df + 0.5) / (df + 0.5));
+        double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / index.getAvdl())) + termFrequency)) * Math.log((index.getN() - df + 0.5) / (df + 0.5));
 
         return wtd;
     }
 
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/index.serial");
+
+        Bm25Articles score = new Bm25Articles("Statistics", index);
+
+        System.out.println("Score : " + score.getRequestScore());
+
+
+
     }
 }
