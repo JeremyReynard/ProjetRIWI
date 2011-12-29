@@ -32,7 +32,7 @@ public class ArticlesDirectoryTextParser {
     }
 
     @SuppressWarnings("CallToThreadDumpStack")
-    public void extract(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {   
+    public Index extract(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {   
         
         this.docCount = 0;
         int nbFiles = this.filesList.length;
@@ -58,7 +58,7 @@ public class ArticlesDirectoryTextParser {
             
             currentPath = Paths.get(this.dirPath + "/" + this.filesList[f]);
             jpBarFile.setString(this.filesList[f]);
-            jpBarGlobal.setString("Global : " + (f + 1) + " / " + nbFiles);
+            jpBarGlobal.setString("Global : " + (f + 1) + " / " + (nbFiles + 1));
             
             try (BufferedReader reader = Files.newBufferedReader(currentPath, UTF8)) {
                 line = null;
@@ -70,7 +70,7 @@ public class ArticlesDirectoryTextParser {
                 while ((line = reader.readLine()) != null) {
                     percent = (100 * currentLine) / nbLines;
                     jpBarFile.setValue(percent);
-                    jpBarGlobal.setValue(deltaPBGlobal + (percent / nbFiles) );                    
+                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );                    
                     currentLine++;                   
                     
                     // if the line is just a \n do nothing
@@ -121,7 +121,7 @@ public class ArticlesDirectoryTextParser {
         index.setN(docCount);
         this.extractionTime = System.currentTimeMillis() - startTime;
 
-        //this.export();
+        return (this.index);
     }
     
     private int countNBLines(Path path) {
@@ -210,5 +210,10 @@ public class ArticlesDirectoryTextParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public Index getIndex(){
+        
+        return this.index;
     }
 }
