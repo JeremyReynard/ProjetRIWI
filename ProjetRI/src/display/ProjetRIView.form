@@ -58,7 +58,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" pref="262" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" pref="259" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -71,7 +71,7 @@
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="recuperationPane" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" pref="50" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -116,11 +116,11 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="directoryChoose" alignment="0" pref="343" max="32767" attributes="2"/>
-                                  <Component id="startExtract" alignment="0" pref="343" max="32767" attributes="2"/>
-                                  <Component id="jSeparator1" alignment="0" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarFile" alignment="0" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarGlobal" alignment="0" pref="343" max="32767" attributes="0"/>
+                                  <Component id="directoryChoose" alignment="0" pref="332" max="32767" attributes="2"/>
+                                  <Component id="startExtract" alignment="0" pref="332" max="32767" attributes="2"/>
+                                  <Component id="jSeparator1" alignment="0" pref="332" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarFile" alignment="0" pref="332" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarGlobal" alignment="0" pref="332" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -212,9 +212,9 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="indexFileChoose" alignment="0" pref="339" max="32767" attributes="0"/>
-                                  <Component id="jSeparator2" alignment="0" pref="339" max="32767" attributes="0"/>
-                                  <Component id="jpBarIndexFile" alignment="0" pref="339" max="32767" attributes="0"/>
+                                  <Component id="indexFileChoose" alignment="0" pref="328" max="32767" attributes="0"/>
+                                  <Component id="jSeparator2" alignment="0" pref="328" max="32767" attributes="0"/>
+                                  <Component id="jpBarIndexFile" alignment="0" pref="328" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -279,7 +279,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="showIndexWord" pref="371" max="32767" attributes="0"/>
+                              <Component id="showIndexWord" pref="364" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="ltnRadio" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -300,7 +300,7 @@
                               <Component id="ltnRadio" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="bm25Radio" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="447" max="32767" attributes="0"/>
+                          <EmptySpace pref="421" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
