@@ -9,6 +9,7 @@ import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -374,15 +375,16 @@ public class ProjetRIView extends FrameView {
                 String[] dirFilesList = directory.toFile().list();
                 extractor = new ArticlesDirectoryTextParser(dirPath, dirFilesList);
                 index = extractor.extract(jProgressBarFile, jProgressBarGlobal);
-              
-                IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
-                
+                              
+                IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);              
+                                
                 showIndexBrut.setEnabled(true);
                 showIndexWord.setEnabled(true);                
                 directoryChoose.setEnabled(true);
                 startExtract.setEnabled(true);
                 jProgressBarFile.setValue(100);
                 jProgressBarGlobal.setValue(100);
+                jProgressBarGlobal.setString("Over");
             }
         };
         extractorThread.start();
@@ -390,6 +392,7 @@ public class ProjetRIView extends FrameView {
 
     private void directoryChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directoryChooseActionPerformed
         JFileChooser chooser = new JFileChooser();
+        chooser.setLocale(Locale.ENGLISH);                
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);

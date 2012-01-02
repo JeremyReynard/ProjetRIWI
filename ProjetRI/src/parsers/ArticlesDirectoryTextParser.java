@@ -35,6 +35,9 @@ public class ArticlesDirectoryTextParser {
     public Index extract(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {   
         
         this.docCount = 0;
+        int nbWordsInDoc = 0;        
+        Map<String, Integer> mapDL = new HashMap<>();
+        
         int nbFiles = this.filesList.length;
 
         Charset UTF8 = Charset.forName("UTF-8");
@@ -77,17 +80,18 @@ public class ArticlesDirectoryTextParser {
                     if (line.length() > 0) {
                         // docno line
                         if (line.contains("<doc><docno>")) {
-                            currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");
-
-                            this.docCount++;
+                            currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");                            
+                            this.docCount++;                                                           
                         } // others lines
-                        else if (!(line.contains("</doc>"))) {
+                        else if (!(line.contains("</doc>"))) {                            
                             // Punctuation & digit
                             line = line.trim().replaceAll("[\\d\\W]", " ");
 
                             tabString = null;
 
                             tabString = line.split("[ ]+");
+                            nbWordsInDoc += tabString.length;
+                            
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
                                 word = tabString[i].toLowerCase();
@@ -110,6 +114,11 @@ public class ArticlesDirectoryTextParser {
                                 }
                             }
                         }
+                        else {
+                            mapDL.put(currentDocNum, nbWordsInDoc);
+                            //System.out.println(currentDocNum + " - " + nbWordsInDoc);
+                            nbWordsInDoc = 0;
+                        }
                     }
                 }
 
@@ -119,6 +128,9 @@ public class ArticlesDirectoryTextParser {
             }
         }
         index.setN(docCount);
+        index.setDlMap(mapDL);
+        
+        
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);
