@@ -53,8 +53,8 @@ public class ArticlesDirectoryXMLParser {
 
                 for (String w : words) {
                     //TODO : Lemmatization (lower case, singular words, stop words ...)
-                    w.toLowerCase();
-                    if (!w.isEmpty()) {
+                    w.toLowerCase();                    
+                    if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
                         valueMap = index.getCollectionData().get(w);
                         boolean isTermFrequencyFound = false;
                         // the word is already in the collection
