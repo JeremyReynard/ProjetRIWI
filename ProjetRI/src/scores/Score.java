@@ -30,8 +30,12 @@ public class Score {
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle){
         
-        return this.index.getCollectionData().get(word).get(documentTitle);
+        Integer tf = this.index.getCollectionData().get(word).get(documentTitle);
 
+        if(tf==null){
+            return 0;
+        }
+        return tf;
     }
     
     /*
