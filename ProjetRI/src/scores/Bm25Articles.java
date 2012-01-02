@@ -14,7 +14,7 @@ import serialization.IndexDeserialization;
  *
  * @author Michaël Bard <michael.bard@laposte.net>
  */
-public class Bm25Articles extends Score {
+public class Bm25Articles extends Score implements CommonsScoreInterface {
 
     int k1;
     int b;
@@ -22,7 +22,7 @@ public class Bm25Articles extends Score {
     public Bm25Articles(String request, Index index) {
         super(request, index);
     }
-
+    @Override
     public Map<String, Double> getXBestScore(int X) {
 
         Map<String, Double> scores = new HashMap<>();
@@ -37,7 +37,7 @@ public class Bm25Articles extends Score {
         return scores;
 
     }
-
+    @Override
     public double getRequestScore(String documentNumber) {
         double score = 0;
 
@@ -49,7 +49,7 @@ public class Bm25Articles extends Score {
 
         return score;
     }
-
+    @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
 
         int df = getDocumentFrequency(index, word);

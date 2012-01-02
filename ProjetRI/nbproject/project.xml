@@ -13,7 +13,7 @@
             </test-roots>
         </data>
         <swingapp xmlns="http://www.netbeans.org/ns/form-swingapp/1">
-            <application-class name="projetri.ProjetRIApp"/>
+            <application-class name="display.ProjetRIApp"/>
         </swingapp>
     </configuration>
 </project>
