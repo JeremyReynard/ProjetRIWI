@@ -375,7 +375,7 @@ public class ProjetRIView extends FrameView {
                 extractor = new ArticlesDirectoryTextParser(dirPath, dirFilesList);
                 index = extractor.extract(jProgressBarFile, jProgressBarGlobal);
               
-                IndexSerialization.serialize(extractor.getIndex(), "indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
+                IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
                 
                 showIndexBrut.setEnabled(true);
                 showIndexWord.setEnabled(true);                
