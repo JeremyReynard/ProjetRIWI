@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JProgressBar;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -21,26 +22,49 @@ import serialization.IndexSerialization;
  *
  * @author Michaël Bard <michael.bard@laposte.net>
  */
-public class ArticlesDirectoryXMLParser {
+public class ArticlesDirectoryXMLParser extends DirectoryParser{
 
-    public Index parseDirectory(String directoryPath) {
+    public ArticlesDirectoryXMLParser(String dirPath){
+        
+        super(dirPath);
+    }
+
+    @Override
+    public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
         System.out.println("Beginning of indexing.\n");
 
         File[] files = null;
-        File directoryToScan = new File(directoryPath);
+        File directoryToScan = new File(this.directoryPath);
         files = directoryToScan.listFiles();
-
-        Index index = new Index();
+        
+        // JProgressBar
+        int nbFiles = files.length;
+        int currentFileNumber = 0;
+        int currentWordNumber = 0;
+        int deltaPBGlobal = 0;
+        int percent = 0;
+        // ---
+        
         Map<String, Integer> valueMap = null;
         String currentDocNum = "";
         String[] words = null;
         SAXParserFactory factory = null;
         SAXParser saxParser;
 
+        long startTime = System.currentTimeMillis();
         for (File f : files) {
+               
+            // JProgressBar
+            jpBarFile.setString(f.getName());
+            jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
+            deltaPBGlobal = 100 * currentFileNumber / nbFiles;
+            currentWordNumber = 0;
+            currentFileNumber++;
+            // ---
+            
             factory = SAXParserFactory.newInstance();
             try {
-                index.setN(index.getN() + 1);
+                this.index.setN(index.getN() + 1);
                 saxParser = factory.newSAXParser();
                 ArticleXMLParser articleParser = new ArticleXMLParser();
                 saxParser.parse(f.getAbsolutePath(), articleParser);
@@ -49,9 +73,17 @@ public class ArticlesDirectoryXMLParser {
 
                 words = (articleParser.getText().toString()).split("\\W");
 
-                index.getDlMap().put(currentDocNum, words.length);
+                this.index.getDlMap().put(currentDocNum, words.length);     
 
                 for (String w : words) {
+                    
+                    // JProgressBar
+                    percent = (100 * currentWordNumber) / words.length;
+                    jpBarFile.setValue(percent);
+                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );
+                    currentWordNumber++;
+                    //--
+                    
                     //TODO : Lemmatization (lower case, singular words, stop words ...)
                     w.toLowerCase();                    
                     if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
@@ -76,20 +108,21 @@ public class ArticlesDirectoryXMLParser {
                             index.getCollectionData().get(w).put(currentDocNum, 1);
                         }
                     }
-                }
+                }                
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }
         }
 
+        this.extractionTime = System.currentTimeMillis() - startTime;
         System.out.println("End of indexing.\n");
         return index;
 
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-
-        Index index = new ArticlesDirectoryXMLParser().parseDirectory("../../coll10");
+        
+        Index index = new ArticlesDirectoryXMLParser(".").parseDirectory(null, null);
 
         IndexSerialization.serialize(index, "fileSerialization/index.serial");
 

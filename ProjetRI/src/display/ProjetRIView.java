@@ -15,6 +15,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import parsers.ArticlesDirectoryTextParser;
+import parsers.ArticlesDirectoryXMLParser;
+import parsers.DirectoryParser;
 import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
@@ -359,32 +361,52 @@ public class ProjetRIView extends FrameView {
     }//GEN-LAST:event_showIndexBrutActionPerformed
 
     private void startExtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startExtractActionPerformed
+       
         this.showIndexBrut.setEnabled(false);
-        this.showIndexWord.setEnabled(false);
-        
+        this.showIndexWord.setEnabled(false);        
+        this.indexFileChoose.setEnabled(false);
+
         Thread extractorThread = new Thread() {
 
             @Override
             public void run() {
                 jProgressBarFile.setValue(0);
                 directoryChoose.setEnabled(false);
-                startExtract.setEnabled(false);                
+                startExtract.setEnabled(false);
 
-                // add all the files in the selected directory to list
                 Path directory = Paths.get(dirPath);
-                String[] dirFilesList = directory.toFile().list();
-                extractor = new ArticlesDirectoryTextParser(dirPath, dirFilesList);
-                index = extractor.extract(jProgressBarFile, jProgressBarGlobal);
-                              
-                IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);              
-                                
-                showIndexBrut.setEnabled(true);
-                showIndexWord.setEnabled(true);                
-                directoryChoose.setEnabled(true);
-                startExtract.setEnabled(true);
-                jProgressBarFile.setValue(100);
-                jProgressBarGlobal.setValue(100);
-                jProgressBarGlobal.setString("Over");
+                String[] filesList = directory.toFile().list();
+
+                if (filesList.length > 0) {
+
+                    if (directory.toFile().list()[0].endsWith("xml")) {
+                        extractor = new ArticlesDirectoryXMLParser(dirPath);
+                    } else {
+                        extractor = new ArticlesDirectoryTextParser(dirPath);
+                    }
+
+                    index = extractor.parseDirectory(jProgressBarFile, jProgressBarGlobal);
+
+                    IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
+
+                    showIndexBrut.setEnabled(true);
+                    showIndexWord.setEnabled(true);
+                    directoryChoose.setEnabled(true);
+                    startExtract.setEnabled(true);
+                    jProgressBarFile.setValue(100);
+                    jProgressBarGlobal.setValue(100);
+                    jProgressBarGlobal.setString("Over");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            mainPanel, 
+                            "There is no file in this directory : " + dirPath + "\n"
+                            + "Please choose another one !", 
+                            "Error", 
+                            JOptionPane.ERROR_MESSAGE);
+                    
+                    directoryChoose.setEnabled(true);                    
+                }
+
             }
         };
         extractorThread.start();
@@ -392,7 +414,7 @@ public class ProjetRIView extends FrameView {
 
     private void directoryChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directoryChooseActionPerformed
         JFileChooser chooser = new JFileChooser();
-        chooser.setLocale(Locale.ENGLISH);                
+        chooser.setLocale(Locale.ENGLISH);
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
@@ -426,31 +448,32 @@ public class ProjetRIView extends FrameView {
     }//GEN-LAST:event_bm25RadioActionPerformed
 
 private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indexFileChooseActionPerformed
-        
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        //chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);        
-        chooser.addChoosableFileFilter(new SimpleFilter("Serialized Index",".serial"));
-        
-        int returnVal = chooser.showOpenDialog(this.mainPanel);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            this.indexPath = chooser.getSelectedFile().getAbsolutePath();
-            
-            jpBarIndexFile.setString(chooser.getSelectedFile().toString());
-            jpBarIndexFile.setIndeterminate(true);
-            
-            Thread deserializationTh = new Thread(){                
-                @Override
-                public void run(){
-                    
-                    index = IndexDeserialization.deserialize(indexPath);
-                    
-                    jpBarIndexFile.setIndeterminate(false);
-                    jpBarIndexFile.setValue(100);                   
-                }             
-            };
-            deserializationTh.start();
-        }    
+
+    JFileChooser chooser = new JFileChooser();
+    chooser.setCurrentDirectory(new java.io.File("."));
+    //chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);        
+    chooser.addChoosableFileFilter(new SimpleFilter("Serialized Index", ".serial"));
+
+    int returnVal = chooser.showOpenDialog(this.mainPanel);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        this.indexPath = chooser.getSelectedFile().getAbsolutePath();
+
+        jpBarIndexFile.setString(chooser.getSelectedFile().toString());
+        jpBarIndexFile.setIndeterminate(true);
+
+        Thread deserializationTh = new Thread() {
+
+            @Override
+            public void run() {
+
+                index = IndexDeserialization.deserialize(indexPath);
+
+                jpBarIndexFile.setIndeterminate(false);
+                jpBarIndexFile.setValue(100);
+            }
+        };
+        deserializationTh.start();
+    }
 }//GEN-LAST:event_indexFileChooseActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton bm25Radio;
@@ -477,9 +500,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     //private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
     private String dirPath = "";
     private String indexPath = "";
-    private ArticlesDirectoryTextParser extractor;
-    private final String APP_NAME = "Indexator&atravers";  
-    
-    private Index index = null;      
-
+    private DirectoryParser extractor;
+    private final String APP_NAME = "Indexator&atravers";
+    private Index index = null;
 }
