@@ -52,5 +52,5 @@ public class Score {
     public String getRequest() {
         return this.request;
     }
-       
+    
 }

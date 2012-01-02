@@ -5,6 +5,7 @@
 package scores;
 
 import index.Index;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import serialization.IndexDeserialization;
@@ -22,30 +23,31 @@ public class Bm25Articles extends Score {
         super(request, index);
     }
 
-    public double getRequestScore() {
+    public Map<String, Double> getXBestScore(int X) {
+
+        Map<String, Double> scores = new HashMap<>();
+        Map<String, Double> bestScores = new HashMap<>();
+
+        for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
+            String documentNumber = i.next().toString();
+            System.out.println("DocNumber : " + documentNumber);
+            scores.put(documentNumber, getRequestScore(documentNumber));
+        }
+
+        return scores;
+
+    }
+
+    public double getRequestScore(String documentNumber) {
         double score = 0;
 
         for (String word : this.request.split("\\W")) {
-            score += getWordScore(word);
+            int dl = index.getDlMap().get(documentNumber).intValue();
+            System.out.println(dl);
+            score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl);
         }
 
         return score;
-    }
-
-    public double getWordScore(String word) {
-
-        double wt = 0;
-
-        Map<String, Integer> mapOfWord = index.getCollectionData().get(word);
-
-        for (Iterator i = mapOfWord.keySet().iterator(); i.hasNext();) {
-            String documentId = i.next().toString();
-            //TODO Have the document length and the avdl
-            int documentLength = 10;
-            wt += getDocumentWordScore(word, getTermFrequency(index, word, documentId), documentLength);
-        }
-
-        return wt;
     }
 
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
@@ -60,10 +62,14 @@ public class Bm25Articles extends Score {
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/index.serial");
 
+        System.out.println("dl : " + index.getDlMap().toString());
+
         Bm25Articles score = new Bm25Articles("Statistics", index);
 
-        System.out.println("Score : " + score.getRequestScore());
 
+        Map<String, Double> scores = score.getXBestScore(3);
+
+        System.out.println(scores.toString());
 
 
     }
