@@ -12,12 +12,12 @@ import java.util.Map;
  * @author Michaël Bard <michael.bard@laposte.net>
  */
 public class Score {
-
+    
     protected Index index;
     protected String request;
     
     /*
-     * Constructor 
+     * Constructor
      * @Param String request
      * @Param Index index
      */
@@ -32,19 +32,23 @@ public class Score {
     public Integer getTermFrequency(Index index, String word, String documentTitle){
         
         Map<String,Integer> mapValue = this.index.getCollectionData().get(word);
-
+        int integer =0;
+        //If the word does not exist in the Map
         if(mapValue==null){
             return 0;
         }
-       
-        return mapValue.get(documentTitle);
+        //If the word exist in the document
+        if(mapValue.containsKey(documentTitle)){
+            integer = mapValue.get(documentTitle);
+        }
+        return integer;
     }
     
     /*
      * @return the df
      */
     public Integer getDocumentFrequency(Index index, String word){
-
+        
         Map<String,Integer> mapValue = this.index.getCollectionData().get(word);
         
         if(mapValue == null){
@@ -55,14 +59,14 @@ public class Score {
     }
     
     
-    //Getters 
-
+    //Getters
+    
     public Index getIndex() {
         return this.index;
     }
-
+    
     public String getRequest() {
         return this.request;
     }
-    
+
 }
