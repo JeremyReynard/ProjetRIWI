@@ -13,7 +13,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.List;
 import javax.swing.JProgressBar;
 
 public class ArticlesDirectoryTextParser {
@@ -23,12 +22,15 @@ public class ArticlesDirectoryTextParser {
     private Index index;
     private long extractionTime;
     private int docCount;
+    private final Stopwords stopWords;
 
     public ArticlesDirectoryTextParser(String dirPath, String[] filesList) {
 
         this.filesList = filesList;
         this.dirPath = dirPath;
         this.index = new Index();
+        
+        this.stopWords = new Stopwords();
     }
 
     @SuppressWarnings("CallToThreadDumpStack")
@@ -95,22 +97,25 @@ public class ArticlesDirectoryTextParser {
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
                                 word = tabString[i].toLowerCase();
+                                
+                                if ((!Stopwords.isStopword(word))){
 
-                                valueMap = this.index.getCollectionData().get(word);
+                                    valueMap = this.index.getCollectionData().get(word);
 
-                                // the word is already in the collection
-                                if (valueMap != null) {
-                                    // the word has been already found in the current document
-                                    if (valueMap.containsKey(currentDocNum)) {
-                                        valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
-                                    } else {
-                                        //first occurrence of the word in this document									
-                                        valueMap.put(currentDocNum, 1);
+                                    // the word is already in the collection
+                                    if (valueMap != null) {
+                                        // the word has been already found in the current document
+                                        if (valueMap.containsKey(currentDocNum)) {
+                                            valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
+                                        } else {
+                                            //first occurrence of the word in this document									
+                                            valueMap.put(currentDocNum, 1);
+                                        }
+                                    } // first occurrence of the word : add it to the collection
+                                    else {
+                                        this.index.getCollectionData().put(word, new HashMap<String, Integer>());
+                                        this.index.getCollectionData().get(word).put(currentDocNum, 1);
                                     }
-                                } // first occurrence of the word : add it to the collection
-                                else {
-                                    this.index.getCollectionData().put(word, new HashMap<String, Integer>());
-                                    this.index.getCollectionData().get(word).put(currentDocNum, 1);
                                 }
                             }
                         }
@@ -129,8 +134,7 @@ public class ArticlesDirectoryTextParser {
         }
         index.setN(docCount);
         index.setDlMap(mapDL);
-        
-        
+                
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);
@@ -189,7 +193,6 @@ public class ArticlesDirectoryTextParser {
             while (iteratorTF.hasNext()) {
 
                 number += iteratorTF.next();
-
             }
 
             return number;
