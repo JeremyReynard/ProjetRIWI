@@ -6,6 +6,7 @@ package scores;
 
 import index.Index;
 import java.util.Map;
+import serialization.IndexDeserialization;
 
 
 /**
@@ -43,5 +44,19 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
          return Math.log(1.0 + (double)termFrequency) * ((double)index.getN() /(double)documentFrequency) ;
     }
     
+    public static void main(String[] args) {
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
 
+        System.out.println("dl : " + index.getDlMap().toString());
+
+        LtnSmartArticles score = new LtnSmartArticles("States", index);
+        System.out.println(score.getRequestScore("10003934"));
+                                                    
+        //Map<String, Double> scores = score.getXBestScore(3);
+
+      //  System.out.println(scores.toString());
+
+
+    }
+    
 }
