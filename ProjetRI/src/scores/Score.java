@@ -5,6 +5,7 @@
 package scores;
 
 import index.Index;
+import java.util.Map;
 
 /**
  *
@@ -30,12 +31,13 @@ public class Score {
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle){
         
-        Integer tf = this.index.getCollectionData().get(word).get(documentTitle);
+        Map<String,Integer> mapValue = this.index.getCollectionData().get(word);
 
-        if(tf==null){
+        if(mapValue==null){
             return 0;
         }
-        return tf;
+       
+        return mapValue.get(documentTitle);
     }
     
     /*
@@ -43,7 +45,13 @@ public class Score {
      */
     public Integer getDocumentFrequency(Index index, String word){
 
-        return this.index.getCollectionData().get(word).size();
+        Map<String,Integer> mapValue = this.index.getCollectionData().get(word);
+        
+        if(mapValue == null){
+            // -1 because 0 make a divide by 0 error
+            return -1;
+        }
+        return mapValue.size();
     }
     
     
