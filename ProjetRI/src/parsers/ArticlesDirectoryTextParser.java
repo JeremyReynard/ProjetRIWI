@@ -2,45 +2,42 @@ package parsers;
 
 import index.Index;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JProgressBar;
 
-public class ArticlesDirectoryTextParser {
-
+public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
+    
     private String[] filesList;
-    private String dirPath;
-    private Index index;
-    private long extractionTime;
-    private int docCount;
-    private final Stopwords stopWords;
-
-    public ArticlesDirectoryTextParser(String dirPath, String[] filesList) {
-
-        this.filesList = filesList;
-        this.dirPath = dirPath;
-        this.index = new Index();
-        
-        this.stopWords = new Stopwords();
+    
+    public ArticlesDirectoryTextParser(String dirPath) {
+       
+        super(dirPath);    
+        // add all the files in the selected directory to list
+        Path directory = Paths.get(dirPath);
+        this.filesList = directory.toFile().list();        
     }
 
     @SuppressWarnings("CallToThreadDumpStack")
-    public Index extract(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {   
-        
-        this.docCount = 0;
+    @Override
+    public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {  
+             
         int nbWordsInDoc = 0;        
         Map<String, Integer> mapDL = new HashMap<>();
+        Map<String, Integer> valueMap = null;
         
+        // JProgress Bar
         int nbFiles = this.filesList.length;
+        int currentLine = 0;
+        int nbLines = 0;           
+        int deltaPBGlobal = 0;
+        int percent = 0;
+        // ---
 
         Charset UTF8 = Charset.forName("UTF-8");
         String currentDocNum = "";
@@ -50,55 +47,49 @@ public class ArticlesDirectoryTextParser {
         Path currentPath = null;
         String line = null;
 
-        Map<String, Integer> valueMap = null;
-
-        int currentLine = 0;
-        int nbLines = 0;   
-        
-        int deltaPBGlobal = 0;
-        int percent = 0;
-
         long startTime = System.currentTimeMillis();
         for (int f = 0; f < nbFiles; ++f) {   
             
-            currentPath = Paths.get(this.dirPath + "/" + this.filesList[f]);
+            currentPath = Paths.get(this.directoryPath + "/" + this.filesList[f]);
+            
+            // JProgress Bar
             jpBarFile.setString(this.filesList[f]);
             jpBarGlobal.setString("Global : " + (f + 1) + " / " + (nbFiles + 1));
+            currentLine = 0;                
+            deltaPBGlobal = 100 * f / nbFiles;
+            // ---
             
             try (BufferedReader reader = Files.newBufferedReader(currentPath, UTF8)) {
                 line = null;
-                nbLines = countNBLines(currentPath);
-                
-                currentLine = 0;                
-                deltaPBGlobal = 100 * f / nbFiles;
+                nbLines = countNBLines(currentPath);   
                 
                 while ((line = reader.readLine()) != null) {
+                    
+                    // JProgress Bar
                     percent = (100 * currentLine) / nbLines;
                     jpBarFile.setValue(percent);
                     jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );                    
-                    currentLine++;                   
+                    currentLine++; 
+                    // ---
                     
                     // if the line is just a \n do nothing
                     if (line.length() > 0) {
                         // docno line
                         if (line.contains("<doc><docno>")) {
                             currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");                            
-                            this.docCount++;                                                           
+                            index.setN(index.getN() + 1);                                                          
                         } // others lines
                         else if (!(line.contains("</doc>"))) {                            
-                            // Punctuation & digit
-                            line = line.trim().replaceAll("[\\d\\W]", " ");
-
+                            // Punctuation & digit                           
                             tabString = null;
-
-                            tabString = line.split("[ ]+");
+                            tabString = line.split("[\\W]");
                             nbWordsInDoc += tabString.length;
                             
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
                                 word = tabString[i].toLowerCase();
                                 
-                                if ((!Stopwords.isStopword(word))){
+                                if (!word.isEmpty() && (!Stopwords.isStopword(word))){
 
                                     valueMap = this.index.getCollectionData().get(word);
 
@@ -121,7 +112,6 @@ public class ArticlesDirectoryTextParser {
                         }
                         else {
                             mapDL.put(currentDocNum, nbWordsInDoc);
-                            //System.out.println(currentDocNum + " - " + nbWordsInDoc);
                             nbWordsInDoc = 0;
                         }
                     }
@@ -131,10 +121,8 @@ public class ArticlesDirectoryTextParser {
                 System.err.println("Parsing error !");
                 //e.printStackTrace();
             }
-        }
-        index.setN(docCount);
-        index.setDlMap(mapDL);
-                
+        }       
+        index.setDlMap(mapDL);                
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);
@@ -158,77 +146,5 @@ public class ArticlesDirectoryTextParser {
         }
 
         return count;
-    }
-
-    public String showResults() {
-
-        long sec = (this.extractionTime + 500) / 1000;
-
-        String result = "";
-        result += "Indexation time " + sec + "sec\n";
-        result += "Nb docs : " + this.docCount + "\n";
-        result += "Nb words " + this.index.getCollectionData().size() + "\n";
-
-        return result;
-    }
-
-    public String showResults(String word) {
-
-        String result = "";
-        int number = this.getNumberOccurences(word);
-        result += "Nb occurs : " + number + "\n";
-
-        return result;
-    }
-
-    public int getNumberOccurences(String word) {
-
-        if (this.index.getCollectionData().containsKey(word)) {
-
-            int number = 0;
-            Map<String, Integer> valueMap = this.index.getCollectionData().get(word);
-
-            Iterator<Integer> iteratorTF = valueMap.values().iterator();
-
-            while (iteratorTF.hasNext()) {
-
-                number += iteratorTF.next();
-            }
-
-            return number;
-        }
-        return 0;
-    }
-
-    public int getNumberDoc() {
-
-        return this.docCount;
-    }
-
-    public void export() {
-
-        String export = this.docCount + " " + this.extractionTime + " (" + this.index.getCollectionData().size() + ")\n";
-
-        this.export(export);
-    }
-
-    private void export(String str) {
-        Charset UTF8 = Charset.forName("UTF-8");
-        Path sourcePath = Paths.get("export.txt");
-
-        try (BufferedWriter writer =
-                        Files.newBufferedWriter(
-                        sourcePath,
-                        UTF8,
-                        new OpenOption[]{StandardOpenOption.CREATE, StandardOpenOption.APPEND})) {
-            writer.write(str);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public Index getIndex(){
-        
-        return this.index;
     }
 }
