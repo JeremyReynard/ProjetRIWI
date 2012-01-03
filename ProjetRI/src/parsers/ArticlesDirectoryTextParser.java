@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JProgressBar;
 
-public class ArticlesDirectoryTextParser extends DirectoryParser{
+public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
     
     private String[] filesList;
     
@@ -80,19 +80,16 @@ public class ArticlesDirectoryTextParser extends DirectoryParser{
                             index.setN(index.getN() + 1);                                                          
                         } // others lines
                         else if (!(line.contains("</doc>"))) {                            
-                            // Punctuation & digit
-                            line = line.trim().replaceAll("[\\d\\W]", " ");
-
+                            // Punctuation & digit                           
                             tabString = null;
-
-                            tabString = line.split("[ ]+");
+                            tabString = line.split("[\\W]");
                             nbWordsInDoc += tabString.length;
                             
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
                                 word = tabString[i].toLowerCase();
                                 
-                                if ((!Stopwords.isStopword(word))){
+                                if (!word.isEmpty() && (!Stopwords.isStopword(word))){
 
                                     valueMap = this.index.getCollectionData().get(word);
 
@@ -115,7 +112,6 @@ public class ArticlesDirectoryTextParser extends DirectoryParser{
                         }
                         else {
                             mapDL.put(currentDocNum, nbWordsInDoc);
-                            //System.out.println(currentDocNum + " - " + nbWordsInDoc);
                             nbWordsInDoc = 0;
                         }
                     }
@@ -126,8 +122,7 @@ public class ArticlesDirectoryTextParser extends DirectoryParser{
                 //e.printStackTrace();
             }
         }       
-        index.setDlMap(mapDL);
-                
+        index.setDlMap(mapDL);                
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);

@@ -34,14 +34,14 @@ public class ArticleXMLParser extends DefaultHandler {
             isInTitleTag = true;
         }
         //<header><id>
-        if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
+        else if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
             isInIdTag = 1;
         }
         //<header><categories><category>
-        if (qName.equalsIgnoreCase("category")) {
+        else if (qName.equalsIgnoreCase("category")) {
             isInCategoryTag = true;
         }
-        if (qName.equalsIgnoreCase("bdy")) {
+        else if (qName.equalsIgnoreCase("bdy")) {
             isInBodyTag = true;
         }
     }
@@ -54,14 +54,14 @@ public class ArticleXMLParser extends DefaultHandler {
             isInTitleTag = false;
         }
         //<header></id>
-        if (qName.equalsIgnoreCase("id")) {
+        else if (qName.equalsIgnoreCase("id")) {
             isInIdTag = 2;
         }
         //<header><categories></category>
-        if (qName.equalsIgnoreCase("category")) {
+        else if (qName.equalsIgnoreCase("category")) {
             isInCategoryTag = false;
         }
-        if (qName.equalsIgnoreCase("bdy")) {
+        else if (qName.equalsIgnoreCase("bdy")) {
             isInBodyTag = false;
         }
 
