@@ -65,12 +65,25 @@ public class Index implements Serializable {
     }
 
     public double getAvdl() {
+        
         double dlSum = 0;
-        for (Iterator i = dlMap.keySet().iterator(); i.hasNext();) {
-            String dl = i.next().toString();
-            dlSum += Integer.parseInt(dl);
+        for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
+            Integer dl = (Integer) i.next();
+            dlSum += dl.intValue();
         }
-        return dlSum / dlMap.size();
+        
+        return (dlSum / dlMap.size());
+    }
+    
+    public int getNumberOfWords(){
+        int nbWords = 0;
+        
+        for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
+            Integer dl = (Integer) i.next();
+            nbWords += dl.intValue();
+        }
+        
+        return nbWords;
     }
 
     @Override

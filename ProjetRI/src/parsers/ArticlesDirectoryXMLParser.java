@@ -22,7 +22,7 @@ import serialization.IndexSerialization;
  *
  * @author Michaël Bard <michael.bard@laposte.net>
  */
-public class ArticlesDirectoryXMLParser extends DirectoryParser {
+public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
     public ArticlesDirectoryXMLParser(String dirPath) {
 
@@ -31,7 +31,7 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
 
     @Override
     public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
-        System.out.println("Beginning of indexing.\n");
+        //System.out.println("Beginning of indexing.\n");
 
         File[] files = null;
         File directoryToScan = new File(this.directoryPath);
@@ -50,6 +50,7 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
         String[] words = null;
         SAXParserFactory factory = null;
         SAXParser saxParser;
+        ArticleXMLParser articleParser = null;
 
         long startTime = System.currentTimeMillis();
         for (File f : files) {
@@ -66,7 +67,7 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
             try {
                 this.index.setN(index.getN() + 1);
                 saxParser = factory.newSAXParser();
-                ArticleXMLParser articleParser = new ArticleXMLParser();
+                articleParser = new ArticleXMLParser();
                 saxParser.parse(f.getAbsolutePath(), articleParser);
 
                 currentDocNum = articleParser.getId().toString();
@@ -87,17 +88,13 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
                     w = w.toLowerCase();
                     if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
                         valueMap = index.getCollectionData().get(w);
-                        boolean isTermFrequencyFound = false;
+
                         // the word is already in the collection
                         if (valueMap != null) {
-                            for (int i = 0; i < valueMap.size(); i++) {
-                                // the word has been already found in the current document
-                                if (valueMap.containsKey(currentDocNum) && !isTermFrequencyFound) {
-                                    valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
-                                    isTermFrequencyFound = true;
-                                }
-                            }
-                            if (!isTermFrequencyFound) {
+                            // the word has been already found in the current document
+                            if (valueMap.containsKey(currentDocNum)) {
+                                valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
+                            } else {
                                 //first occurrence of the word in this document
                                 valueMap.put(currentDocNum, 1);
                             }
@@ -203,12 +200,13 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }
+            factory = null;
         }
 
         this.extractionTime = System.currentTimeMillis() - startTime;
-        System.out.println("End of indexing.\n");
-        return index;
+        //System.out.println("End of indexing.\n");
 
+        return index;
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -224,7 +222,7 @@ public class ArticlesDirectoryXMLParser extends DirectoryParser {
 
         index = IndexDeserialization.deserialize("fileSerialization/index.serial");
 
-        System.out.println("N : " + index.getN());
+        System.out.println("N : " + index.getN() );
         System.out.println("avdl : " + index.getAvdl());
         System.out.println("dl : " + index.getDlMap().toString());
         System.out.println("\n"+index.toString());

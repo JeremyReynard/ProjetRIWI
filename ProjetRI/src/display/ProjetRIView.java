@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import parsers.ArticlesDirectoryTextParser;
 import parsers.ArticlesDirectoryXMLParser;
-import parsers.DirectoryParser;
+import parsers.ArticlesDirectoryParser;
 import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
@@ -500,7 +500,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     //private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
     private String dirPath = "";
     private String indexPath = "";
-    private DirectoryParser extractor;
+    private ArticlesDirectoryParser extractor;
     private final String APP_NAME = "Indexator&atravers";
     private Index index = null;
 }
