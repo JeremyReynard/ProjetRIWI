@@ -77,11 +77,12 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/index.serial");
 
-        System.out.println("dl : " + index.getDlMap().toString());
+        Bm25Articles score = new Bm25Articles("largely", index, 1, 0.5);
 
-        Bm25Articles score = new Bm25Articles("power", index, 1, 0.5);
+        int X = 3;
+        Map<String, Double> scores = score.getXBestScore(X);
         
-        Map<String, Double> scores = score.getXBestScore(3);
+        System.out.println(X+" best scores : "+scores);
 
     }
 }
