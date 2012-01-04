@@ -5,21 +5,29 @@
 package scores;
 
 import index.Index;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
+import serialization.IndexDeserialization;
 
 /**
- * 
+ *
  * @author Michaël Bard <michael.bard@laposte.net>
  */
 public class Score {
-
+    
     protected Index index;
     protected String request;
-
+    
     /*
      * Constructor
      * @Param String request
@@ -29,12 +37,12 @@ public class Score {
         this.index = index;
         this.request = request;
     }
-
+    
     /*
      * @return the tf
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle) {
-
+        
         Map<String, Integer> mapValue = this.index.getCollectionData().get(word);
         int integer = 0;
         //If the word does not exist in the Map
@@ -47,52 +55,98 @@ public class Score {
         }
         return integer;
     }
-
+    
     /*
      * @return the df
      */
     public Integer getDocumentFrequency(Index index, String word) {
-
+        
         Map<String, Integer> mapValue = this.index.getCollectionData().get(word);
-
+        
         if (mapValue == null) {
             // -1 because 0 make a divide by 0 error
             return -1;
         }
         return mapValue.size();
     }
-
+    
     /*
      * Methods allowed to sort the score map
      */
     public Map sortMap(Map unsortedMap) {
         Map sortedMap = new HashMap();
         TreeSet set = new TreeSet(new Comparator() {
-
+            
             public int compare(Object obj, Object obj1) {
                 Double val1 = (Double) ((Map.Entry) obj).getValue();
                 Double val2 = (Double) ((Map.Entry) obj1).getValue();
-
+                
                 return val1.compareTo(val2);
             }
         });
-
+        
         set.addAll(unsortedMap.entrySet());
-
+        
         for (Iterator it = set.iterator(); it.hasNext();) {
             Map.Entry myMapEntry = (Map.Entry) it.next();
             sortedMap.put(myMapEntry.getKey(), myMapEntry.getValue());
         }
-
+        
         return sortedMap;
     }
+    
+    public void createRunFile(String fileName, String requestNumber, String articleINEXNumber,String pathElement,Map<String, Double> xBestScore ){
+       
+        int xBestScoresize = xBestScore.size();
+        
+        Path runPath = Paths.get("Runs/"+fileName+".txt");
+        
+        try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"))) {
+            String runLine;
+            Double runScore;
+            String separator=" ";
+            for (Iterator iterBestscore = xBestScore.keySet().iterator() ; iterBestscore.hasNext() ; ){
+                runScore = xBestScore.get((String)iterBestscore.next());
+                runLine = requestNumber+separator+
+                        "Q0"+separator
+                        +articleINEXNumber+separator
+                        +xBestScoresize+separator
+                        +runScore+separator
+                        +"MichaelJeremyMickael"+separator
+                        +pathElement+"\n";
+                writer.write(runLine);
+                xBestScoresize--;
+                
+            }
 
+            writer.close();
+        }catch(IOException e){
+            System.out.println("[Score][createRunFile] "+e);
+        }
+
+    }
+    
+    
     //Getters
     public Index getIndex() {
         return this.index;
     }
-
+    
     public String getRequest() {
         return this.request;
     }
+    
+     public static void main(String[] args) {
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        
+        LtnSmartArticles score = new LtnSmartArticles("states", index);
+        
+        Map<String, Double> scores = score.getXBestScore(6);
+        score.createRunFile("runtest", "000", "articleNumb", "/article[1]", scores);
+        
+        //System.out.println("[main][scores]"+scores.toString());
+        
+        
+    }
+    
 }
