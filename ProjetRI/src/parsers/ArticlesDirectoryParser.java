@@ -33,7 +33,7 @@ public abstract class ArticlesDirectoryParser {
         result += "N : " + index.getN() + "\n";
         result += "avdl : " + index.getAvdl() + "\n";
         result += "words : " + index.getNumberOfWords();
-               
+                 
         return result;
     }
     

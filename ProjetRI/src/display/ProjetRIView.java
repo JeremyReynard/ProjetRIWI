@@ -69,6 +69,10 @@ public class ProjetRIView extends FrameView {
         showIndexWord = new javax.swing.JButton();
         bm25Radio = new javax.swing.JRadioButton();
         ltnRadio = new javax.swing.JRadioButton();
+        k1Label = new javax.swing.JLabel();
+        bLabel = new javax.swing.JLabel();
+        k1TF = new javax.swing.JTextField();
+        bTF = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -132,11 +136,11 @@ public class ProjetRIView extends FrameView {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, creationPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(creationPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(directoryChoose, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(startExtract, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(jProgressBarFile, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(jProgressBarGlobal, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
+                    .addComponent(directoryChoose, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(startExtract, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jProgressBarFile, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jProgressBarGlobal, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                 .addContainerGap())
         );
         creationPaneLayout.setVerticalGroup(
@@ -179,9 +183,9 @@ public class ProjetRIView extends FrameView {
             .addGroup(recuperationPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(recuperationPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(indexFileChoose, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
-                    .addComponent(jpBarIndexFile, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                    .addComponent(indexFileChoose, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                    .addComponent(jpBarIndexFile, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                 .addContainerGap())
         );
         recuperationPaneLayout.setVerticalGroup(
@@ -210,7 +214,7 @@ public class ProjetRIView extends FrameView {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, indexationPaneLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
-                .addComponent(showIndexBrut, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(showIndexBrut, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addGap(58, 58, 58))
         );
         indexationPaneLayout.setVerticalGroup(
@@ -221,7 +225,7 @@ public class ProjetRIView extends FrameView {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(recuperationPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(showIndexBrut, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(showIndexBrut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
@@ -252,6 +256,18 @@ public class ProjetRIView extends FrameView {
         ltnRadio.setText(resourceMap.getString("ltnRadio.text")); // NOI18N
         ltnRadio.setName("ltnRadio"); // NOI18N
 
+        k1Label.setText(resourceMap.getString("k1Label.text")); // NOI18N
+        k1Label.setName("k1Label"); // NOI18N
+
+        bLabel.setText(resourceMap.getString("bLabel.text")); // NOI18N
+        bLabel.setName("bLabel"); // NOI18N
+
+        k1TF.setText(resourceMap.getString("k1TF.text")); // NOI18N
+        k1TF.setName("k1TF"); // NOI18N
+
+        bTF.setText(resourceMap.getString("bTF.text")); // NOI18N
+        bTF.setName("bTF"); // NOI18N
+
         javax.swing.GroupLayout searchPaneLayout = new javax.swing.GroupLayout(searchPane);
         searchPane.setLayout(searchPaneLayout);
         searchPaneLayout.setHorizontalGroup(
@@ -259,11 +275,18 @@ public class ProjetRIView extends FrameView {
             .addGroup(searchPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(showIndexWord, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                    .addComponent(showIndexWord, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(searchPaneLayout.createSequentialGroup()
-                        .addComponent(ltnRadio)
+                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ltnRadio)
+                            .addComponent(k1Label)
+                            .addComponent(bLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bm25Radio)))
+                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bTF, 0, 0, Short.MAX_VALUE)
+                            .addComponent(k1TF, 0, 0, Short.MAX_VALUE)
+                            .addComponent(bm25Radio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(17, 17, 17)))
                 .addContainerGap())
         );
         searchPaneLayout.setVerticalGroup(
@@ -275,7 +298,15 @@ public class ProjetRIView extends FrameView {
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ltnRadio)
                     .addComponent(bm25Radio))
-                .addContainerGap(447, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(k1Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bLabel))
+                .addContainerGap(356, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab(resourceMap.getString("searchPane.TabConstraints.tabTitle"), searchPane); // NOI18N
@@ -288,7 +319,7 @@ public class ProjetRIView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
         );
 
         mainTabbedPane.getAccessibleContext().setAccessibleName(resourceMap.getString("jTabbedPane1.AccessibleContext.accessibleName")); // NOI18N
@@ -476,6 +507,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     }
 }//GEN-LAST:event_indexFileChooseActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bLabel;
+    private javax.swing.JTextField bTF;
     private javax.swing.JRadioButton bm25Radio;
     private javax.swing.JPanel creationPane;
     private javax.swing.JButton directoryChoose;
@@ -486,6 +519,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JProgressBar jpBarIndexFile;
+    private javax.swing.JLabel k1Label;
+    private javax.swing.JTextField k1TF;
     private javax.swing.JRadioButton ltnRadio;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabbedPane;
