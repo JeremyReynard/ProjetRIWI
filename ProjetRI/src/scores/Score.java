@@ -8,7 +8,7 @@ import index.Index;
 import java.util.Map;
 
 /**
- *
+ * test
  * @author Michaël Bard <michael.bard@laposte.net>
  */
 public class Score {
