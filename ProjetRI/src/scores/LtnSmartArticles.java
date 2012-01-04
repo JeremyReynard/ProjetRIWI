@@ -25,22 +25,33 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
 
         Map<String, Double> scores = new HashMap<>();
         Map<String, Double> bestScores = new HashMap<>();
+        
+        String documentNumber;
+        Iterator it;
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
-            String documentNumber = i.next().toString();
+            documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
+        }
+        
+        if (X > this.index.getN()){
+            X = this.index.getN();
         }
 
         scores = this.sortMap(scores);
+        
+        if (X > scores.size()){
+            X = scores.size();
+        }
+        
         for (int i = 0; i < X; i++) {
-            Iterator it = scores.keySet().iterator();
-            String documentNumber = it.next().toString();
+            it = scores.keySet().iterator();
+            documentNumber = it.next().toString();
             bestScores.put(documentNumber, scores.get(documentNumber));
             scores.remove(documentNumber);
         }
 
         return bestScores;
-
     }
     
     
@@ -48,7 +59,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     public double getRequestScore(String documentNumber) {
         double score = 0;
         
-        for (String word : this.request.split("\\W")) {
+        for (String word : this.request.split("[\\W]+")) {
             int dl = index.getDlMap().get(documentNumber).intValue();
             score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl);
         }
@@ -71,9 +82,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         
         Map<String, Double> scores = score.getXBestScore(3);
         
-        System.out.println("[main][scores]"+scores.toString());
-        
-        
+        System.out.println("[main][scores]"+scores.toString());        
     }
 
 }

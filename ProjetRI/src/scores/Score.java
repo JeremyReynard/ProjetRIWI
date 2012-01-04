@@ -4,14 +4,16 @@
  */
 package scores;
 
+
 import index.Index;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -74,6 +76,7 @@ public class Score {
      * Methods allowed to sort the score map
      */
     public Map sortMap(Map unsortedMap) {
+
         Map sortedMap = new HashMap();
         TreeSet set = new TreeSet(new Comparator() {
             
@@ -96,12 +99,12 @@ public class Score {
     }
     
     public void createRunFile(String fileName, String requestNumber, String articleINEXNumber,String pathElement,Map<String, Double> xBestScore ){
-       
+
         int xBestScoresize = xBestScore.size();
         
         Path runPath = Paths.get("Runs/"+fileName+".txt");
-        
-        try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"))) {
+                
+        try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"),StandardOpenOption.CREATE)) {
             String runLine;
             Double runScore;
             String separator=" ";

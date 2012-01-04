@@ -15,7 +15,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainTabbedPane" alignment="0" pref="531" max="32767" attributes="0"/>
+              <Component id="mainTabbedPane" alignment="0" pref="539" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -72,7 +72,7 @@
                           <Component id="recuperationPane" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="showIndexBrut" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -279,20 +279,17 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="showIndexWord" pref="364" max="32767" attributes="0"/>
+                              <Component id="searchTabbedPane" alignment="0" pref="364" max="32767" attributes="0"/>
+                              <Component id="showIndexWord" alignment="0" pref="364" max="32767" attributes="0"/>
+                              <Component id="exportRunButton" alignment="0" pref="364" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ltnRadio" min="-2" max="-2" attributes="0"/>
-                                      <Component id="k1Label" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="bLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="requestNumberTF" alignment="0" pref="274" max="32767" attributes="0"/>
+                                      <Component id="requestTF" alignment="0" pref="274" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="bTF" min="0" pref="0" max="32767" attributes="1"/>
-                                      <Component id="k1TF" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                                      <Component id="bm25Radio" alignment="0" max="32767" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                                  <Component id="nbRunsTF" pref="62" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -302,24 +299,20 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="showIndexWord" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="ltnRadio" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bm25Radio" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="requestTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="nbRunsTF" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="k1TF" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="k1Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="bTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="356" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="requestNumberTF" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Component id="exportRunButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="searchTabbedPane" pref="324" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -335,43 +328,143 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showIndexWordActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="bm25Radio">
+                <Container class="javax.swing.JTabbedPane" name="searchTabbedPane">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="bm25Radio.text"/>
-                    <Property name="name" type="java.lang.String" value="bm25Radio" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="searchTabbedPane" noResource="true"/>
+                  </Properties>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="bm25">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="bm25" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="BM25">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="bm25.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="k1label" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="k1TF" min="-2" pref="51" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="bLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="bTF" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="257" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="k1label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="k1TF" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="bLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="219" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="k1label">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1label.text"/>
+                            <Property name="name" type="java.lang.String" value="k1label" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="bLabel">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bLabel.text"/>
+                            <Property name="name" type="java.lang.String" value="bLabel" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="k1TF">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1TF.text"/>
+                            <Property name="name" type="java.lang.String" value="k1TF" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="bTF">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bTF.text"/>
+                            <Property name="name" type="java.lang.String" value="bTF" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="ltn">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="ltn" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="LTNSmart">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="ltn.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="356" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="287" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="exportRunButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="exportRunButton.text"/>
+                    <Property name="name" type="java.lang.String" value="exportRunButton" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bm25RadioActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportRunButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="ltnRadio">
+                <Component class="javax.swing.JTextField" name="requestTF">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="ltnRadio.text"/>
-                    <Property name="name" type="java.lang.String" value="ltnRadio" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="requestTF.text"/>
+                    <Property name="name" type="java.lang.String" value="requestTF" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="k1Label">
+                <Component class="javax.swing.JTextField" name="nbRunsTF">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="k1Label.text"/>
-                    <Property name="name" type="java.lang.String" value="k1Label" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="nbRunsTF.text"/>
+                    <Property name="name" type="java.lang.String" value="nbRunsTF" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="bLabel">
+                <Component class="javax.swing.JTextField" name="requestNumberTF">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="bLabel.text"/>
-                    <Property name="name" type="java.lang.String" value="bLabel" noResource="true"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="k1TF">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="k1TF.text"/>
-                    <Property name="name" type="java.lang.String" value="k1TF" noResource="true"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="bTF">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="bTF.text"/>
-                    <Property name="name" type="java.lang.String" value="bTF" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="requestNumberTF.text"/>
+                    <Property name="name" type="java.lang.String" value="requestNumberTF" noResource="true"/>
                   </Properties>
                 </Component>
               </SubComponents>

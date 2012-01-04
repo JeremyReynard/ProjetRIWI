@@ -24,6 +24,12 @@ public abstract class ArticlesDirectoryParser {
         this.index = new Index();        
     }
     
+    public ArticlesDirectoryParser(Index index){
+        
+        this.index = index;
+        this.directoryPath = "";
+    }
+    
     public abstract Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal);    
             
     public String showResults(){
@@ -59,5 +65,5 @@ public abstract class ArticlesDirectoryParser {
         
     public Index getIndex(){
         return this.index;
-    }   
+    }  
 }

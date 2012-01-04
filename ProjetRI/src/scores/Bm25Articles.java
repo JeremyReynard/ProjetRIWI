@@ -30,16 +30,28 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
         Map<String, Double> scores = new HashMap<>();
         Map<String, Double> bestScores = new HashMap<>();
+        
+        String documentNumber;
+        Iterator it;
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
-            String documentNumber = i.next().toString();
+            documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
+        }
+        
+        if (X > this.index.getN()){
+            X = this.index.getN();
         }
 
         scores = this.sortMap(scores);
+        
+        if (X > scores.size()){
+            X = scores.size();
+        }
+        
         for (int i = 0; i < X; i++) {
-            Iterator it = scores.keySet().iterator();
-            String documentNumber = it.next().toString();
+            it = scores.keySet().iterator();
+            documentNumber = it.next().toString();
             bestScores.put(documentNumber, scores.get(documentNumber));
             scores.remove(documentNumber);
         }

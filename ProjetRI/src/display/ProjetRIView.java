@@ -4,12 +4,14 @@
 package display;
 
 import index.Index;
+import java.awt.Component;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,6 +19,8 @@ import javax.swing.JOptionPane;
 import parsers.ArticlesDirectoryTextParser;
 import parsers.ArticlesDirectoryXMLParser;
 import parsers.ArticlesDirectoryParser;
+import scores.LtnSmartArticles;
+import scores.Score;
 import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
@@ -67,12 +71,17 @@ public class ProjetRIView extends FrameView {
         jSeparator2 = new javax.swing.JSeparator();
         searchPane = new javax.swing.JPanel();
         showIndexWord = new javax.swing.JButton();
-        bm25Radio = new javax.swing.JRadioButton();
-        ltnRadio = new javax.swing.JRadioButton();
-        k1Label = new javax.swing.JLabel();
+        searchTabbedPane = new javax.swing.JTabbedPane();
+        bm25 = new javax.swing.JPanel();
+        k1label = new javax.swing.JLabel();
         bLabel = new javax.swing.JLabel();
         k1TF = new javax.swing.JTextField();
         bTF = new javax.swing.JTextField();
+        ltn = new javax.swing.JPanel();
+        exportRunButton = new javax.swing.JButton();
+        requestTF = new javax.swing.JTextField();
+        nbRunsTF = new javax.swing.JTextField();
+        requestNumberTF = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -226,7 +235,7 @@ public class ProjetRIView extends FrameView {
                 .addComponent(recuperationPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(showIndexBrut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(19, 19, 19))
+                .addGap(20, 20, 20))
         );
 
         creationPane.getAccessibleContext().setAccessibleName(resourceMap.getString("creationPane.AccessibleContext.accessibleName")); // NOI18N
@@ -245,19 +254,12 @@ public class ProjetRIView extends FrameView {
             }
         });
 
-        bm25Radio.setText(resourceMap.getString("bm25Radio.text")); // NOI18N
-        bm25Radio.setName("bm25Radio"); // NOI18N
-        bm25Radio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bm25RadioActionPerformed(evt);
-            }
-        });
+        searchTabbedPane.setName("searchTabbedPane"); // NOI18N
 
-        ltnRadio.setText(resourceMap.getString("ltnRadio.text")); // NOI18N
-        ltnRadio.setName("ltnRadio"); // NOI18N
+        bm25.setName("bm25"); // NOI18N
 
-        k1Label.setText(resourceMap.getString("k1Label.text")); // NOI18N
-        k1Label.setName("k1Label"); // NOI18N
+        k1label.setText(resourceMap.getString("k1label.text")); // NOI18N
+        k1label.setName("k1label"); // NOI18N
 
         bLabel.setText(resourceMap.getString("bLabel.text")); // NOI18N
         bLabel.setName("bLabel"); // NOI18N
@@ -268,6 +270,71 @@ public class ProjetRIView extends FrameView {
         bTF.setText(resourceMap.getString("bTF.text")); // NOI18N
         bTF.setName("bTF"); // NOI18N
 
+        javax.swing.GroupLayout bm25Layout = new javax.swing.GroupLayout(bm25);
+        bm25.setLayout(bm25Layout);
+        bm25Layout.setHorizontalGroup(
+            bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bm25Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(bm25Layout.createSequentialGroup()
+                        .addComponent(k1label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bm25Layout.createSequentialGroup()
+                        .addComponent(bLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(bTF)))
+                .addContainerGap(257, Short.MAX_VALUE))
+        );
+        bm25Layout.setVerticalGroup(
+            bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bm25Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(k1label)
+                    .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bLabel)
+                    .addComponent(bTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(219, Short.MAX_VALUE))
+        );
+
+        searchTabbedPane.addTab(resourceMap.getString("bm25.TabConstraints.tabTitle"), bm25); // NOI18N
+
+        ltn.setName("ltn"); // NOI18N
+
+        javax.swing.GroupLayout ltnLayout = new javax.swing.GroupLayout(ltn);
+        ltn.setLayout(ltnLayout);
+        ltnLayout.setHorizontalGroup(
+            ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 356, Short.MAX_VALUE)
+        );
+        ltnLayout.setVerticalGroup(
+            ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 287, Short.MAX_VALUE)
+        );
+
+        searchTabbedPane.addTab(resourceMap.getString("ltn.TabConstraints.tabTitle"), ltn); // NOI18N
+
+        exportRunButton.setText(resourceMap.getString("exportRunButton.text")); // NOI18N
+        exportRunButton.setName("exportRunButton"); // NOI18N
+        exportRunButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportRunButtonActionPerformed(evt);
+            }
+        });
+
+        requestTF.setText(resourceMap.getString("requestTF.text")); // NOI18N
+        requestTF.setName("requestTF"); // NOI18N
+
+        nbRunsTF.setText(resourceMap.getString("nbRunsTF.text")); // NOI18N
+        nbRunsTF.setName("nbRunsTF"); // NOI18N
+
+        requestNumberTF.setText(resourceMap.getString("requestNumberTF.text")); // NOI18N
+        requestNumberTF.setName("requestNumberTF"); // NOI18N
+
         javax.swing.GroupLayout searchPaneLayout = new javax.swing.GroupLayout(searchPane);
         searchPane.setLayout(searchPaneLayout);
         searchPaneLayout.setHorizontalGroup(
@@ -275,18 +342,16 @@ public class ProjetRIView extends FrameView {
             .addGroup(searchPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addComponent(showIndexWord, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(exportRunButton, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(searchPaneLayout.createSequentialGroup()
-                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ltnRadio)
-                            .addComponent(k1Label)
-                            .addComponent(bLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bTF, 0, 0, Short.MAX_VALUE)
-                            .addComponent(k1TF, 0, 0, Short.MAX_VALUE)
-                            .addComponent(bm25Radio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(17, 17, 17)))
+                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(requestNumberTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                            .addComponent(requestTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(nbRunsTF, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)))
                 .addContainerGap())
         );
         searchPaneLayout.setVerticalGroup(
@@ -296,17 +361,15 @@ public class ProjetRIView extends FrameView {
                 .addComponent(showIndexWord)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ltnRadio)
-                    .addComponent(bm25Radio))
+                    .addComponent(requestTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nbRunsTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(k1Label))
+                .addComponent(requestNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(exportRunButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bLabel))
-                .addContainerGap(356, Short.MAX_VALUE))
+                .addComponent(searchTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainTabbedPane.addTab(resourceMap.getString("searchPane.TabConstraints.tabTitle"), searchPane); // NOI18N
@@ -319,7 +382,7 @@ public class ProjetRIView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
         );
 
         mainTabbedPane.getAccessibleContext().setAccessibleName(resourceMap.getString("jTabbedPane1.AccessibleContext.accessibleName")); // NOI18N
@@ -382,10 +445,10 @@ public class ProjetRIView extends FrameView {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void showIndexBrutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexBrutActionPerformed
-        if (this.extractor != null) {
+        if (this.indexator != null) {
             JOptionPane.showMessageDialog(
                     this.mainPanel,
-                    this.extractor.showResults(),
+                    this.indexator.showResults(),
                     "Stats",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -411,14 +474,14 @@ public class ProjetRIView extends FrameView {
                 if (filesList.length > 0) {
 
                     if (directory.toFile().list()[0].endsWith("xml")) {
-                        extractor = new ArticlesDirectoryXMLParser(dirPath);
+                        indexator = new ArticlesDirectoryXMLParser(dirPath);
                     } else {
-                        extractor = new ArticlesDirectoryTextParser(dirPath);
+                        indexator = new ArticlesDirectoryTextParser(dirPath);
                     }
 
-                    index = extractor.parseDirectory(jProgressBarFile, jProgressBarGlobal);
+                    index = indexator.parseDirectory(jProgressBarFile, jProgressBarGlobal);
 
-                    IndexSerialization.serialize(extractor.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
+                    IndexSerialization.serialize(indexator.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
 
                     showIndexBrut.setEnabled(true);
                     showIndexWord.setEnabled(true);
@@ -465,53 +528,97 @@ public class ProjetRIView extends FrameView {
                 JOptionPane.QUESTION_MESSAGE);
 
         if (word != null) {
+            if (this.indexator == null) {
+                Map<String, Integer> map = this.index.getCollectionData().get(word);
+                int nbOccurs = 0;
+
+                if (map != null) {
+                    for (Integer i : map.values()) {
+                        nbOccurs += i.intValue();
+                    }
+                }
+                               
+                JOptionPane.showMessageDialog(
+                    mainPanel,
+                    "Occurences : " + nbOccurs + "\n",
+                    "Word : " + word,
+                    JOptionPane.INFORMATION_MESSAGE);        
+            }
+            else {
             JOptionPane.showMessageDialog(
                     this.mainPanel,
-                    this.extractor.showResults(word),
+                    this.indexator.showResults(word),
                     "Word : " + word,
                     JOptionPane.INFORMATION_MESSAGE);
+            }
         }
 
     }//GEN-LAST:event_showIndexWordActionPerformed
-
-    private void bm25RadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bm25RadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bm25RadioActionPerformed
 
 private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indexFileChooseActionPerformed
 
     JFileChooser chooser = new JFileChooser();
     chooser.setCurrentDirectory(new java.io.File("."));
-    //chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);        
+           
     chooser.addChoosableFileFilter(new SimpleFilter("Serialized Index", ".serial"));
 
     int returnVal = chooser.showOpenDialog(this.mainPanel);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         this.indexPath = chooser.getSelectedFile().getAbsolutePath();
 
-        jpBarIndexFile.setString(chooser.getSelectedFile().toString());
+        jpBarIndexFile.setString("Deserialization : " + chooser.getSelectedFile().getName());
         jpBarIndexFile.setIndeterminate(true);
 
         Thread deserializationTh = new Thread() {
 
             @Override
             public void run() {
-
+                directoryChoose.setEnabled(false);
                 index = IndexDeserialization.deserialize(indexPath);
 
                 jpBarIndexFile.setIndeterminate(false);
                 jpBarIndexFile.setValue(100);
+                                
+                showIndexWord.setEnabled(true);                     
             }
         };
         deserializationTh.start();
     }
 }//GEN-LAST:event_indexFileChooseActionPerformed
+
+    private void exportRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportRunButtonActionPerformed
+               
+        String request = this.requestTF.getText().trim().toLowerCase();
+        String requestNumber = this.requestNumberTF.getText().trim();
+        int nbRuns = Integer.parseInt(this.nbRunsTF.getText().trim());
+
+        Score score = null;
+        Map<String, Double> bestScores = null;
+        
+        Component selectedTab = this.searchTabbedPane.getSelectedComponent();
+        if (selectedTab.equals(this.ltn)) {
+            System.out.println("LTN");
+            score = new LtnSmartArticles(request, this.index);
+            bestScores = ((LtnSmartArticles) score).getXBestScore(nbRuns);
+        }
+        else if (selectedTab.equals(this.bm25)){
+            System.out.println("BM25");            
+        }
+        
+        if (score != null){
+            score.createRunFile("ltn",requestNumber, "000", "/article[1]", bestScores);
+            JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
+        }  
+        
+    }//GEN-LAST:event_exportRunButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bLabel;
     private javax.swing.JTextField bTF;
-    private javax.swing.JRadioButton bm25Radio;
+    private javax.swing.JPanel bm25;
     private javax.swing.JPanel creationPane;
     private javax.swing.JButton directoryChoose;
+    private javax.swing.JButton exportRunButton;
     private javax.swing.JButton indexFileChoose;
     private javax.swing.JPanel indexationPane;
     private javax.swing.JProgressBar jProgressBarFile;
@@ -519,14 +626,18 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JProgressBar jpBarIndexFile;
-    private javax.swing.JLabel k1Label;
     private javax.swing.JTextField k1TF;
-    private javax.swing.JRadioButton ltnRadio;
+    private javax.swing.JLabel k1label;
+    private javax.swing.JPanel ltn;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextField nbRunsTF;
     private javax.swing.JPanel recuperationPane;
+    private javax.swing.JTextField requestNumberTF;
+    private javax.swing.JTextField requestTF;
     private javax.swing.JPanel searchPane;
+    private javax.swing.JTabbedPane searchTabbedPane;
     private javax.swing.JButton showIndexBrut;
     private javax.swing.JButton showIndexWord;
     private javax.swing.JButton startExtract;
@@ -535,7 +646,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     //private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
     private String dirPath = "";
     private String indexPath = "";
-    private ArticlesDirectoryParser extractor;
+    private ArticlesDirectoryParser indexator;
     private final String APP_NAME = "Indexator&atravers";
     private Index index = null;
 }
