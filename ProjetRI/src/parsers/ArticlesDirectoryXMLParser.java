@@ -174,18 +174,14 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
                         w = w.toLowerCase();
                         if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
+                            
                             valueMap = index.getCollectionData().get(w);
-                            boolean isTermFrequencyFound = false;
                             // the word is already in the collection
                             if (valueMap != null) {
-                                for (int i = 0; i < valueMap.size(); i++) {
-                                    // the word has been already found in the current document
-                                    if (valueMap.containsKey(currentDocNum) && !isTermFrequencyFound) {
-                                        valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
-                                        isTermFrequencyFound = true;
-                                    }
-                                }
-                                if (!isTermFrequencyFound) {
+                                // the word has been already found in the current document
+                                if (valueMap.containsKey(currentDocNum)) {
+                                    valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
+                                } else {
                                     //first occurrence of the word in this document
                                     valueMap.put(currentDocNum, 1);
                                 }
@@ -222,9 +218,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
         index = IndexDeserialization.deserialize("fileSerialization/index.serial");
 
-        System.out.println("N : " + index.getN() );
+        System.out.println("N : " + index.getN());
         System.out.println("avdl : " + index.getAvdl());
         System.out.println("dl : " + index.getDlMap().toString());
-        System.out.println("\n"+index.toString());
+        System.out.println("\n" + index.toString());
     }
 }
