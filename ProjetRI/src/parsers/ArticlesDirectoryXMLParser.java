@@ -130,6 +130,8 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         int deltaPBGlobal = 0;
         int percent = 0;
         // ---
+        
+        ArticleXMLParserElement articleParserElement = null;
 
         Map<String, Integer> valueMap = null;
         String currentDocNum = "";
@@ -154,7 +156,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                 for (String elementTag : elementTags) {
 
                     saxParser = factory.newSAXParser();
-                    ArticleXMLParserElement articleParserElement = new ArticleXMLParserElement(elementTag);
+                    articleParserElement = new ArticleXMLParserElement(elementTag);
                     saxParser.parse(f.getAbsolutePath(), articleParserElement);
 
                     currentDocNum = articleParserElement.getId().toString();
