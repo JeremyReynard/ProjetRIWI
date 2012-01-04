@@ -12,8 +12,8 @@ import index.Index;
  */
 public class Bm25Elements extends Bm25Articles {
     
-    public Bm25Elements(String request, Index index) {
-        super(request, index);
+    public Bm25Elements(String request, Index index, int k1, int b) {
+        super(request, index, k1, b);
     }
     
 }

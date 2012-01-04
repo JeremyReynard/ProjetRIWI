@@ -17,11 +17,14 @@ import serialization.IndexDeserialization;
 public class Bm25Articles extends Score implements CommonsScoreInterface {
 
     int k1;
-    int b;
+    double b;
 
-    public Bm25Articles(String request, Index index) {
+    public Bm25Articles(String request, Index index, int k1, double b) {
         super(request, index);
+        this.b = b;
+        this.k1 = k1;
     }
+
     @Override
     public Map<String, Double> getXBestScore(int X) {
 
@@ -30,29 +33,41 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             String documentNumber = i.next().toString();
-            System.out.println("DocNumber : " + documentNumber);
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
 
-        return scores;
+        scores = this.sortMap(scores);
+        for (int i = 0; i < X; i++) {
+            Iterator it = scores.keySet().iterator();
+            String documentNumber = it.next().toString();
+            bestScores.put(documentNumber, scores.get(documentNumber));
+            scores.remove(documentNumber);
+        }
+
+        return bestScores;
 
     }
+
     @Override
     public double getRequestScore(String documentNumber) {
         double score = 0;
 
         for (String word : this.request.split("\\W")) {
             int dl = index.getDlMap().get(documentNumber).intValue();
-            System.out.println(dl);
             score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl);
         }
 
         return score;
     }
+
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
 
         int df = getDocumentFrequency(index, word);
+
+        if (df == -1) {
+            return 0;
+        }
 
         double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / index.getAvdl())) + termFrequency)) * Math.log((index.getN() - df + 0.5) / (df + 0.5));
 
@@ -64,13 +79,9 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
         System.out.println("dl : " + index.getDlMap().toString());
 
-        Bm25Articles score = new Bm25Articles("Statistics", index);
-
-
+        Bm25Articles score = new Bm25Articles("power", index, 1, 0.5);
+        
         Map<String, Double> scores = score.getXBestScore(3);
-
-        System.out.println(scores.toString());
-
 
     }
 }
