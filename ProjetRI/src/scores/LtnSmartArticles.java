@@ -22,15 +22,25 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     
     @Override
     public Map<String, Double> getXBestScore(int X) {
+
         Map<String, Double> scores = new HashMap<>();
         Map<String, Double> bestScores = new HashMap<>();
-        
+
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             String documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
-        
-        return scores;
+
+        scores = this.sortMap(scores);
+        for (int i = 0; i < X; i++) {
+            Iterator it = scores.keySet().iterator();
+            String documentNumber = it.next().toString();
+            bestScores.put(documentNumber, scores.get(documentNumber));
+            scores.remove(documentNumber);
+        }
+
+        return bestScores;
+
     }
     
     
