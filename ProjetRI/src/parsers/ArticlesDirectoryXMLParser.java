@@ -211,7 +211,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String[] elementTags = {"article"};
+        String[] elementTags = {"title"};
 
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();

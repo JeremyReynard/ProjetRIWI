@@ -14,7 +14,7 @@ public class Score {
 
     protected Index index;
     protected String request;
-    
+
     /*
      * Constructor 
      * @Param String request
@@ -24,23 +24,23 @@ public class Score {
         this.index = index;
         this.request = request;
     }
-    
+
     /*
      * @return the tf
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle){
-        
+
         return this.index.getCollectionData().get(word).get(documentTitle);
 
-    }
-    
+            }
+
     /*
      * @return the df
      */
     public Integer getDocumentFrequency(Index index, String word){
 
         return this.index.getCollectionData().get(word).size();
-    }
+        }
     
     
     //Getters 
@@ -51,6 +51,6 @@ public class Score {
 
     public String getRequest() {
         return this.request;
-    }
+}
     
 }
