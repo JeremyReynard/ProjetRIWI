@@ -17,6 +17,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import serialization.IndexDeserialization;
+import serialization.IndexSerialization;
 
 /**
  *
@@ -141,6 +142,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         String[] words = null;
         SAXParserFactory factory = null;
         SAXParser saxParser;
+        int numberOfWords = 0;
 
         long startTime = System.currentTimeMillis();
         for (File f : files) {
@@ -155,6 +157,8 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
             factory = SAXParserFactory.newInstance();
             try {
+                numberOfWords = 0;
+                
                 this.index.setN(index.getN() + 1);
                 for (String elementTag : elementTags) {
 
@@ -164,7 +168,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
                     currentDocNum = articleParserElement.getId().toString();
 
-                    words = (articleParserElement.getText().toString()).split("\\W");
+                    words = (articleParserElement.getText().toString()).split("[\\W]+");
 
                     this.index.getDlMap().put(currentDocNum, words.length);
 
@@ -179,7 +183,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
                         w = w.toLowerCase();
                         if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
-
+                            numberOfWords++;
                             valueMap = index.getCollectionData().get(w);
                             // the word is already in the collection
                             if (valueMap != null) {
@@ -197,6 +201,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                             }
                         }
                     }
+                    this.index.getDlMap().put(currentDocNum, numberOfWords);
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
@@ -212,7 +217,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        /*String[] elementTags = {"title"};
+        String[] elementTags = {"title"};
         
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
@@ -226,40 +231,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         System.out.println("N : " + index.getN());
         System.out.println("avdl : " + index.getAvdl());
         System.out.println("dl : " + index.getDlMap().toString());
-        System.out.println("\n" + index.toString());*/
-
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
-        
-        try {
-            FileWriter writer = new FileWriter("./indexXML.txt");
-            writer.write(index.toString());
-
-            writer.close(); // A ne pas oublier !!!
-
-        } catch (IOException e) {
-        }
-
-/*        System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl());
-        System.out.println("dl : " + index.getDlMap().toString());
-        System.out.println("\n" + index.toString());*/
-
-        index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
-
-        try {
-            FileWriter writer = new FileWriter("./indexText.txt");
-            writer.write(index.toString());
-
-            writer.close(); // A ne pas oublier !!!
-
-        } catch (IOException e) {
-        }
-        
-  /*      System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl());
-        System.out.println("dl : " + index.getDlMap().toString());
         System.out.println("\n" + index.toString());
 
-*/
     }
 }
