@@ -82,15 +82,23 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                         else if (!(line.contains("</doc>"))) {
                             // Punctuation & digit                           
                             tabString = null;
+<<<<<<< HEAD
                             tabString = line.split("[\\W]");
                             nbWordsInDoc += tabString.length;
 
+=======
+                            tabString = line.split("[\\W]+");
+                                                        
+>>>>>>> 1942a985443601e1b4dae84504c0eec215c0a556
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
+                                
                                 word = tabString[i].toLowerCase();
 
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))){
 
+                                    nbWordsInDoc ++;
+                                    
                                     valueMap = this.index.getCollectionData().get(word);
 
                                     // the word is already in the collection
