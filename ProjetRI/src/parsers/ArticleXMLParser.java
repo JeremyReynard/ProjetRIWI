@@ -29,57 +29,30 @@ public class ArticleXMLParser extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        //<header><title>
-        if (qName.equalsIgnoreCase("title")) {
-            isInTitleTag = true;
-        }
         //<header><id>
-        else if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
+        if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
             isInIdTag = 1;
-        }
-        //<header><categories><category>
-        else if (qName.equalsIgnoreCase("category")) {
-            isInCategoryTag = true;
-        }
-        else if (qName.equalsIgnoreCase("bdy")) {
-            isInBodyTag = true;
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        //<header></title>
-        if (qName.equalsIgnoreCase("title")) {
-            text.append(" ");
-            isInTitleTag = false;
-        }
         //<header></id>
-        else if (qName.equalsIgnoreCase("id")) {
+        if (qName.equalsIgnoreCase("id")) {
             isInIdTag = 2;
-        }
-        //<header><categories></category>
-        else if (qName.equalsIgnoreCase("category")) {
-            isInCategoryTag = false;
-        }
-        else if (qName.equalsIgnoreCase("bdy")) {
-            isInBodyTag = false;
         }
 
     }
 
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
-        if (isInTitleTag) {
-            text.append(ch, start, length);
-        }
         if (isInIdTag == 1) {
             id.append(ch, start, length);
-        }
-        if (isInCategoryTag) {
             text.append(ch, start, length);
-        }
-        if (isInBodyTag) {
+            text.append(" ");
+        } else {
             text.append(ch, start, length);
+            text.append(" ");
         }
     }
 

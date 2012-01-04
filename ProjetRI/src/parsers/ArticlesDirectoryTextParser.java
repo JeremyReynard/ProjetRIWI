@@ -12,29 +12,29 @@ import java.util.Map;
 import javax.swing.JProgressBar;
 
 public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
-    
+
     private String[] filesList;
-    
+
     public ArticlesDirectoryTextParser(String dirPath) {
-       
-        super(dirPath);    
+
+        super(dirPath);
         // add all the files in the selected directory to list
         Path directory = Paths.get(dirPath);
-        this.filesList = directory.toFile().list();        
+        this.filesList = directory.toFile().list();
     }
 
     @SuppressWarnings("CallToThreadDumpStack")
     @Override
-    public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {  
-             
-        int nbWordsInDoc = 0;        
+    public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
+
+        int nbWordsInDoc = 0;
         Map<String, Integer> mapDL = new HashMap<>();
         Map<String, Integer> valueMap = null;
-        
+
         // JProgress Bar
         int nbFiles = this.filesList.length;
         int currentLine = 0;
-        int nbLines = 0;           
+        int nbLines = 0;
         int deltaPBGlobal = 0;
         int percent = 0;
         // ---
@@ -48,47 +48,47 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
         String line = null;
 
         long startTime = System.currentTimeMillis();
-        for (int f = 0; f < nbFiles; ++f) {   
-            
+        for (int f = 0; f < nbFiles; ++f) {
+
             currentPath = Paths.get(this.directoryPath + "/" + this.filesList[f]);
-            
+
             // JProgress Bar
             jpBarFile.setString(this.filesList[f]);
             jpBarGlobal.setString("Global : " + (f + 1) + " / " + (nbFiles + 1));
-            currentLine = 0;                
+            currentLine = 0;
             deltaPBGlobal = 100 * f / nbFiles;
             // ---
-            
+
             try (BufferedReader reader = Files.newBufferedReader(currentPath, UTF8)) {
                 line = null;
-                nbLines = countNBLines(currentPath);   
-                
+                nbLines = countNBLines(currentPath);
+
                 while ((line = reader.readLine()) != null) {
-                    
+
                     // JProgress Bar
                     percent = (100 * currentLine) / nbLines;
                     jpBarFile.setValue(percent);
                     jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );                    
-                    currentLine++; 
+                    currentLine++;
                     // ---
-                    
+
                     // if the line is just a \n do nothing
                     if (line.length() > 0) {
                         // docno line
                         if (line.contains("<doc><docno>")) {
-                            currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");                            
-                            index.setN(index.getN() + 1);                                                          
+                            currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");
+                            index.setN(index.getN() + 1);
                         } // others lines
-                        else if (!(line.contains("</doc>"))) {                            
+                        else if (!(line.contains("</doc>"))) {
                             // Punctuation & digit                           
                             tabString = null;
                             tabString = line.split("[\\W]");
                             nbWordsInDoc += tabString.length;
-                            
+
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
                                 word = tabString[i].toLowerCase();
-                                
+
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))){
 
                                     valueMap = this.index.getCollectionData().get(word);
@@ -121,26 +121,26 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                 System.err.println("Parsing error !");
                 //e.printStackTrace();
             }
-        }       
-        index.setDlMap(mapDL);                
+        }
+        index.setDlMap(mapDL);
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);
     }
-    
+
     private int countNBLines(Path path) {
-           
+
         int count = 0;
-        
+
         Charset UTF8 = Charset.forName("UTF-8");
-        
+
         try {
-            BufferedReader reader = Files.newBufferedReader(path, UTF8);  
-                           
+            BufferedReader reader = Files.newBufferedReader(path, UTF8);
+
             while (reader.readLine() != null) {
                 ++count;
             }
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
