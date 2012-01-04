@@ -73,38 +73,44 @@ public class Score {
     }
  
     
-    public void createRunFile(String fileName, String requestNumber, String articleINEXNumber,String pathElement,Map<String, Double> xBestScore, int runNumber){
+    public void createRunFile(String fileName, String requestNumber, String pathElement,Map<String, Double> scores, int runNumber){
+     
+        double maxValue;
+        String docNumber = "";
+        String next;
+        String runs = " ";
+        String separator = " ";
+                       
+        for ( ; runNumber > 0; runNumber--) {
+            maxValue = Double.MIN_VALUE;
+            for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
+                next = (String) j.next();
+                if (scores.get(next) > maxValue) {
+                    docNumber = next;
+                    maxValue = scores.get(next);
+                }
+            }
+            scores.remove(docNumber);
 
-        int xBestScoresize = xBestScore.size();
+            runs += requestNumber + separator
+                    + "Q0" + separator
+                    + docNumber + separator
+                    + runNumber + separator
+                    + maxValue + separator
+                    + "MichaelJeremyMickael" + separator
+                    + pathElement + "\n";        
+        }
         
         Path runPath = Paths.get("Runs/"+fileName+".txt");
                 
         try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"),StandardOpenOption.CREATE)) {
-            String runLine;
-            Double runScore;
-            String separator=" ";
-            for (Iterator iterBestscore = xBestScore.keySet().iterator() ; iterBestscore.hasNext() ; ){
-                runScore = xBestScore.get((String)iterBestscore.next());
-                runLine = requestNumber+separator+
-                        "Q0"+separator
-                        +articleINEXNumber+separator
-                        +xBestScoresize+separator
-                        +runScore+separator
-                        +"MichaelJeremyMickael"+separator
-                        +pathElement+"\n";
-                writer.write(runLine);
-                xBestScoresize--;
-                
-            }
-
+            writer.write(runs);
             writer.close();
         }catch(IOException e){
             System.out.println("[Score][createRunFile] "+e);
         }
-
     }
-    
-    
+        
     //Getters
     public Index getIndex() {
         return this.index;
@@ -120,7 +126,7 @@ public class Score {
         LtnSmartArticles score = new LtnSmartArticles("states", index);
         
         Map<String, Double> scores = score.getScores();
-        score.createRunFile("runtest", "000", "articleNumb", "/article[1]", scores, 1500);
+        score.createRunFile("runtest", "articleNumb", "/article[1]", scores, 1500);
         
         //System.out.println("[main][scores]"+scores.toString());
         

@@ -606,7 +606,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         }
         
         if (score != null){
-            score.createRunFile("ltn",requestNumber, "000", "/article[1]", scores, nbRuns);
+            score.createRunFile("ltn",requestNumber, "/article[1]", scores, nbRuns);
             JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
         }  
         
