@@ -593,20 +593,20 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         int nbRuns = Integer.parseInt(this.nbRunsTF.getText().trim());
 
         Score score = null;
-        Map<String, Double> bestScores = null;
+        Map<String, Double> scores = null;
         
         Component selectedTab = this.searchTabbedPane.getSelectedComponent();
         if (selectedTab.equals(this.ltn)) {
             System.out.println("LTN");
             score = new LtnSmartArticles(request, this.index);
-            bestScores = ((LtnSmartArticles) score).getXBestScore(nbRuns);
+            scores = ((LtnSmartArticles) score).getScores();
         }
         else if (selectedTab.equals(this.bm25)){
             System.out.println("BM25");            
         }
         
         if (score != null){
-            score.createRunFile("ltn",requestNumber, "000", "/article[1]", bestScores);
+            score.createRunFile("ltn",requestNumber, "000", "/article[1]", scores, nbRuns);
             JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
         }  
         

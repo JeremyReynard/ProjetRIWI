@@ -26,10 +26,9 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
     }
 
     @Override
-    public Map<String, Double> getXBestScore(int X) {
+    public Map<String, Double> getScores() {
 
         Map<String, Double> scores = new HashMap<>();
-        Map<String, Double> bestScores = new HashMap<>();
         
         String documentNumber;
         Iterator it;
@@ -39,24 +38,7 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
         
-        if (X > this.index.getN()){
-            X = this.index.getN();
-        }
-
-        scores = this.sortMap(scores);
-        
-        if (X > scores.size()){
-            X = scores.size();
-        }
-        
-        for (int i = 0; i < X; i++) {
-            it = scores.keySet().iterator();
-            documentNumber = it.next().toString();
-            bestScores.put(documentNumber, scores.get(documentNumber));
-            scores.remove(documentNumber);
-        }
-
-        return bestScores;
+        return scores;
 
     }
 
@@ -91,10 +73,9 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
         Bm25Articles score = new Bm25Articles("largely", index, 1, 0.5);
 
-        int X = 3;
-        Map<String, Double> scores = score.getXBestScore(X);
+        Map<String, Double> scores = score.getScores();
         
-        System.out.println(X+" best scores : "+scores);
+        System.out.println("Scores : "+scores);
 
     }
 }

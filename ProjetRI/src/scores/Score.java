@@ -71,34 +71,9 @@ public class Score {
         }
         return mapValue.size();
     }
+ 
     
-    /*
-     * Methods allowed to sort the score map
-     */
-    public Map sortMap(Map unsortedMap) {
-
-        Map sortedMap = new HashMap();
-        TreeSet set = new TreeSet(new Comparator() {
-            
-            public int compare(Object obj, Object obj1) {
-                Double val1 = (Double) ((Map.Entry) obj).getValue();
-                Double val2 = (Double) ((Map.Entry) obj1).getValue();
-                
-                return val1.compareTo(val2);
-            }
-        });
-        
-        set.addAll(unsortedMap.entrySet());
-        
-        for (Iterator it = set.iterator(); it.hasNext();) {
-            Map.Entry myMapEntry = (Map.Entry) it.next();
-            sortedMap.put(myMapEntry.getKey(), myMapEntry.getValue());
-        }
-        
-        return sortedMap;
-    }
-    
-    public void createRunFile(String fileName, String requestNumber, String articleINEXNumber,String pathElement,Map<String, Double> xBestScore ){
+    public void createRunFile(String fileName, String requestNumber, String articleINEXNumber,String pathElement,Map<String, Double> xBestScore, int runNumber){
 
         int xBestScoresize = xBestScore.size();
         
@@ -144,8 +119,8 @@ public class Score {
         
         LtnSmartArticles score = new LtnSmartArticles("states", index);
         
-        Map<String, Double> scores = score.getXBestScore(6);
-        score.createRunFile("runtest", "000", "articleNumb", "/article[1]", scores);
+        Map<String, Double> scores = score.getScores();
+        score.createRunFile("runtest", "000", "articleNumb", "/article[1]", scores, 1500);
         
         //System.out.println("[main][scores]"+scores.toString());
         

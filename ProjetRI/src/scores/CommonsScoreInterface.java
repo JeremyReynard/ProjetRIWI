@@ -15,10 +15,10 @@ public interface CommonsScoreInterface {
     //TODO : javadoc
     /**
      * 
-     * @param X
+     *
      * @return 
      */
-    public Map<String, Double> getXBestScore(int X);
+    public Map<String, Double> getScores();
     
     /**
      * Get the request Score for the document

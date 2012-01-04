@@ -21,10 +21,9 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     }
     
     @Override
-    public Map<String, Double> getXBestScore(int X) {
+    public Map<String, Double> getScores() {
 
         Map<String, Double> scores = new HashMap<>();
-        Map<String, Double> bestScores = new HashMap<>();
         
         String documentNumber;
         Iterator it;
@@ -33,25 +32,8 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
             documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
-        
-        if (X > this.index.getN()){
-            X = this.index.getN();
-        }
 
-        scores = this.sortMap(scores);
-        
-        if (X > scores.size()){
-            X = scores.size();
-        }
-        
-        for (int i = 0; i < X; i++) {
-            it = scores.keySet().iterator();
-            documentNumber = it.next().toString();
-            bestScores.put(documentNumber, scores.get(documentNumber));
-            scores.remove(documentNumber);
-        }
-
-        return bestScores;
+        return scores;
     }
     
     
@@ -80,7 +62,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         
         LtnSmartArticles score = new LtnSmartArticles("states", index);
         
-        Map<String, Double> scores = score.getXBestScore(3);
+        Map<String, Double> scores = score.getScores();
         
         System.out.println("[main][scores]"+scores.toString());        
     }
