@@ -67,8 +67,10 @@ public class Index implements Serializable {
     public double getAvdl() {
         
         double dlSum = 0;
+        Integer dl = 0;
+        
         for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
-            Integer dl = (Integer) i.next();
+            dl = (Integer) i.next();
             dlSum += dl.intValue();
         }
         
@@ -77,9 +79,10 @@ public class Index implements Serializable {
     
     public int getNumberOfWords(){
         int nbWords = 0;
+        Integer dl = 0;
         
         for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
-            Integer dl = (Integer) i.next();
+            dl = (Integer) i.next();
             nbWords += dl.intValue();
         }
         
@@ -89,9 +92,10 @@ public class Index implements Serializable {
     @Override
     public String toString() {
         String s = "Index {\n" + " collectionData = \n";
+        String term = null;
 
         for (Iterator i = collectionData.keySet().iterator(); i.hasNext();) {
-            String term = i.next().toString();
+            term = i.next().toString();
             s += "[" + term + ":" + collectionData.get(term) + "],\n";
         }
 

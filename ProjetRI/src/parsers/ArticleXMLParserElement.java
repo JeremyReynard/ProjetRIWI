@@ -35,8 +35,7 @@ public class ArticleXMLParserElement extends DefaultHandler {
         if (qName.equalsIgnoreCase("id") && isInIdTag == 0) {
             isInIdTag = 1;
         }
-
-        if (qName.equalsIgnoreCase(elementTag)) {
+        else if (qName.equalsIgnoreCase(elementTag)) {
             isInElementTag = true;
         }
 
@@ -49,8 +48,7 @@ public class ArticleXMLParserElement extends DefaultHandler {
         if (qName.equalsIgnoreCase("id")) {
             isInIdTag = 2;
         }
-
-        if (qName.equalsIgnoreCase(elementTag)) {
+        else if (qName.equalsIgnoreCase(elementTag)) {
             isInElementTag = false;
         }
 
