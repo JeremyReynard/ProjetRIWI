@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import parsers.ArticlesDirectoryTextParser;
 import parsers.ArticlesDirectoryXMLParser;
 import parsers.ArticlesDirectoryParser;
+import scores.Bm25Articles;
 import scores.LtnSmartArticles;
 import scores.Score;
 import serialization.IndexDeserialization;
@@ -455,9 +456,9 @@ public class ProjetRIView extends FrameView {
     }//GEN-LAST:event_showIndexBrutActionPerformed
 
     private void startExtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startExtractActionPerformed
-       
+
         this.showIndexBrut.setEnabled(false);
-        this.showIndexWord.setEnabled(false);        
+        this.showIndexWord.setEnabled(false);
         this.indexFileChoose.setEnabled(false);
 
         Thread extractorThread = new Thread() {
@@ -492,13 +493,13 @@ public class ProjetRIView extends FrameView {
                     jProgressBarGlobal.setString("Over");
                 } else {
                     JOptionPane.showMessageDialog(
-                            mainPanel, 
+                            mainPanel,
                             "There is no file in this directory : " + dirPath + "\n"
-                            + "Please choose another one !", 
-                            "Error", 
+                            + "Please choose another one !",
+                            "Error",
                             JOptionPane.ERROR_MESSAGE);
-                    
-                    directoryChoose.setEnabled(true);                    
+
+                    directoryChoose.setEnabled(true);
                 }
 
             }
@@ -537,19 +538,18 @@ public class ProjetRIView extends FrameView {
                         nbOccurs += i.intValue();
                     }
                 }
-                               
+
                 JOptionPane.showMessageDialog(
-                    mainPanel,
-                    "Occurences : " + nbOccurs + "\n",
-                    "Word : " + word,
-                    JOptionPane.INFORMATION_MESSAGE);        
-            }
-            else {
-            JOptionPane.showMessageDialog(
-                    this.mainPanel,
-                    this.indexator.showResults(word),
-                    "Word : " + word,
-                    JOptionPane.INFORMATION_MESSAGE);
+                        mainPanel,
+                        "Occurences : " + nbOccurs + "\n",
+                        "Word : " + word,
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(
+                        this.mainPanel,
+                        this.indexator.showResults(word),
+                        "Word : " + word,
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
@@ -559,7 +559,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
     JFileChooser chooser = new JFileChooser();
     chooser.setCurrentDirectory(new java.io.File("."));
-           
+
     chooser.addChoosableFileFilter(new SimpleFilter("Serialized Index", ".serial"));
 
     int returnVal = chooser.showOpenDialog(this.mainPanel);
@@ -578,8 +578,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
                 jpBarIndexFile.setIndeterminate(false);
                 jpBarIndexFile.setValue(100);
-                                
-                showIndexWord.setEnabled(true);                     
+
+                showIndexWord.setEnabled(true);
             }
         };
         deserializationTh.start();
@@ -587,31 +587,36 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 }//GEN-LAST:event_indexFileChooseActionPerformed
 
     private void exportRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportRunButtonActionPerformed
-               
+
         String request = this.requestTF.getText().trim().toLowerCase();
         String requestNumber = this.requestNumberTF.getText().trim();
         int nbRuns = Integer.parseInt(this.nbRunsTF.getText().trim());
 
         Score score = null;
         Map<String, Double> scores = null;
-        
+
+        int k1;
+        double b;
+
         Component selectedTab = this.searchTabbedPane.getSelectedComponent();
         if (selectedTab.equals(this.ltn)) {
             System.out.println("LTN");
             score = new LtnSmartArticles(request, this.index);
             scores = ((LtnSmartArticles) score).getScores();
+        } else if (selectedTab.equals(this.bm25)) {
+            k1 = Integer.parseInt(this.k1TF.getText());
+            b = Double.parseDouble(this.bTF.getText());
+            System.out.println("BM25 : b =>" + b + " ; k1=>" + k1);
+            score = new Bm25Articles(request, this.index, k1, b);
+            scores = ((Bm25Articles) score).getScores();
         }
-        else if (selectedTab.equals(this.bm25)){
-            System.out.println("BM25");            
-        }
-        
-        if (score != null){
-            score.createRunFile("ltn",requestNumber, "/article[1]", scores, nbRuns);
-            JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
-        }  
-        
-    }//GEN-LAST:event_exportRunButtonActionPerformed
 
+        if (score != null) {
+            score.createRunFile("ltn", requestNumber, "/article[1]", scores, nbRuns);
+            JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }//GEN-LAST:event_exportRunButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bLabel;
     private javax.swing.JTextField bTF;

@@ -81,7 +81,7 @@ public class Score {
         String runs = " ";
         String separator = " ";
                        
-        for ( ; runNumber > 0; runNumber--) {
+        for ( int runIndice = 1; runIndice <= runNumber; runIndice++ ) {
             maxValue = Double.MIN_VALUE;
             for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
                 next = (String) j.next();
@@ -95,8 +95,8 @@ public class Score {
             runs += requestNumber + separator
                     + "Q0" + separator
                     + docNumber + separator
-                    + runNumber + separator
-                    + maxValue + separator
+                    + runIndice + separator
+                    + (runNumber - runIndice + 1) + separator
                     + "MichaelJeremyMickael" + separator
                     + pathElement + "\n";        
         }
