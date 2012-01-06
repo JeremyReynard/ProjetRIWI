@@ -11,7 +11,7 @@ import java.util.Map;
 import serialization.IndexDeserialization;
 
 /**
- * test
+ *
  * @author Michaël Bard <michael.bard@laposte.net>
  */
 public class Bm25Articles extends Score implements CommonsScoreInterface {
