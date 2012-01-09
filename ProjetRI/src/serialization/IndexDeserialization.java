@@ -13,7 +13,7 @@ import java.io.ObjectInputStream;
 public final class IndexDeserialization {
     
     public static Index deserialize(String fileName){
-        System.out.println("Beginning of deserialization");
+        //System.out.println("Beginning of deserialization");
         Index index = new Index();
         try {
            //Open a InputStream linked "index.serial"
@@ -36,11 +36,12 @@ public final class IndexDeserialization {
         } catch(ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-        if(index != null) {
+        
+        /*if(index != null) {
             System.out.println("End of deserialization");
             return index;
-        }
-        return null;
+        }*/
+        return index;
     }
     
     static public void main(String ...args) {

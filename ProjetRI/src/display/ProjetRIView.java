@@ -15,6 +15,7 @@ import org.jdesktop.application.FrameView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -35,14 +36,14 @@ import serialization.IndexSerialization;
  * The application's main frame.
  */
 public class ProjetRIView extends FrameView {
-    
+
     public ProjetRIView(SingleFrameApplication app) {
         super(app);
-        
+
         // init
         initComponents();
     }
-    
+
     @Action
     public void showAboutBox() {
         if (aboutBox == null) {
@@ -52,7 +53,7 @@ public class ProjetRIView extends FrameView {
         }
         ProjetRIApp.getApplication().show(aboutBox);
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -86,9 +87,7 @@ public class ProjetRIView extends FrameView {
         bTF = new javax.swing.JTextField();
         ltn = new javax.swing.JPanel();
         exportRunButton = new javax.swing.JButton();
-        requestTF = new javax.swing.JTextField();
-        nbRunsTF = new javax.swing.JTextField();
-        requestNumberTF = new javax.swing.JTextField();
+        runCreationPB = new javax.swing.JProgressBar();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -305,7 +304,7 @@ public class ProjetRIView extends FrameView {
                 .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bLabel)
                     .addComponent(bTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         searchTabbedPane.addTab(resourceMap.getString("bm25.TabConstraints.tabTitle"), bm25); // NOI18N
@@ -320,7 +319,7 @@ public class ProjetRIView extends FrameView {
         );
         ltnLayout.setVerticalGroup(
             ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
+            .addGap(0, 317, Short.MAX_VALUE)
         );
 
         searchTabbedPane.addTab(resourceMap.getString("ltn.TabConstraints.tabTitle"), ltn); // NOI18N
@@ -333,32 +332,21 @@ public class ProjetRIView extends FrameView {
             }
         });
 
-        requestTF.setText(resourceMap.getString("requestTF.text")); // NOI18N
-        requestTF.setName("requestTF"); // NOI18N
-
-        nbRunsTF.setText(resourceMap.getString("nbRunsTF.text")); // NOI18N
-        nbRunsTF.setName("nbRunsTF"); // NOI18N
-
-        requestNumberTF.setText(resourceMap.getString("requestNumberTF.text")); // NOI18N
-        requestNumberTF.setName("requestNumberTF"); // NOI18N
+        runCreationPB.setName("runCreationPB"); // NOI18N
+        runCreationPB.setString(resourceMap.getString("runCreationPB.string")); // NOI18N
+        runCreationPB.setStringPainted(true);
 
         javax.swing.GroupLayout searchPaneLayout = new javax.swing.GroupLayout(searchPane);
         searchPane.setLayout(searchPaneLayout);
         searchPaneLayout.setHorizontalGroup(
             searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPaneLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                    .addComponent(showIndexWord, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                    .addComponent(exportRunButton, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                    .addGroup(searchPaneLayout.createSequentialGroup()
-                        .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(requestNumberTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                            .addComponent(requestTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(nbRunsTF, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)))
+                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(searchTabbedPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(runCreationPB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(showIndexWord, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addComponent(exportRunButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
                 .addContainerGap())
         );
         searchPaneLayout.setVerticalGroup(
@@ -367,15 +355,11 @@ public class ProjetRIView extends FrameView {
                 .addContainerGap()
                 .addComponent(showIndexWord)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(requestTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nbRunsTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requestNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
                 .addComponent(exportRunButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(runCreationPB, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -389,7 +373,7 @@ public class ProjetRIView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+            .addComponent(mainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
         );
 
         mainTabbedPane.getAccessibleContext().setAccessibleName(resourceMap.getString("jTabbedPane1.AccessibleContext.accessibleName")); // NOI18N
@@ -429,7 +413,7 @@ public class ProjetRIView extends FrameView {
         setComponent(mainPanel);
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         JOptionPane.showMessageDialog(
                 this.mainPanel,
@@ -440,7 +424,7 @@ public class ProjetRIView extends FrameView {
                 "- About -",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
-    
+
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         if (JOptionPane.showConfirmDialog(
                 this.mainPanel,
@@ -450,7 +434,7 @@ public class ProjetRIView extends FrameView {
             System.exit(0);
         }
     }//GEN-LAST:event_exitMenuItemActionPerformed
-    
+
     private void showIndexBrutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexBrutActionPerformed
         if (this.indexator != null) {
             JOptionPane.showMessageDialog(
@@ -460,36 +444,36 @@ public class ProjetRIView extends FrameView {
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_showIndexBrutActionPerformed
-    
+
     private void startExtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startExtractActionPerformed
-        
+
         this.showIndexBrut.setEnabled(false);
         this.showIndexWord.setEnabled(false);
         this.indexFileChoose.setEnabled(false);
-        
+
         Thread extractorThread = new Thread() {
-            
+
             @Override
             public void run() {
                 jProgressBarFile.setValue(0);
                 directoryChoose.setEnabled(false);
                 startExtract.setEnabled(false);
-                
+
                 Path directory = Paths.get(dirPath);
                 String[] filesList = directory.toFile().list();
-                
+
                 if (filesList.length > 0) {
-                    
+
                     if (directory.toFile().list()[0].endsWith("xml")) {
                         indexator = new ArticlesDirectoryXMLParser(dirPath);
                     } else {
                         indexator = new ArticlesDirectoryTextParser(dirPath);
                     }
-                    
+
                     index = indexator.parseDirectory(jProgressBarFile, jProgressBarGlobal);
-                    
+
                     IndexSerialization.serialize(indexator.getIndex(), "fileSerialization/indexSerialized.serial", jProgressBarFile, jProgressBarGlobal);
-                    
+
                     showIndexBrut.setEnabled(true);
                     showIndexWord.setEnabled(true);
                     directoryChoose.setEnabled(true);
@@ -504,15 +488,15 @@ public class ProjetRIView extends FrameView {
                             + "Please choose another one !",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
-                    
+
                     directoryChoose.setEnabled(true);
                 }
-                
+
             }
         };
         extractorThread.start();
     }//GEN-LAST:event_startExtractActionPerformed
-    
+
     private void directoryChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directoryChooseActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setLocale(Locale.ENGLISH);
@@ -525,26 +509,26 @@ public class ProjetRIView extends FrameView {
             this.startExtract.setEnabled(true);
         }
     }//GEN-LAST:event_directoryChooseActionPerformed
-    
+
     private void showIndexWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexWordActionPerformed
-        
+
         String word = JOptionPane.showInputDialog(
                 this.mainPanel,
                 "Word : ",
                 "Word searcher",
                 JOptionPane.QUESTION_MESSAGE);
-        
+
         if (word != null) {
             if (this.indexator == null) {
                 Map<String, Integer> map = this.index.getCollectionData().get(word);
                 int nbOccurs = 0;
-                
+
                 if (map != null) {
                     for (Integer i : map.values()) {
                         nbOccurs += i.intValue();
                     }
                 }
-                
+
                 JOptionPane.showMessageDialog(
                         mainPanel,
                         "Occurences : " + nbOccurs + "\n",
@@ -558,34 +542,36 @@ public class ProjetRIView extends FrameView {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        
+
     }//GEN-LAST:event_showIndexWordActionPerformed
-    
+
 private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indexFileChooseActionPerformed
-    
+
     JFileChooser chooser = new JFileChooser();
     chooser.setCurrentDirectory(new java.io.File("."));
-    
+
     chooser.addChoosableFileFilter(new SimpleFilter("Serialized Index", ".serial"));
-    
+
     int returnVal = chooser.showOpenDialog(this.mainPanel);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         this.indexPath = chooser.getSelectedFile().getAbsolutePath();
-        
+
         jpBarIndexFile.setString("Deserialization : " + chooser.getSelectedFile().getName());
         jpBarIndexFile.setIndeterminate(true);
-        
+
         Thread deserializationTh = new Thread() {
-            
+
             @Override
             public void run() {
                 directoryChoose.setEnabled(false);
                 index = IndexDeserialization.deserialize(indexPath);
-                
+
                 jpBarIndexFile.setIndeterminate(false);
                 jpBarIndexFile.setValue(100);
-                
+
                 showIndexWord.setEnabled(true);
+                
+                JOptionPane.showMessageDialog(mainPanel, "Done !", "Index deserialization", JOptionPane.INFORMATION_MESSAGE);
             }
         };
         deserializationTh.start();
@@ -593,94 +579,93 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 }//GEN-LAST:event_indexFileChooseActionPerformed
 
     private void exportRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportRunButtonActionPerformed
-        
-        String runs = "";
-        Component selectedTab = this.searchTabbedPane.getSelectedComponent();
-        Score score =null;
-        Map<String, Double> scores = null;
-        int k1;
-        Double b;
-        
-        for(int i =0; i<requestTab.length;i++){
-            
-            if (selectedTab.equals(this.ltn)) {
-                System.out.println("LTN");
-                System.out.println("Request: "+requestTab[i]+" Number: "+requestId[i]);
-                score = new LtnSmartArticles(requestTab[i], this.index);
-                scores = ((LtnSmartArticles) score).getScores();
-            } else if (selectedTab.equals(this.bm25)) {
-                k1 = Integer.parseInt(this.k1TF.getText());
-                b = Double.parseDouble(this.bTF.getText());
-                System.out.println("BM25 : b =>" + b + " ; k1=>" + k1);
-                System.out.println("Request: "+requestTab[i]+" Number: "+requestId[i]);
-                score = new Bm25Articles(requestTab[i], this.index, k1, b);
-                scores = ((Bm25Articles) score).getScores();
-            }
-            double maxValue;
-            String docNumber = "";
-            String next;
-            
-            String separator = " ";
-            
-            for ( int runIndice = 1; runIndice <= 1500; runIndice++ ) {
-                maxValue = Double.MIN_VALUE;
-                for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
-                    next = (String) j.next();
-                    if (scores.get(next) > maxValue) {
-                        docNumber = next;
-                        maxValue = scores.get(next);
-                    }
-                }
-                scores.remove(docNumber);
+
+        Thread runCreationThread = new Thread() {
+
+            @Override
+            public void run() {
+
+                String runs = "";
+                Component selectedTab = searchTabbedPane.getSelectedComponent();
+                Score score = null;
+                Map<String, Double> scores = null;
+                int k1;
+                Double b;
+
+                String request = null;
+                String id = null;
                 
-                runs += requestId[i] + separator
-                        + "Q0" + separator
-                        + docNumber + separator
-                        + runIndice + separator
-                        + (1500 - runIndice + 1) + separator
-                        + "MichaelJeremyMickael" + separator
-                        + "/article[1]" + "\n";
+                int nbRequests = requestsMap.size();
+                int requestNumber = 0;
+                String requestStr = null;
+
+                for (Map.Entry<String, String> e : requestsMap.entrySet()) {                    
+                    request = e.getValue();
+                    id = e.getKey();
+                    runCreationPB.setValue((100 * requestNumber) / nbRequests);
+                    requestNumber++;
+                    
+                    if (selectedTab.equals(ltn)) {                        
+                       
+                        requestStr = "[LTN] ";
+                        requestStr += id + " - " + request;     
+                        runCreationPB.setString(requestStr);
+                        
+                        score = new LtnSmartArticles(request, index);
+                        scores = ((LtnSmartArticles) score).getScores();
+                    } else if (selectedTab.equals(bm25)) {
+                        k1 = Integer.parseInt(k1TF.getText());
+                        b = Double.parseDouble(bTF.getText());
+ 
+                        requestStr = "[BM25] ";
+                        requestStr += id + " - " + request;     
+                        runCreationPB.setString(requestStr);
+                                                
+                        score = new Bm25Articles(request, index, k1, b);
+                        scores = ((Bm25Articles) score).getScores();
+                    }
+                    double maxValue;
+                    String docNumber = "";
+                    String next;
+
+                    String separator = " ";
+
+                    for (int runIndice = 1; runIndice <= 1500; runIndice++) {
+                        maxValue = Double.MIN_VALUE;
+                        for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
+                            next = (String) j.next();
+                            if (scores.get(next) > maxValue) {
+                                docNumber = next;
+                                maxValue = scores.get(next);
+                            }
+                        }
+                        scores.remove(docNumber);
+
+                        runs += id + separator
+                                + "Q0" + separator
+                                + docNumber + separator
+                                + runIndice + separator
+                                + (1500 - runIndice + 1) + separator
+                                + "MichaelJeremyMickael" + separator
+                                + "/article[1]" + "\n";
+                    }
+
+
+                }
+                Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickael" + ".txt");
+                try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"), StandardOpenOption.CREATE)) {
+                    writer.write(runs);
+                    writer.close();
+                } catch (IOException e) {
+                    System.out.println("[Score][createRunFile] " + e);
+                }
+
+                JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
+
             }
-            
-            
-        }
-        Path runPath = Paths.get("Runs/"+"runsMichaelJeremyMickael"+".txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"),StandardOpenOption.CREATE)) {
-            writer.write(runs);
-            writer.close();
-        }catch(IOException e){
-            System.out.println("[Score][createRunFile] "+e);
-        }
-        
-        
-        /*String request = this.requestTF.getText().trim().toLowerCase();
-         * String requestNumber = this.requestNumberTF.getText().trim();
-         * int nbRuns = Integer.parseInt(this.nbRunsTF.getText().trim());
-         *
-         * Score score = null;
-         * Map<String, Double> scores = null;
-         *
-         * int k1;
-         * double b;
-         *
-         * Component selectedTab = this.searchTabbedPane.getSelectedComponent();
-         * if (selectedTab.equals(this.ltn)) {
-         * System.out.println("LTN");
-         * score = new LtnSmartArticles(request, this.index);
-         * scores = ((LtnSmartArticles) score).getScores();
-         * } else if (selectedTab.equals(this.bm25)) {
-         * k1 = Integer.parseInt(this.k1TF.getText());
-         * b = Double.parseDouble(this.bTF.getText());
-         * System.out.println("BM25 : b =>" + b + " ; k1=>" + k1);
-         * score = new Bm25Articles(request, this.index, k1, b);
-         * scores = ((Bm25Articles) score).getScores();
-         * }
-         *
-         * if (score != null) {
-         * score.createRunFile("ltn", requestNumber, "/article[1]", scores, nbRuns);
-         * JOptionPane.showMessageDialog(mainPanel, "Done !", "Run file creation", JOptionPane.INFORMATION_MESSAGE);
-         * }*/
-        
+        };
+        runCreationThread.start();
+
     }//GEN-LAST:event_exportRunButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bLabel;
@@ -702,10 +687,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JTextField nbRunsTF;
     private javax.swing.JPanel recuperationPane;
-    private javax.swing.JTextField requestNumberTF;
-    private javax.swing.JTextField requestTF;
+    private javax.swing.JProgressBar runCreationPB;
     private javax.swing.JPanel searchPane;
     private javax.swing.JTabbedPane searchTabbedPane;
     private javax.swing.JButton showIndexBrut;
@@ -719,22 +702,17 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private ArticlesDirectoryParser indexator;
     private final String APP_NAME = "Indexator&atravers";
     private Index index = null;
-    private String[] requestTab={
-            "olive oil health benefit",
-            "notting hill film actors",
-            "probabilistic models in information retrieval",
-            "web link network analysis",
-            "web ranking scoring algorithm",
-            "supervised machine learning algorithm",
-            "operating system +mutual +exclusion"
-        };
-    private String[] requestId={
-            "2009011",
-            "2009036",
-            "2009067",
-            "2009073",
-            "2009074",
-            "2009078",
-            "2009085",
-        };
+    private final HashMap<String, String> requestsMap =
+            new HashMap() {
+
+                {
+                    put("2009011", "olive oil health benefit");
+                    put("2009036", "notting hill film actors");
+                    put("2009067", "probabilistic models in information retrieval");
+                    put("2009073", "web link network analysis");
+                    put("2009074", "web ranking scoring algorithm");
+                    put("2009078", "supervised machine learning algorithm");
+                    put("2009085", "operating system +mutual +exclusion");
+                }
+            };
 }
