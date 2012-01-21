@@ -430,6 +430,7 @@
                 <Component class="javax.swing.JButton" name="exportRunButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" resourceKey="exportRunButton.text"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="exportRunButton" noResource="true"/>
                   </Properties>
                   <Events>

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JProgressBar;
 
-public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
+public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
     private String[] filesList;
 
@@ -68,7 +68,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                     // JProgress Bar
                     percent = (100 * currentLine) / nbLines;
                     jpBarFile.setValue(percent);
-                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );                    
+                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)));
                     currentLine++;
                     // ---
 
@@ -82,17 +82,16 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                         else if (!(line.contains("</doc>"))) {
                             // Punctuation & digit                           
                             tabString = null;
-                            
+
                             tabString = line.split("[\\W]+");
 
                             for (int i = 0; i < tabString.length; ++i) {
-                                // lowercase
                                 
-                                word = tabString[i].toLowerCase();
-
-                                if (!word.isEmpty() && (!Stopwords.isStopword(word))){
-
-                                    nbWordsInDoc ++;
+                                word = tabString[i];                                                                 
+                                if (!word.isEmpty() && (!Stopwords.isStopword(word))) { 
+                                    // lemmatization
+                                    word = Stemmer.lemmeWord(word);                                   
+                                    nbWordsInDoc++;
                                     
                                     valueMap = this.index.getCollectionData().get(word);
 
@@ -112,8 +111,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                                     }
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             mapDL.put(currentDocNum, nbWordsInDoc);
                             nbWordsInDoc = 0;
                         }
@@ -130,6 +128,8 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
 
         return (this.index);
     }
+    
+    
 
     private int countNBLines(Path path) {
 
