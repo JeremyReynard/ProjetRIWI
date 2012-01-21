@@ -144,6 +144,8 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
         return (this.index);
     }
+    
+    
 
     private int countNBLines(Path path) {
 

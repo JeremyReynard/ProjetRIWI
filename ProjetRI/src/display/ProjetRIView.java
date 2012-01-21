@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import parsers.ArticlesDirectoryTextParser;
 import parsers.ArticlesDirectoryXMLParser;
 import parsers.ArticlesDirectoryParser;
+import parsers.Stemmer;
 import scores.Bm25Articles;
 import scores.LtnSmartArticles;
 import scores.Score;
@@ -326,6 +327,7 @@ public class ProjetRIView extends FrameView {
         searchTabbedPane.addTab(resourceMap.getString("ltn.TabConstraints.tabTitle"), ltn); // NOI18N
 
         exportRunButton.setText(resourceMap.getString("exportRunButton.text")); // NOI18N
+        exportRunButton.setEnabled(false);
         exportRunButton.setName("exportRunButton"); // NOI18N
         exportRunButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -450,6 +452,7 @@ public class ProjetRIView extends FrameView {
 
         this.showIndexBrut.setEnabled(false);
         this.showIndexWord.setEnabled(false);
+        exportRunButton.setEnabled(false);
         this.indexFileChoose.setEnabled(false);
 
         Thread extractorThread = new Thread() {
@@ -477,6 +480,7 @@ public class ProjetRIView extends FrameView {
 
                     showIndexBrut.setEnabled(true);
                     showIndexWord.setEnabled(true);
+                    exportRunButton.setEnabled(true);
                     directoryChoose.setEnabled(true);
                     startExtract.setEnabled(true);
                     jProgressBarFile.setValue(100);
@@ -571,7 +575,9 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                 jpBarIndexFile.setValue(100);
 
                 showIndexWord.setEnabled(true);
-                
+                exportRunButton.setEnabled(true);
+                directoryChoose.setEnabled(true);
+
                 JOptionPane.showMessageDialog(mainPanel, "Done !", "Index deserialization", JOptionPane.INFORMATION_MESSAGE);
             }
         };
@@ -595,34 +601,34 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
                 String request = null;
                 String id = null;
-                
+
                 int nbRequests = requestsMap.size();
                 int requestNumber = 0;
                 String requestStr = null;
 
-                for (Map.Entry<String, String> e : requestsMap.entrySet()) {                    
+                for (Map.Entry<String, String> e : requestsMap.entrySet()) {
                     request = e.getValue();
                     id = e.getKey();
                     runCreationPB.setValue((100 * requestNumber) / nbRequests);
                     requestNumber++;
-                    
-                    if (selectedTab.equals(ltn)) {                        
-                       
+
+                    if (selectedTab.equals(ltn)) {
+
                         requestStr = "[LTN] ";
-                        requestStr += id + " - " + request;     
+                        requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
-                        
-                        score = new LtnSmartArticles(request, index);
+
+                        score = new LtnSmartArticles(Stemmer.lemmeRequest(request), index);
                         scores = ((LtnSmartArticles) score).getScores();
                     } else if (selectedTab.equals(bm25)) {
                         k1 = Integer.parseInt(k1TF.getText());
                         b = Double.parseDouble(bTF.getText());
- 
+
                         requestStr = "[BM25] ";
-                        requestStr += id + " - " + request;     
+                        requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
-                                                
-                        score = new Bm25Articles(request, index, k1, b);
+
+                        score = new Bm25Articles(Stemmer.lemmeRequest(request), index, k1, b);
                         scores = ((Bm25Articles) score).getScores();
                     }
                     double maxValue;
@@ -696,8 +702,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JButton showIndexWord;
     private javax.swing.JButton startExtract;
     // End of variables declaration//GEN-END:variables
-    private JDialog aboutBox;
-    //private String dirPath = "/home/mlh/Documents/FAC/M2-S1/IR/Projet/files/";
+    private JDialog aboutBox;   
     private String dirPath = "";
     private String indexPath = "";
     private ArticlesDirectoryParser indexator;
@@ -706,7 +711,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private final HashMap<String, String> requestsMap =
             new HashMap() {
 
-                {
+                {                   
                     put("2009011", "olive oil health benefit");
                     put("2009036", "notting hill film actors");
                     put("2009067", "probabilistic models in information retrieval");

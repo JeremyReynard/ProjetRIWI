@@ -7,7 +7,6 @@ package parsers;
 import index.Index;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,10 +105,12 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                     jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)));
                     currentWordNumber++;
                     //--
-
-                    w = w.toLowerCase();
+                   
                     if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
                         numberOfWords++;
+                        // lemmatization
+                        w = Stemmer.lemmeWord(w); 
+                        
                         valueMap = index.getCollectionData().get(w);
 
                         // the word is already in the collection

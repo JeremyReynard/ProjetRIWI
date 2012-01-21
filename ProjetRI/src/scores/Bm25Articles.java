@@ -69,7 +69,7 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
     }
 
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/index.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
 
         Bm25Articles score = new Bm25Articles("largely", index, 1, 0.5);
 
