@@ -88,6 +88,11 @@ public class Index implements Serializable {
         
         return nbWords;
     }
+    
+    public int getSize(){
+        
+        return this.collectionData.size();
+    }
 
     @Override
     public String toString() {
