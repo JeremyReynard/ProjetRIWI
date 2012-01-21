@@ -5,6 +5,7 @@
 package parsers;
 
 import index.Index;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.JProgressBar;
 
@@ -36,7 +37,7 @@ public abstract class ArticlesDirectoryParser {
         long sec = (this.extractionTime + 500) / 1000;
         String result = "";
         result += "Indexation time " + sec + "sec \n";
-        result += "N : " + index.getN() + "\n";
+        result += "N(articles) : " + index.getN().get("article") + "\n";
         result += "avdl : " + index.getAvdl() + "\n";
         result += "words : " + index.getNumberOfWords();
                  
@@ -51,12 +52,12 @@ public abstract class ArticlesDirectoryParser {
     
     private int getOccurences(String word) {
         
-        Map<String, Integer> map = this.index.getCollectionData().get(word);
+        Map<String, ArrayList<String>> map = this.index.getCollectionData().get(word);
         int nbOccurs = 0;
         
         if (map != null){
-            for (Integer i : map.values()) {
-                nbOccurs += i.intValue();
+            for (ArrayList<String> l : map.values()) {
+                nbOccurs += l.size();
             }
         }
         

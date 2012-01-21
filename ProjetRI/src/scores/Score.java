@@ -13,12 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeSet;
 import serialization.IndexDeserialization;
 
 /**
@@ -45,7 +42,7 @@ public class Score {
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle) {
         
-        Map<String, Integer> mapValue = this.index.getCollectionData().get(word);
+        Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
         int integer = 0;
         //If the word does not exist in the Map
         if (mapValue == null) {
@@ -53,7 +50,7 @@ public class Score {
         }
         //If the word exist in the document
         if (mapValue.containsKey(documentTitle)) {
-            integer = mapValue.get(documentTitle);
+            integer = mapValue.get(documentTitle).size();
         }
         return integer;
     }
@@ -63,7 +60,7 @@ public class Score {
      */
     public Integer getDocumentFrequency(Index index, String word) {
         
-        Map<String, Integer> mapValue = this.index.getCollectionData().get(word);
+        Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
         
         if (mapValue == null) {
             // -1 because 0 make a divide by 0 error

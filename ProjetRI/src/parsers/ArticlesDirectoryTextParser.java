@@ -2,16 +2,20 @@ package parsers;
 
 import index.Index;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JProgressBar;
+import serialization.IndexDeserialization;
+import serialization.IndexSerialization;
 
-public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
+public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
     private String[] filesList;
 
@@ -29,7 +33,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
 
         int nbWordsInDoc = 0;
         Map<String, Integer> mapDL = new HashMap<>();
-        Map<String, Integer> valueMap = null;
+        Map<String, ArrayList<String>> valueMap = null;
 
         // JProgress Bar
         int nbFiles = this.filesList.length;
@@ -43,9 +47,13 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
         String currentDocNum = "";
         String[] tabString;
         String word = null;
+        ArrayList<String> pathsList;
 
         Path currentPath = null;
         String line = null;
+        
+        Map<String, Integer> N = new HashMap<>();
+        int n = 0;
 
         long startTime = System.currentTimeMillis();
         for (int f = 0; f < nbFiles; ++f) {
@@ -68,7 +76,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                     // JProgress Bar
                     percent = (100 * currentLine) / nbLines;
                     jpBarFile.setValue(percent);
-                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)) );                    
+                    jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)));
                     currentLine++;
                     // ---
 
@@ -77,43 +85,47 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                         // docno line
                         if (line.contains("<doc><docno>")) {
                             currentDocNum = line.replace("<doc><docno>", "").replace("</docno>", "");
-                            index.setN(index.getN() + 1);
+                            n++;
                         } // others lines
                         else if (!(line.contains("</doc>"))) {
                             // Punctuation & digit                           
                             tabString = null;
-                            
+
                             tabString = line.split("[\\W]+");
 
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
-                                
+
                                 word = tabString[i].toLowerCase();
 
-                                if (!word.isEmpty() && (!Stopwords.isStopword(word))){
+                                if (!word.isEmpty() && (!Stopwords.isStopword(word))) {
 
-                                    nbWordsInDoc ++;
-                                    
+                                    nbWordsInDoc++;
+
                                     valueMap = this.index.getCollectionData().get(word);
 
                                     // the word is already in the collection
                                     if (valueMap != null) {
                                         // the word has been already found in the current document
                                         if (valueMap.containsKey(currentDocNum)) {
-                                            valueMap.put(currentDocNum, valueMap.get(currentDocNum) + 1);
+                                            valueMap.get(currentDocNum).add("/article[1]");
+                                            valueMap.put(currentDocNum, valueMap.get(currentDocNum));
                                         } else {
-                                            //first occurrence of the word in this document									
-                                            valueMap.put(currentDocNum, 1);
+                                            //first occurrence of the word in this document
+                                            pathsList = new ArrayList<>();
+                                            pathsList.add("/article[1]");
+                                            valueMap.put(currentDocNum, pathsList);
                                         }
                                     } // first occurrence of the word : add it to the collection
                                     else {
-                                        this.index.getCollectionData().put(word, new HashMap<String, Integer>());
-                                        this.index.getCollectionData().get(word).put(currentDocNum, 1);
+                                        index.getCollectionData().put(word, new HashMap<String, ArrayList<String>>());
+                                        pathsList = new ArrayList<>();
+                                        pathsList.add("/article[1]");
+                                        index.getCollectionData().get(word).put(currentDocNum, pathsList);
                                     }
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             mapDL.put(currentDocNum, nbWordsInDoc);
                             nbWordsInDoc = 0;
                         }
@@ -125,6 +137,8 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
                 //e.printStackTrace();
             }
         }
+        N.put("article",n);
+        index.setN(N);
         index.setDlMap(mapDL);
         this.extractionTime = System.currentTimeMillis() - startTime;
 
@@ -150,4 +164,24 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser{
 
         return count;
     }
+    
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+
+        JProgressBar jp1 = new JProgressBar();
+        JProgressBar jp2 = new JProgressBar();
+
+        Index index = new ArticlesDirectoryTextParser("../../TextOnly1").parseDirectory(jp1, jp2);
+
+        IndexSerialization.serialize(index, "fileSerialization/indexText1.serial");
+
+        index = IndexDeserialization.deserialize("fileSerialization/indexText1.serial");
+
+        System.out.println("N : " + index.getN());
+        System.out.println("avdl : " + index.getAvdl());
+        System.out.println("dl : " + index.getDlMap().toString());
+        System.out.println("\n" + index.toString());
+
+    }
+    
+    
 }

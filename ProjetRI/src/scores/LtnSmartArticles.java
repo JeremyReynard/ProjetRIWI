@@ -54,7 +54,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         
         int documentFrequency = getDocumentFrequency(index, word);
         
-        return Math.log(1.0 + termFrequency) * (index.getN() /(documentFrequency) ) ;
+        return Math.log(1.0 + termFrequency) * (index.getN().get("article") /(documentFrequency) ) ;
     }
     
     public static void main(String[] args) {

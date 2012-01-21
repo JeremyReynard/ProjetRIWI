@@ -5,6 +5,7 @@
 package index;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,11 +19,11 @@ public class Index implements Serializable {
     /**
      * The data collection 
      */
-    private Map<String, Map<String, Integer>> collectionData;
+    private Map<String, Map<String, ArrayList<String>>> collectionData;
     /*
      * Size of the collection
      */
-    private int N;
+    private Map<String, Integer> N;
     /*
      * List of documents' lengths
      */
@@ -31,28 +32,33 @@ public class Index implements Serializable {
     /**
      * The constructor 
      */
-    public Index(Map<String, Map<String, Integer>> collectionData) {
+    public Index(Map<String, Map<String, ArrayList<String>>> collectionData) {
         this.collectionData = collectionData;
     }
 
     public Index() {
         this.collectionData = new HashMap<>();
         this.dlMap = new HashMap<>();
+        this.N = new HashMap<>();
     }
 
-    public Map<String, Map<String, Integer>> getCollectionData() {
+    public Map<String, Map<String, ArrayList<String>>> getCollectionData() {
         return collectionData;
     }
 
-    public void setCollectionData(Map<String, Map<String, Integer>> collectionData) {
+    public void setCollectionData(Map<String, Map<String, ArrayList<String>>> collectionData) {
         this.collectionData = collectionData;
     }
 
-    public int getN() {
+    public int getN(String tag) {
+        return N.get(tag);
+    }
+
+    public Map<String, Integer> getN() {
         return N;
     }
 
-    public void setN(int N) {
+    public void setN(Map<String, Integer> N) {
         this.N = N;
     }
 
@@ -65,27 +71,27 @@ public class Index implements Serializable {
     }
 
     public double getAvdl() {
-        
+
         double dlSum = 0;
         Integer dl = 0;
-        
+
         for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
             dl = (Integer) i.next();
             dlSum += dl.intValue();
         }
-        
+
         return (dlSum / dlMap.size());
     }
-    
-    public int getNumberOfWords(){
+
+    public int getNumberOfWords() {
         int nbWords = 0;
         Integer dl = 0;
-        
+
         for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
             dl = (Integer) i.next();
             nbWords += dl.intValue();
         }
-        
+
         return nbWords;
     }
 

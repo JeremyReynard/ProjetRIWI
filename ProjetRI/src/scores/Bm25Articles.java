@@ -63,7 +63,7 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
             return 0;
         }
 
-        double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / index.getAvdl())) + termFrequency)) * Math.log((index.getN() - df + 0.5) / (df + 0.5));
+        double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / index.getAvdl())) + termFrequency)) * Math.log((index.getN().get("article") - df + 0.5) / (df + 0.5));
 
         return wtd;
     }

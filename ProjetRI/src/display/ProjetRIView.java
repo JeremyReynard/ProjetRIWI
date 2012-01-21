@@ -15,6 +15,7 @@ import org.jdesktop.application.FrameView;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -520,12 +521,12 @@ public class ProjetRIView extends FrameView {
 
         if (word != null) {
             if (this.indexator == null) {
-                Map<String, Integer> map = this.index.getCollectionData().get(word);
+                Map<String, ArrayList<String>> map = this.index.getCollectionData().get(word);
                 int nbOccurs = 0;
 
                 if (map != null) {
-                    for (Integer i : map.values()) {
-                        nbOccurs += i.intValue();
+                    for (ArrayList<String> l : map.values()) {
+                        nbOccurs += l.size();
                     }
                 }
 
