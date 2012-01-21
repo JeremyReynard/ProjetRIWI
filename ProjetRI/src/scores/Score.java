@@ -71,16 +71,34 @@ public class Score {
         }
         return mapValue.size();
     }
- 
+    
+    /*
+     * @return the the term frequency in a specific document
+     */
+    public Integer getDocumentFrequency(Index index, String word,String documentTitle) {
+        
+        Map<String, Integer> mapValue = this.index.getCollectionData().get(word);
+        
+        if (mapValue == null) {
+            // -1 because 0 make a divide by 0 error
+            return -1;
+        }else if(mapValue.get(documentTitle)!=null){
+            
+            return mapValue.get(documentTitle);
+        
+        }
+        // -1 because 0 make a divide by 0 error
+        return -1;
+    }
     
     public void createRunFile(String fileName, String requestNumber, String pathElement,Map<String, Double> scores, int runNumber){
-     
+        
         double maxValue;
         String docNumber = "";
         String next;
         String runs = " ";
         String separator = " ";
-                       
+        
         for ( int runIndice = 1; runIndice <= runNumber; runIndice++ ) {
             maxValue = Double.MIN_VALUE;
             for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
@@ -91,18 +109,18 @@ public class Score {
                 }
             }
             scores.remove(docNumber);
-
+            
             runs += requestNumber + separator
                     + "Q0" + separator
                     + docNumber + separator
                     + runIndice + separator
                     + (runNumber - runIndice + 1) + separator
                     + "MichaelJeremyMickael" + separator
-                    + pathElement + "\n";        
+                    + pathElement + "\n";
         }
         
         Path runPath = Paths.get("Runs/"+fileName+".txt");
-                
+        
         try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"),StandardOpenOption.CREATE)) {
             writer.write(runs);
             writer.close();
@@ -110,7 +128,7 @@ public class Score {
             System.out.println("[Score][createRunFile] "+e);
         }
     }
-        
+    
     //Getters
     public Index getIndex() {
         return this.index;
@@ -120,7 +138,7 @@ public class Score {
         return this.request;
     }
     
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         
         LtnSmartArticles score = new LtnSmartArticles("states", index);
@@ -132,5 +150,5 @@ public class Score {
         
         
     }
-    
+
 }
