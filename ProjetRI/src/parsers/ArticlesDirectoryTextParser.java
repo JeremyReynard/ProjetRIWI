@@ -95,13 +95,18 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
+<<<<<<< HEAD
 
                                 word = tabString[i];
+=======
+                                word = tabString[i].toLowerCase();                                
+>>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
 
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))) {
                                     
                                     word = Stemmer.lemmeWord(tabString[i].toLowerCase());
 
+                                    word = Stemmer.lemmeWord(word);
                                     nbWordsInDoc++;
 
                                     valueMap = this.index.getCollectionData().get(word);
