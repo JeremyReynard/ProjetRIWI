@@ -51,7 +51,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
         Path currentPath = null;
         String line = null;
-        
+
         Map<String, Integer> N = new HashMap<>();
         int n = 0;
 
@@ -95,16 +95,10 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
-<<<<<<< HEAD
+                                word = tabString[i].toLowerCase();
 
-                                word = tabString[i];
-=======
-                                word = tabString[i].toLowerCase();                                
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
 
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))) {
-                                    
-                                    word = Stemmer.lemmeWord(tabString[i].toLowerCase());
 
                                     word = Stemmer.lemmeWord(word);
                                     nbWordsInDoc++;
@@ -144,15 +138,13 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
                 //e.printStackTrace();
             }
         }
-        N.put("article",n);
+        N.put("article", n);
         index.setN(N);
         index.setDlMap(mapDL);
         this.extractionTime = System.currentTimeMillis() - startTime;
 
         return (this.index);
     }
-    
-    
 
     private int countNBLines(Path path) {
 
@@ -173,7 +165,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
         return count;
     }
-    
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         JProgressBar jp1 = new JProgressBar();
@@ -191,6 +183,4 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
         System.out.println("\n" + index.toString());
 
     }
-    
-    
 }

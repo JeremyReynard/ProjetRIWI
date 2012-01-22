@@ -80,11 +80,9 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
             termTemporaryFrequency = getTermFrequency(index, termTemporary, documentNumber);
             
             //Get the term frenquency of an existing word in a specific document
-<<<<<<< HEAD
-            termTemporaryDocumentFrequency = getTermFrequency(index, termTemporary,documentNumber);
-=======
+
             termTemporaryDocumentFrequency = getDocumentFrequency(index, termTemporary);
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
+
             
             //Formula
             sommePonderations+=Math.pow((Math.log(1+termTemporaryFrequency)*(index.getN().get("article") /termTemporaryDocumentFrequency)),2);

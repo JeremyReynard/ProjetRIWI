@@ -1,16 +1,634 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.7">
+  <NonVisualComponents>
+    <Container class="javax.swing.JPanel" name="mainPanel">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="mainPanel" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="mainTabbedPane" alignment="0" pref="513" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="mainTabbedPane" alignment="0" pref="539" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JTabbedPane" name="mainTabbedPane">
+          <Properties>
+            <Property name="doubleBuffered" type="boolean" value="true"/>
+            <Property name="name" type="java.lang.String" value="mainTabbedPane" noResource="true"/>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="jTabbedPane1.AccessibleContext.accessibleName"/>
+          </AccessibilityProperties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="indexationPane">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="indexationPane" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Indexation">
+                    <Property name="tabTitle" type="java.lang.String" resourceKey="indexationPane.TabConstraints.tabTitle"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="creationPane" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="recuperationPane" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                          <Component id="showIndexBrut" pref="376" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="creationPane" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                          <Component id="recuperationPane" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                          <Component id="showIndexBrut" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="showIndexBrut">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="showIndexBrut.text"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="name" type="java.lang.String" value="showIndexBrut" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showIndexBrutActionPerformed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JPanel" name="creationPane">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Index creaction">
+                          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder>
+                              <Property name="font" resourceKey="creationPane.border.border.titleFont"/>
+                              <Property name="color" resourceKey="creationPane.border.border.titleColor"/>
+                            </TitledBorder>
+                          </Border>
+                          <Property name="titleX" resourceKey="creationPane.border.title"/>
+                          <Property name="color" resourceKey="creationPane.border.titleColor"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="creationPane" noResource="true"/>
+                  </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="creationPane.AccessibleContext.accessibleName"/>
+                  </AccessibilityProperties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="directoryChoose" alignment="0" pref="449" max="32767" attributes="2"/>
+                                  <Component id="startExtract" alignment="0" pref="449" max="32767" attributes="2"/>
+                                  <Component id="jSeparator1" alignment="0" pref="449" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarFile" alignment="0" pref="449" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarGlobal" alignment="0" pref="449" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="directoryChoose" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="startExtract" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jProgressBarFile" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jProgressBarGlobal" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="directoryChoose">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="directoryChoose.text"/>
+                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[120, 20]"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[120, 20]"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="directoryChoose" noResource="true"/>
+                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="[120, 20]"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="directoryChooseActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="startExtract">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="startExtract.text"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="startExtract" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startExtractActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JProgressBar" name="jProgressBarFile">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jProgressBarFile" noResource="true"/>
+                        <Property name="string" type="java.lang.String" resourceKey="jProgressBarFile.string"/>
+                        <Property name="stringPainted" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JProgressBar" name="jProgressBarGlobal">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jProgressBarGlobal" noResource="true"/>
+                        <Property name="string" type="java.lang.String" resourceKey="jProgressBarGlobal.string"/>
+                        <Property name="stringPainted" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSeparator" name="jSeparator1">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="recuperationPane">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Index recuperation">
+                          <Property name="titleX" resourceKey="recuperationPane.border.title"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="recuperationPane" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="indexFileChoose" alignment="0" pref="445" max="32767" attributes="0"/>
+                                  <Component id="jSeparator2" alignment="0" pref="445" max="32767" attributes="0"/>
+                                  <Component id="jpBarIndexFile" alignment="0" pref="445" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="indexFileChoose" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jpBarIndexFile" min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="indexFileChoose">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="indexFileChoose.text"/>
+                        <Property name="name" type="java.lang.String" value="indexFileChoose" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="indexFileChooseActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JProgressBar" name="jpBarIndexFile">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jpBarIndexFile" noResource="true"/>
+                        <Property name="string" type="java.lang.String" resourceKey="jpBarIndexFile.string"/>
+                        <Property name="stringPainted" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JSeparator" name="jSeparator2">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="searchPane">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="searchPane" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Search">
+                    <Property name="tabTitle" type="java.lang.String" resourceKey="searchPane.TabConstraints.tabTitle"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="searchTabbedPane" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="runCreationPB" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="showIndexWord" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="exportRunButton" alignment="0" pref="481" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="showIndexWord" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="exportRunButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="runCreationPB" min="-2" pref="28" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="searchTabbedPane" pref="358" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="showIndexWord">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="showIndexWord.text"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="name" type="java.lang.String" value="showIndexWord" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showIndexWordActionPerformed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JTabbedPane" name="searchTabbedPane">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="searchTabbedPane" noResource="true"/>
+                  </Properties>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="bm25">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="bm25" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="BM25">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="bm25.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="k1label" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="k1TF" min="-2" pref="51" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="bLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="bTF" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="374" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="k1label" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="k1TF" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="bLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="253" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="k1label">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1label.text"/>
+                            <Property name="name" type="java.lang.String" value="k1label" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="bLabel">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bLabel.text"/>
+                            <Property name="name" type="java.lang.String" value="bLabel" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="k1TF">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1TF.text"/>
+                            <Property name="name" type="java.lang.String" value="k1TF" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="bTF">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bTF.text"/>
+                            <Property name="name" type="java.lang.String" value="bTF" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="ltn">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="ltn" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="LTNSmart">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="ltn.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="ltc">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="ltc" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="LTCSmart">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="ltc.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="mjm">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="mjm" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="MJM">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="mjm.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="kTextField" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="382" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane1" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="kTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="134" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="jLabel1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+                            <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="kTextField">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="kTextField.text"/>
+                            <Property name="name" type="java.lang.String" value="kTextField" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                          <Properties>
+                            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JTextArea" name="jTextArea1">
+                              <Properties>
+                                <Property name="columns" type="int" value="20"/>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="rows" type="int" value="5"/>
+                                <Property name="text" type="java.lang.String" resourceKey="jTextArea1.text"/>
+                                <Property name="name" type="java.lang.String" value="jTextArea1" noResource="true"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                      </SubComponents>
+                    </Container>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JButton" name="exportRunButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="exportRunButton.text"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="name" type="java.lang.String" value="exportRunButton" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportRunButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JProgressBar" name="runCreationPB">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="runCreationPB" noResource="true"/>
+                    <Property name="string" type="java.lang.String" resourceKey="runCreationPB.string"/>
+                    <Property name="stringPainted" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JMenuBar" name="menuBar">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="menuBar" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="fileMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="fileMenu.text"/>
+            <Property name="name" type="java.lang.String" value="fileMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Q"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="exitMenuItem.text"/>
+                <Property name="name" type="java.lang.String" value="exitMenuItem" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitMenuItemActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="helpMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" resourceKey="helpMenu.text"/>
+            <Property name="name" type="java.lang.String" value="helpMenu" noResource="true"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+A"/>
+                </Property>
+                <Property name="text" type="java.lang.String" resourceKey="aboutMenuItem.text"/>
+                <Property name="name" type="java.lang.String" value="aboutMenuItem" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aboutMenuItemActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Container>
+  </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" resourceKey="title"/>
-    <Property name="modal" type="boolean" value="true"/>
-    <Property name="name" type="java.lang.String" value="aboutBox" noResource="true"/>
-    <Property name="resizable" type="boolean" value="false"/>
+    <Property name="component" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="mainPanel"/>
+    </Property>
+    <Property name="menuBar" type="javax.swing.JMenuBar" editor="org.netbeans.modules.form.ComponentChooserEditor">
+      <ComponentRef name="menuBar"/>
+    </Property>
   </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-  </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
@@ -21,184 +639,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,43,0,0,2,1"/>
   </AuxValues>
-
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="imageLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="versionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="vendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="homepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="appVersionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="appVendorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="appHomepageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="appTitleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="appDescLabel" alignment="0" pref="266" max="32767" attributes="0"/>
-                  <Component id="closeButton" alignment="1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="imageLabel" min="-2" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="appTitleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="appDescLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="versionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="appVersionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="vendorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="appVendorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="homepageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="appHomepageLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
-              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-      </Group>
-    </DimensionLayout>
-  </Layout>
-  <SubComponents>
-    <Component class="javax.swing.JButton" name="closeButton">
-      <Properties>
-        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-          <action class="display.ProjetRIAboutBox" id="closeAboutBox" methodName="closeAboutBox"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="closeButton" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="appTitleLabel">
-      <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
-          <FontInfo relative="true">
-            <Font bold="true" component="appTitleLabel" property="font" relativeSize="true" size="4"/>
-          </FontInfo>
-        </Property>
-        <Property name="text" type="java.lang.String" resourceKey="Application.title"/>
-        <Property name="name" type="java.lang.String" value="appTitleLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="versionLabel">
-      <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
-          <FontInfo relative="true">
-            <Font bold="true" component="versionLabel" property="font" relativeSize="true" size="0"/>
-          </FontInfo>
-        </Property>
-        <Property name="text" type="java.lang.String" resourceKey="versionLabel.text"/>
-        <Property name="name" type="java.lang.String" value="versionLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="appVersionLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="Application.version"/>
-        <Property name="name" type="java.lang.String" value="appVersionLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="vendorLabel">
-      <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
-          <FontInfo relative="true">
-            <Font bold="true" component="vendorLabel" property="font" relativeSize="true" size="0"/>
-          </FontInfo>
-        </Property>
-        <Property name="text" type="java.lang.String" resourceKey="vendorLabel.text"/>
-        <Property name="name" type="java.lang.String" value="vendorLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="appVendorLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="Application.vendor"/>
-        <Property name="name" type="java.lang.String" value="appVendorLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="homepageLabel">
-      <Properties>
-        <Property name="font" type="java.awt.Font" noResource="true" editor="org.netbeans.modules.form.editors2.FontEditor">
-          <FontInfo relative="true">
-            <Font bold="true" component="homepageLabel" property="font" relativeSize="true" size="0"/>
-          </FontInfo>
-        </Property>
-        <Property name="text" type="java.lang.String" resourceKey="homepageLabel.text"/>
-        <Property name="name" type="java.lang.String" value="homepageLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="appHomepageLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="Application.homepage"/>
-        <Property name="name" type="java.lang.String" value="appHomepageLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="appDescLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="appDescLabel.text"/>
-        <Property name="name" type="java.lang.String" value="appDescLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="imageLabel">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" resourceKey="imageLabel.icon"/>
-        <Property name="name" type="java.lang.String" value="imageLabel" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-    </Component>
-  </SubComponents>
 </Form>

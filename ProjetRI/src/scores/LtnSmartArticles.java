@@ -34,12 +34,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         Map<String, Double> scores = new HashMap<>();
         
         String documentNumber;
-<<<<<<< HEAD
 
-=======
-        Iterator it;
-        
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
@@ -70,11 +65,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     }
     
     public static void main(String[] args) {
-<<<<<<< HEAD
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
-        
-        LtnSmartArticles score = new LtnSmartArticles("Stated", index);
-=======
+
         Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         String runs = "";
         System.out.println("Deserialized");
@@ -85,7 +76,6 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         double maxValue;
         String docNumber = "";
         String next;
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
         
         String separator = " ";
         

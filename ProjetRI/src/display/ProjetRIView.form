@@ -15,7 +15,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainTabbedPane" alignment="0" pref="539" max="32767" attributes="0"/>
+              <Component id="mainTabbedPane" alignment="0" pref="534" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -58,7 +58,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" pref="376" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" pref="379" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -71,7 +71,7 @@
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="recuperationPane" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" pref="43" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -116,11 +116,11 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="directoryChoose" alignment="0" pref="449" max="32767" attributes="2"/>
-                                  <Component id="startExtract" alignment="0" pref="449" max="32767" attributes="2"/>
-                                  <Component id="jSeparator1" alignment="0" pref="449" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarFile" alignment="0" pref="449" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarGlobal" alignment="0" pref="449" max="32767" attributes="0"/>
+                                  <Component id="directoryChoose" alignment="0" pref="460" max="32767" attributes="2"/>
+                                  <Component id="startExtract" alignment="0" pref="460" max="32767" attributes="2"/>
+                                  <Component id="jSeparator1" alignment="0" pref="460" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarFile" alignment="0" pref="460" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarGlobal" alignment="0" pref="460" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -212,9 +212,9 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="indexFileChoose" alignment="0" pref="445" max="32767" attributes="0"/>
-                                  <Component id="jSeparator2" alignment="0" pref="445" max="32767" attributes="0"/>
-                                  <Component id="jpBarIndexFile" alignment="0" pref="445" max="32767" attributes="0"/>
+                                  <Component id="indexFileChoose" alignment="0" pref="456" max="32767" attributes="0"/>
+                                  <Component id="jSeparator2" alignment="0" pref="456" max="32767" attributes="0"/>
+                                  <Component id="jpBarIndexFile" alignment="0" pref="456" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -279,10 +279,10 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="searchTabbedPane" alignment="0" pref="481" max="32767" attributes="0"/>
-                              <Component id="runCreationPB" alignment="0" pref="481" max="32767" attributes="0"/>
-                              <Component id="showIndexWord" alignment="0" pref="481" max="32767" attributes="0"/>
-                              <Component id="exportRunButton" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="searchTabbedPane" alignment="0" pref="488" max="32767" attributes="0"/>
+                              <Component id="runCreationPB" alignment="0" pref="488" max="32767" attributes="0"/>
+                              <Component id="showIndexWord" alignment="0" pref="488" max="32767" attributes="0"/>
+                              <Component id="exportRunButton" alignment="0" pref="488" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -298,7 +298,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="runCreationPB" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="searchTabbedPane" pref="358" max="32767" attributes="0"/>
+                          <Component id="searchTabbedPane" pref="392" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -322,65 +322,6 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="ltn">
-                      <Properties>
-                        <Property name="name" type="java.lang.String" value="ltn" noResource="true"/>
-                      </Properties>
-                      <Constraints>
-                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                          <JTabbedPaneConstraints tabName="LTNSmart">
-                            <Property name="tabTitle" type="java.lang.String" resourceKey="ltn.TabConstraints.tabTitle"/>
-                          </JTabbedPaneConstraints>
-                        </Constraint>
-                      </Constraints>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ltnArticleRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="ltnElementsRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="291" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                  <Component id="ltnArticleRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="ltnElementsRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="294" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JRadioButton" name="ltnArticleRadioButton">
-                          <Properties>
-                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                              <ComponentRef name="buttonGroup1"/>
-                            </Property>
-                            <Property name="selected" type="boolean" value="true"/>
-                            <Property name="text" type="java.lang.String" resourceKey="ltnArticleRadioButton.text"/>
-                            <Property name="name" type="java.lang.String" value="ltnArticleRadioButton" noResource="true"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JRadioButton" name="ltnElementsRadioButton">
-                          <Properties>
-                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                              <ComponentRef name="buttonGroup1"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" resourceKey="ltnElementsRadioButton.text"/>
-                            <Property name="name" type="java.lang.String" value="ltnElementsRadioButton" noResource="true"/>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
                     <Container class="javax.swing.JPanel" name="bm25">
                       <Properties>
                         <Property name="name" type="java.lang.String" value="bm25" noResource="true"/>
@@ -396,25 +337,21 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="bm25ElementsRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="bm25ArticleRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="k1label" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="k1TF" min="-2" pref="51" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="1">
-                                              <Component id="bLabel" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="bTF" max="32767" attributes="0"/>
-                                          </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="k1label" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="k1TF" min="-2" pref="51" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="1">
+                                          <Component id="bLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="bTF" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="374" max="32767" attributes="0"/>
+                                  <EmptySpace pref="399" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -431,15 +368,7 @@
                                       <Component id="bLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="bTF" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-<<<<<<< HEAD
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="bm25ArticleRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="bm25ElementsRadioButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="240" max="32767" attributes="0"/>
-=======
-                                  <EmptySpace pref="253" max="32767" attributes="0"/>
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
+                                  <EmptySpace pref="307" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -469,29 +398,8 @@
                             <Property name="name" type="java.lang.String" value="bTF" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JRadioButton" name="bm25ArticleRadioButton">
-                          <Properties>
-                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                              <ComponentRef name="buttonGroup2"/>
-                            </Property>
-                            <Property name="selected" type="boolean" value="true"/>
-                            <Property name="text" type="java.lang.String" resourceKey="bm25ArticleRadioButton.text"/>
-                            <Property name="name" type="java.lang.String" value="bm25ArticleRadioButton" noResource="true"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JRadioButton" name="bm25ElementsRadioButton">
-                          <Properties>
-                            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                              <ComponentRef name="buttonGroup2"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" resourceKey="bm25ElementsRadioButton.text"/>
-                            <Property name="name" type="java.lang.String" value="bm25ElementsRadioButton" noResource="true"/>
-                          </Properties>
-                        </Component>
                       </SubComponents>
                     </Container>
-<<<<<<< HEAD
-=======
                     <Container class="javax.swing.JPanel" name="ltn">
                       <Properties>
                         <Property name="name" type="java.lang.String" value="ltn" noResource="true"/>
@@ -507,12 +415,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="483" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="364" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -532,12 +440,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="483" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="364" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -563,7 +471,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="kTextField" min="-2" pref="33" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" pref="382" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="407" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -579,7 +487,7 @@
                                           <Component id="kTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="134" max="32767" attributes="0"/>
+                                  <EmptySpace pref="178" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -620,7 +528,6 @@
                         </Container>
                       </SubComponents>
                     </Container>
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JButton" name="exportRunButton">
@@ -713,12 +620,6 @@
         </Menu>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
-    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="component" type="javax.swing.JComponent" editor="org.netbeans.modules.form.ComponentChooserEditor">

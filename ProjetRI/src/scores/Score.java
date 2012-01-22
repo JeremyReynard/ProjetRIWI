@@ -70,11 +70,7 @@ public class Score {
         }
         return mapValue.entrySet().size();
     }
-<<<<<<< HEAD
-        
-=======
-    
->>>>>>> 057a7803314dc68cb64b3b1918351faea6b9f1d0
+
     public void createRunFile(String fileName, String requestNumber, String pathElement,Map<String, Double> scores, int runNumber){
         
         double maxValue;
