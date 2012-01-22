@@ -62,7 +62,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
         long startTime = System.currentTimeMillis();
         for (File f : files) {
-
+            
             // JProgressBar
             jpBarFile.setString(f.getName());
             jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
@@ -91,7 +91,6 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                        index.getN().put(tag, articleParser.getN().get(tag)); 
                     }
                 }
-                index.getN().putAll(articleParser.getN());
 
                 numberOfWords = 0;
 
@@ -109,7 +108,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                     if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
                         numberOfWords++;
                         // lemmatization
-                        w = Stemmer.lemmeWord(w); 
+                        w = Stemmer.lemmeWord(w.toLowerCase()); 
                         
                         valueMap = index.getCollectionData().get(w);
 
@@ -153,9 +152,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
         Index index = new ArticlesDirectoryXMLParser("../../coll10").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexXML1.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexXML10.serial");
 
-        index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
+        index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
 
         System.out.println("N : " + index.getN());
         System.out.println("avdl : " + index.getAvdl());

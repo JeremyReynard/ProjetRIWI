@@ -26,7 +26,6 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         Map<String, Double> scores = new HashMap<>();
         
         String documentNumber;
-        Iterator it;
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
@@ -53,14 +52,14 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
         
         int documentFrequency = getDocumentFrequency(index, word);
-        
+                
         return Math.log(1.0 + termFrequency) * (index.getN().get("article") /(documentFrequency) ) ;
     }
     
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
         
-        LtnSmartArticles score = new LtnSmartArticles("states", index);
+        LtnSmartArticles score = new LtnSmartArticles("Stated", index);
         
         Map<String, Double> scores = score.getScores();
         

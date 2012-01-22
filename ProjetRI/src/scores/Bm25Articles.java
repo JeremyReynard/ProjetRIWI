@@ -16,10 +16,10 @@ import serialization.IndexDeserialization;
  */
 public class Bm25Articles extends Score implements CommonsScoreInterface {
 
-    int k1;
+    double k1;
     double b;
 
-    public Bm25Articles(String request, Index index, int k1, double b) {
+    public Bm25Articles(String request, Index index, double k1, double b) {
         super(request, index);
         this.b = b;
         this.k1 = k1;
