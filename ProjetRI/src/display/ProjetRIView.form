@@ -10,12 +10,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainTabbedPane" alignment="0" pref="396" max="32767" attributes="0"/>
+              <Component id="mainTabbedPane" alignment="0" pref="513" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainTabbedPane" alignment="0" pref="534" max="32767" attributes="0"/>
+              <Component id="mainTabbedPane" alignment="0" pref="539" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -58,7 +58,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" pref="262" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" pref="376" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -71,7 +71,7 @@
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="recuperationPane" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                          <Component id="showIndexBrut" pref="49" max="32767" attributes="0"/>
+                          <Component id="showIndexBrut" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -116,11 +116,11 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="directoryChoose" alignment="0" pref="343" max="32767" attributes="2"/>
-                                  <Component id="startExtract" alignment="0" pref="343" max="32767" attributes="2"/>
-                                  <Component id="jSeparator1" alignment="0" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarFile" alignment="0" pref="343" max="32767" attributes="0"/>
-                                  <Component id="jProgressBarGlobal" alignment="0" pref="343" max="32767" attributes="0"/>
+                                  <Component id="directoryChoose" alignment="0" pref="449" max="32767" attributes="2"/>
+                                  <Component id="startExtract" alignment="0" pref="449" max="32767" attributes="2"/>
+                                  <Component id="jSeparator1" alignment="0" pref="449" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarFile" alignment="0" pref="449" max="32767" attributes="0"/>
+                                  <Component id="jProgressBarGlobal" alignment="0" pref="449" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -139,7 +139,7 @@
                               <Component id="jProgressBarFile" min="-2" pref="40" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jProgressBarGlobal" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -212,9 +212,9 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="indexFileChoose" alignment="0" pref="339" max="32767" attributes="0"/>
-                                  <Component id="jSeparator2" alignment="0" pref="339" max="32767" attributes="0"/>
-                                  <Component id="jpBarIndexFile" alignment="0" pref="339" max="32767" attributes="0"/>
+                                  <Component id="indexFileChoose" alignment="0" pref="445" max="32767" attributes="0"/>
+                                  <Component id="jSeparator2" alignment="0" pref="445" max="32767" attributes="0"/>
+                                  <Component id="jpBarIndexFile" alignment="0" pref="445" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -229,7 +229,7 @@
                               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jpBarIndexFile" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -279,10 +279,10 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="searchTabbedPane" alignment="0" pref="371" max="32767" attributes="0"/>
-                              <Component id="runCreationPB" alignment="0" pref="371" max="32767" attributes="0"/>
-                              <Component id="showIndexWord" alignment="0" pref="371" max="32767" attributes="0"/>
-                              <Component id="exportRunButton" alignment="0" pref="371" max="32767" attributes="0"/>
+                              <Component id="searchTabbedPane" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="runCreationPB" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="showIndexWord" alignment="0" pref="481" max="32767" attributes="0"/>
+                              <Component id="exportRunButton" alignment="0" pref="481" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -298,7 +298,7 @@
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="runCreationPB" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="searchTabbedPane" pref="392" max="32767" attributes="0"/>
+                          <Component id="searchTabbedPane" pref="358" max="32767" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -351,7 +351,7 @@
                                           <Component id="bTF" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="282" max="32767" attributes="0"/>
+                                  <EmptySpace pref="374" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -368,7 +368,7 @@
                                       <Component id="bLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="bTF" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="307" max="32767" attributes="0"/>
+                                  <EmptySpace pref="253" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -415,12 +415,12 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="366" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="364" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
@@ -440,15 +440,93 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="366" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="473" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="364" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="321" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="mjm">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="mjm" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="MJM">
+                            <Property name="tabTitle" type="java.lang.String" resourceKey="mjm.TabConstraints.tabTitle"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="kTextField" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="382" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane1" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="kTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="134" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="jLabel1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+                            <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="kTextField">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="kTextField.text"/>
+                            <Property name="name" type="java.lang.String" value="kTextField" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                          <Properties>
+                            <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JTextArea" name="jTextArea1">
+                              <Properties>
+                                <Property name="columns" type="int" value="20"/>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="rows" type="int" value="5"/>
+                                <Property name="text" type="java.lang.String" resourceKey="jTextArea1.text"/>
+                                <Property name="name" type="java.lang.String" value="jTextArea1" noResource="true"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                      </SubComponents>
                     </Container>
                   </SubComponents>
                 </Container>
@@ -561,6 +639,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,43,0,0,1,-116"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,43,0,0,2,1"/>
   </AuxValues>
 </Form>

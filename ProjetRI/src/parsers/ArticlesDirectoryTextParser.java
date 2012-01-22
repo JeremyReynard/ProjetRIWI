@@ -95,11 +95,11 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
                             for (int i = 0; i < tabString.length; ++i) {
                                 // lowercase
-
-                                word = tabString[i].toLowerCase();
+                                word = tabString[i].toLowerCase();                                
 
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))) {
 
+                                    word = Stemmer.lemmeWord(word);
                                     nbWordsInDoc++;
 
                                     valueMap = this.index.getCollectionData().get(word);

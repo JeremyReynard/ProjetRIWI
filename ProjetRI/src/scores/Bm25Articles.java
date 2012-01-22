@@ -31,7 +31,6 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         Map<String, Double> scores = new HashMap<>();
         
         String documentNumber;
-        Iterator it;
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
