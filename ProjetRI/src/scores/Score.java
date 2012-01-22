@@ -69,25 +69,6 @@ public class Score {
         return mapValue.size();
     }
     
-    /*
-     * @return the the term frequency in a specific document
-     */
-    public Integer getDocumentFrequency(Index index, String word,String documentTitle) {
-        
-        Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
-        
-        if (mapValue == null) {
-            // -1 because 0 make a divide by 0 error
-            return -1;
-        }else if(mapValue.get(documentTitle)!=null){
-            
-            return mapValue.size();
-        
-        }
-        // -1 because 0 make a divide by 0 error
-        return -1;
-    }
-    
     public void createRunFile(String fileName, String requestNumber, String pathElement,Map<String, Double> scores, int runNumber){
         
         double maxValue;
