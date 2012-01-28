@@ -79,7 +79,7 @@ public class ArticleXMLParser extends DefaultHandler {
                     value = attributes.getValue(i);
                     valueSplitted = value.split("/");
                     linkedDocIdWithXML = valueSplitted[valueSplitted.length-1];
-                    linkedDocIdWithoutXML = linkedDocIdWithXML.substring(0, linkedDocIdWithXML.length()-4);
+                    linkedDocIdWithoutXML = linkedDocIdWithXML.replace(".xml", "");
                     
                     if(this.pagerank.containsKey(linkedDocIdWithoutXML)){
                         this.pagerank.get(linkedDocIdWithoutXML).add(currentDocId);
