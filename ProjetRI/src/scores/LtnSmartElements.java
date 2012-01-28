@@ -49,9 +49,7 @@ public class LtnSmartElements extends ScoreElements {
                     paths = generatedPathsList(index.getCollectionData().get(word).get(documentNumber));
                     for (String p : paths) {
                         score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), p);
-                        if (pathsScores.containsKey(p)) {
-                            //pathsScores.put(p,pathsScores.get(p) + score);
-                        } else {
+                        if (!pathsScores.containsKey(p)) {
                             pathsScores.put(p, score);
                         }
                     }
@@ -87,15 +85,13 @@ public class LtnSmartElements extends ScoreElements {
         String[] splitedPath;
         String s;
         for (String p : paths) {
-            //System.out.println("Precision : "+this.precision +" p : "+p);
             if (p.startsWith(this.precision)) {
                 p = this.precision;
                 splitedPath = p.split("/");
-                // System.out.println(splitedPath.toString());
                 for (int i = 1; i < splitedPath.length; i++) {
                     s = "";
                     for (int j = 1; j <= i; j++) {
-                        s = s + "/" + splitedPath[j]/*.replaceAll("\\[\\d+\\]", "")*/;
+                        s = s + "/" + splitedPath[j];
                     }
                     if (!pathsList.contains(s)) {
                         pathsList.add(s);
@@ -108,7 +104,7 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
 
         String request = "Gottschalk";
 
@@ -117,7 +113,6 @@ public class LtnSmartElements extends ScoreElements {
         LtnSmartElements score = new LtnSmartElements(request, index, "/article");
 
         Map<String, Map<String, Double>> scores = score.getScores();
-        System.out.println(scores.get("10003934").toString());
 
         System.out.println("[main][scores]" + scores.toString());
     }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package scores;
 
 import index.Index;
@@ -60,23 +56,19 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
         int df = getDocumentFrequency(index, word);
 
-        /*  System.out.println("Avdl : "+index.getAvdl("/article"));
-        System.out.println("df : "+df);
-        System.out.println("dl : "+documentLength);
-        System.out.println("tf : "+termFrequency);
-        System.out.println("N : "+index.getN().get("/article"));*/
-
         if (df == -1) {
             return 0;
         }
 
-        double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl /avdl)) + tf)) * Math.log((N - df + 0.5) / (df + 0.5));
+        double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl / avdl)) + tf)) * Math.log((N - df + 0.5) / (df + 0.5));
 
         return wtd;
     }
 
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1000.serial");
+        System.out.println("Begin of deserialization...");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        System.out.println("End of deserialization.");
 
         Bm25Articles score = new Bm25Articles("states", index, 1, 0.5);
 

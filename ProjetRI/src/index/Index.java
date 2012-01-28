@@ -28,6 +28,10 @@ public class Index implements Serializable {
      * List of documents' lengths
      */
     private Map<String, Map<String, Integer>> dlMap;
+    /*
+     * Map of links
+     */
+    private Map<String, ArrayList<String>> links;
 
     /**
      * The constructor 
@@ -40,6 +44,7 @@ public class Index implements Serializable {
         this.collectionData = new HashMap<>();
         this.dlMap = new HashMap<>();
         this.N = new HashMap<>();
+        this.links = new HashMap<>();
     }
 
     public Map<String, Map<String, ArrayList<String>>> getCollectionData() {
@@ -65,14 +70,14 @@ public class Index implements Serializable {
     public Map<String, Map<String, Integer>> getDlMap() {
         return dlMap;
     }
-    
-    public int getDl(String documentId, String path){
+
+    public int getDl(String documentId, String path) {
         int dl = 0;
         String p;
-        for(Iterator i = dlMap.get(documentId).keySet().iterator(); i.hasNext();){
+        for (Iterator i = dlMap.get(documentId).keySet().iterator(); i.hasNext();) {
             p = i.next().toString();
-            if(p.startsWith(path)){
-                dl+= dlMap.get(documentId).get(p).intValue();
+            if (p.startsWith(path)) {
+                dl += dlMap.get(documentId).get(p).intValue();
             }
         }
         return dl;
@@ -86,13 +91,13 @@ public class Index implements Serializable {
 
         double dlSum = 0;
         String key = "";
-        String p ="";
+        String p = "";
 
         for (Iterator i = dlMap.keySet().iterator(); i.hasNext();) {
             key = i.next().toString();
-            for(Iterator j = dlMap.get(key).keySet().iterator(); j.hasNext();){
+            for (Iterator j = dlMap.get(key).keySet().iterator(); j.hasNext();) {
                 p = j.next().toString();
-                if(p.startsWith(path)){
+                if (p.startsWith(path)) {
                     dlSum += dlMap.get(key).get(p).intValue();
                 }
             }
@@ -130,4 +135,14 @@ public class Index implements Serializable {
 
         return s + "}";
     }
+
+    public Map<String, ArrayList<String>> getLinks() {
+        return links;
+    }
+
+    public void setLinks(Map<String, ArrayList<String>> links) {
+        this.links = links;
+    }
+    
+    
 }

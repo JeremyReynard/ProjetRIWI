@@ -15,7 +15,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import parsers.Stemmer;
 
 /**
  *
@@ -33,7 +32,7 @@ public class ScoreElements {
      */
     public ScoreElements(String request, Index index) {
         this.index = index;
-        this.request = Stemmer.lemmeWord(request.toLowerCase());
+        this.request = request.toLowerCase();
     }
 
     /*
@@ -53,7 +52,6 @@ public class ScoreElements {
                 tf++;
             } else {
                 for (String p : mapValue.get(documentTitle)) {
-                    //System.out.println(p);
                     if (p.startsWith(path)) {
                         tf++;
                     }
@@ -69,26 +67,33 @@ public class ScoreElements {
     public Integer getDocumentFrequency(Index index, String word, String path) {
 
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
+        
+        String documentNumber;
+        int df = 0;
+        int k;
+        boolean isFound;
+        String p = "";
 
         if (mapValue == null) {
             // -1 because 0 make a divide by 0 error
             return -1;
         }
-        String documentNumber;
-        int df = 0;
-        boolean isFound;
+
         for (Iterator i = mapValue.keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
             isFound = false;
             if (mapValue.get(documentNumber).contains(path)) {
                 df++;
             } else {
-                for (String p : mapValue.get(documentNumber)) {
-                    //System.out.println(p);
+
+                k = 0;
+                while(k < mapValue.get(documentNumber).size() && !isFound) {
+                    p = mapValue.get(documentNumber).get(k);
                     if (p.startsWith(path) && !isFound) {
                         df++;
                         isFound = true;
                     }
+                    k++;
                 }
             }
         }
