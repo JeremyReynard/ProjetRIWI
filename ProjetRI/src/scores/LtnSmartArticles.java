@@ -66,7 +66,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
     
     public static void main(String[] args) {
         
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+       /* Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         String runs = "";
         System.out.println("Deserialized");
         
@@ -125,7 +125,20 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
             writer.close();
         } catch (IOException e) {
             System.out.println("[Score][createRunFile] " + e);
-        }
+        }*/
+        
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
+
+        String request = "artificial";
+
+        System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
+
+        LtnSmartArticles score = new LtnSmartArticles(request, index);
+
+        Map<String, Double> scores = score.getScores();
+
+        System.out.println("[main][scores]" + scores.toString());
+        
     }
 
 }

@@ -106,11 +106,11 @@ public class LtnSmartElements extends ScoreElements {
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
 
-        String request = "Gottschalk";
+        String request = "artificial";
 
         System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
 
-        LtnSmartElements score = new LtnSmartElements(request, index, "/article");
+        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/bdy");
 
         Map<String, Map<String, Double>> scores = score.getScores();
 
