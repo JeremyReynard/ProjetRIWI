@@ -132,6 +132,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                 }
                 
                 tempdlMap.put(articleParser.getId().toString(), articleParser.getDlMap());
+                
+                this.index.getPagerank().putAll(articleParser.getPagerank());
+                
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }
@@ -149,9 +152,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
 
-        Index index = new ArticlesDirectoryXMLParser("../../coll10").parseDirectory(jp1, jp2);
+        Index index = new ArticlesDirectoryXMLParser("../../coll").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexXML10.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexSerialized.serial");
 
         // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
 
