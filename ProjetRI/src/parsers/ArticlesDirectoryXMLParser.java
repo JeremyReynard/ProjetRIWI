@@ -132,6 +132,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                 }
                 
                 tempdlMap.put(articleParser.getId().toString(), articleParser.getDlMap());
+                
+                this.index.getPagerank().putAll(articleParser.getPagerank());
+                
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }

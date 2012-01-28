@@ -31,7 +31,7 @@ public class Index implements Serializable {
     /*
      * Map of links
      */
-    private Map<String, ArrayList<String>> links;
+    private Map<String, ArrayList<String>> pagerank;
 
     /**
      * The constructor 
@@ -44,7 +44,7 @@ public class Index implements Serializable {
         this.collectionData = new HashMap<>();
         this.dlMap = new HashMap<>();
         this.N = new HashMap<>();
-        this.links = new HashMap<>();
+        this.pagerank = new HashMap<>();
     }
 
     public Map<String, Map<String, ArrayList<String>>> getCollectionData() {
@@ -136,13 +136,12 @@ public class Index implements Serializable {
         return s + "}";
     }
 
-    public Map<String, ArrayList<String>> getLinks() {
-        return links;
+    public Map<String, ArrayList<String>> getPagerank() {
+        return pagerank;
     }
 
-    public void setLinks(Map<String, ArrayList<String>> links) {
-        this.links = links;
+    public void setPagerank(Map<String, ArrayList<String>> pagerank) {
+        this.pagerank = pagerank;
     }
-    
-    
+
 }
