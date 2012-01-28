@@ -58,11 +58,12 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         SAXParserFactory factory = null;
         SAXParser saxParser;
         ArticleXMLParser articleParser = null;
-        int numberOfWords = 0;
+
+        Map<String, Map<String, Integer>> tempdlMap = new HashMap<>();
 
         long startTime = System.currentTimeMillis();
         for (File f : files) {
-            
+
             // JProgressBar
             jpBarFile.setString(f.getName());
             jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
@@ -86,13 +87,10 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                     tag = i.next().toString();
                     if (index.getN().containsKey(tag)) {
                         index.getN().put(tag, index.getN().get(tag) + articleParser.getN().get(tag));
-                    } 
-                    else {
-                       index.getN().put(tag, articleParser.getN().get(tag)); 
+                    } else {
+                        index.getN().put(tag, articleParser.getN().get(tag));
                     }
                 }
-
-                numberOfWords = 0;
 
                 for (int i = 1; i < words.length; i++) {;
                     w = words[i];
@@ -104,12 +102,11 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                     jpBarGlobal.setValue(deltaPBGlobal + (percent / (nbFiles + 1)));
                     currentWordNumber++;
                     //--
-                   
+
                     if (!w.isEmpty() && (!Stopwords.isStopword(w))) {
-                        numberOfWords++;
                         // lemmatization
-                        w = Stemmer.lemmeWord(w.toLowerCase()); 
-                        
+                        w = w.toLowerCase();
+
                         valueMap = index.getCollectionData().get(w);
 
                         // the word is already in the collection
@@ -132,15 +129,16 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                             index.getCollectionData().get(w).put(currentDocNum, pathsList);
                         }
                     }
-                    this.index.getDlMap().put(currentDocNum, numberOfWords);
                 }
+                tempdlMap.put(articleParser.getId().toString(), articleParser.getDlMap());
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }
         }
+        index.setDlMap(tempdlMap);
 
         this.extractionTime = System.currentTimeMillis() - startTime;
-        System.out.println("End of indexing.\n");
+        System.out.println("End of indexation.\n");
         return index;
 
     }
@@ -150,15 +148,16 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
 
-        Index index = new ArticlesDirectoryXMLParser("../../coll10").parseDirectory(jp1, jp2);
+        Index index = new ArticlesDirectoryXMLParser("../../coll1000").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexXML10.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexXML1000.serial");
 
-        index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
+        // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
 
         System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl());
-        System.out.println("dl : " + index.getDlMap().toString());
+        System.out.println("avdl : " + index.getAvdl("/article"));
+        System.out.println("dl : " + index.getDlMap());
+        System.out.println("dl : " + index.getDl("717","/article"));
         //System.out.println("\n" + index.toString());
 
     }

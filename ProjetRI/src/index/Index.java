@@ -27,7 +27,7 @@ public class Index implements Serializable {
     /*
      * List of documents' lengths
      */
-    private Map<String, Integer> dlMap;
+    private Map<String, Map<String, Integer>> dlMap;
 
     /**
      * The constructor 
@@ -62,25 +62,43 @@ public class Index implements Serializable {
         this.N = N;
     }
 
-    public Map<String, Integer> getDlMap() {
+    public Map<String, Map<String, Integer>> getDlMap() {
         return dlMap;
     }
+    
+    public int getDl(String documentId, String path){
+        int dl = 0;
+        String p;
+        for(Iterator i = dlMap.get(documentId).keySet().iterator(); i.hasNext();){
+            p = i.next().toString();
+            if(p.startsWith(path)){
+                dl+= dlMap.get(documentId).get(p).intValue();
+            }
+        }
+        return dl;
+    }
 
-    public void setDlMap(Map<String, Integer> dlMap) {
+    public void setDlMap(Map<String, Map<String, Integer>> dlMap) {
         this.dlMap = dlMap;
     }
 
-    public double getAvdl() {
+    public double getAvdl(String path) {
 
         double dlSum = 0;
-        Integer dl = 0;
+        String key = "";
+        String p ="";
 
-        for (Iterator i = dlMap.values().iterator(); i.hasNext();) {
-            dl = (Integer) i.next();
-            dlSum += dl.intValue();
+        for (Iterator i = dlMap.keySet().iterator(); i.hasNext();) {
+            key = i.next().toString();
+            for(Iterator j = dlMap.get(key).keySet().iterator(); j.hasNext();){
+                p = j.next().toString();
+                if(p.startsWith(path)){
+                    dlSum += dlMap.get(key).get(p).intValue();
+                }
+            }
         }
 
-        return (dlSum / dlMap.size());
+        return dlSum / getN(path);
     }
 
     public int getNumberOfWords() {
@@ -94,9 +112,9 @@ public class Index implements Serializable {
 
         return nbWords;
     }
-    
-    public int getSize(){
-        
+
+    public int getSize() {
+
         return this.collectionData.size();
     }
 

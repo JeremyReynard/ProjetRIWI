@@ -29,14 +29,14 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
     public Map<String, Double> getScores() {
 
         Map<String, Double> scores = new HashMap<>();
-        
+
         String documentNumber;
 
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
-        
+
         return scores;
 
     }
@@ -45,36 +45,49 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
     public double getRequestScore(String documentNumber) {
         double score = 0;
 
+        int dl = index.getDl(documentNumber, "/article");
+        int N = index.getN().get("/article");
+        double avdl = index.getAvdl("/article");
+
         for (String word : this.request.split("\\W")) {
-            int dl = index.getDlMap().get(documentNumber).intValue();
-            score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl);
+            score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl, N, avdl);
         }
 
         return score;
     }
 
-    @Override
-    public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
+    public double getDocumentWordScore(String word, float tf, int dl, int N, double avdl) {
 
         int df = getDocumentFrequency(index, word);
+
+        /*  System.out.println("Avdl : "+index.getAvdl("/article"));
+        System.out.println("df : "+df);
+        System.out.println("dl : "+documentLength);
+        System.out.println("tf : "+termFrequency);
+        System.out.println("N : "+index.getN().get("/article"));*/
 
         if (df == -1) {
             return 0;
         }
 
-        double wtd = ((termFrequency * (k1 + 1)) / (k1 * (1 - b + b * (documentLength / index.getAvdl())) + termFrequency)) * Math.log((index.getN().get("article") - df + 0.5) / (df + 0.5));
+        double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl /avdl)) + tf)) * Math.log((N - df + 0.5) / (df + 0.5));
 
         return wtd;
     }
 
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1000.serial");
 
-        Bm25Articles score = new Bm25Articles("largely", index, 1, 0.5);
+        Bm25Articles score = new Bm25Articles("states", index, 1, 0.5);
 
         Map<String, Double> scores = score.getScores();
-        
-        System.out.println("Scores : "+scores);
 
+        System.out.println("Scores : " + scores);
+
+    }
+
+    @Override
+    public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

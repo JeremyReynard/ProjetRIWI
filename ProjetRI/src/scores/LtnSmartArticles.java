@@ -49,7 +49,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         double score = 0;
         
         for (String word : this.request.split("[\\W]+")) {
-            int dl = index.getDlMap().get(documentNumber).intValue();
+            int dl = index.getDl(documentNumber,"/article");
             score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl);
         }
         
@@ -61,7 +61,7 @@ public class LtnSmartArticles extends Score implements CommonsScoreInterface{
         
         int documentFrequency = getDocumentFrequency(index, word);
                 
-        return Math.log(1.0 + termFrequency) * (index.getN().get("article") /(documentFrequency) ) ;
+        return Math.log(1.0 + termFrequency) * (index.getN().get("/article") /(documentFrequency) ) ;
     }
     
     public static void main(String[] args) {

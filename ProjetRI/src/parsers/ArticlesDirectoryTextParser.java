@@ -32,7 +32,8 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
     public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
 
         int nbWordsInDoc = 0;
-        Map<String, Integer> mapDL = new HashMap<>();
+        Map<String, Map<String, Integer>> mapDL = new HashMap<>();
+        Map<String, Integer> pathLengthMap = new HashMap<>();
         Map<String, ArrayList<String>> valueMap = null;
 
         // JProgress Bar
@@ -100,7 +101,6 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
                                 if (!word.isEmpty() && (!Stopwords.isStopword(word))) {
 
-                                    word = Stemmer.lemmeWord(word);
                                     nbWordsInDoc++;
 
                                     valueMap = this.index.getCollectionData().get(word);
@@ -109,25 +109,26 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
                                     if (valueMap != null) {
                                         // the word has been already found in the current document
                                         if (valueMap.containsKey(currentDocNum)) {
-                                            valueMap.get(currentDocNum).add("/article[1]");
+                                            valueMap.get(currentDocNum).add("/article");
                                             valueMap.put(currentDocNum, valueMap.get(currentDocNum));
                                         } else {
                                             //first occurrence of the word in this document
                                             pathsList = new ArrayList<>();
-                                            pathsList.add("/article[1]");
+                                            pathsList.add("/article");
                                             valueMap.put(currentDocNum, pathsList);
                                         }
                                     } // first occurrence of the word : add it to the collection
                                     else {
                                         index.getCollectionData().put(word, new HashMap<String, ArrayList<String>>());
                                         pathsList = new ArrayList<>();
-                                        pathsList.add("/article[1]");
+                                        pathsList.add("/article");
                                         index.getCollectionData().get(word).put(currentDocNum, pathsList);
                                     }
                                 }
                             }
                         } else {
-                            mapDL.put(currentDocNum, nbWordsInDoc);
+                            pathLengthMap.put("/article", nbWordsInDoc);
+                            mapDL.put(currentDocNum, pathLengthMap);
                             nbWordsInDoc = 0;
                         }
                     }
@@ -138,7 +139,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
                 //e.printStackTrace();
             }
         }
-        N.put("article", n);
+        N.put("/article", n);
         index.setN(N);
         index.setDlMap(mapDL);
         this.extractionTime = System.currentTimeMillis() - startTime;
@@ -178,7 +179,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
         index = IndexDeserialization.deserialize("fileSerialization/indexText1.serial");
 
         System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl());
+        System.out.println("avdl : " + index.getAvdl("/article"));
         System.out.println("dl : " + index.getDlMap().toString());
         System.out.println("\n" + index.toString());
 

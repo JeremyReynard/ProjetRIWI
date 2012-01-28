@@ -17,8 +17,11 @@ import serialization.IndexDeserialization;
  */
 public class LtnSmartElements extends ScoreElements {
 
-    public LtnSmartElements(String request, Index index) {
+    String precision;
+
+    public LtnSmartElements(String request, Index index, String precision) {
         super(request, index);
+        this.precision = precision;
     }
 
     public Map<String, Map<String, Double>> getScores() {
@@ -40,14 +43,12 @@ public class LtnSmartElements extends ScoreElements {
         ArrayList<String> paths;
         double score;
         for (String word : this.request.split("[\\W]+")) {
-            int dl = index.getDlMap().get(documentNumber).intValue();
             //For each path
-
             if (index.getCollectionData().get(word) != null) {
                 if (index.getCollectionData().get(word).get(documentNumber) != null) {
                     paths = generatedPathsList(index.getCollectionData().get(word).get(documentNumber));
                     for (String p : paths) {
-                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), p, dl);
+                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), p);
                         if (pathsScores.containsKey(p)) {
                             //pathsScores.put(p,pathsScores.get(p) + score);
                         } else {
@@ -61,16 +62,23 @@ public class LtnSmartElements extends ScoreElements {
         return pathsScores;
     }
 
-    public double getDocumentWordScore(String word, float termFrequency, String path, int documentLength) {
+    public double getDocumentWordScore(String word, float termFrequency, String path) {
 
         int documentFrequency = getDocumentFrequency(index, word, path);
 
         String[] tags = path.split("/");
         String tag = tags[tags.length - 1].replaceAll("\\[\\d+\\]", "");
 
-        //System.out.println(path + " " + documentFrequency+ " " + tag);
+        String pathForN = "";
+        for (int i = 0; i < tags.length - 1; i++) {
+            if (!tags[i].isEmpty()) {
+                pathForN = pathForN + "/" + tags[i];
+            }
+        }
 
-        return Math.log(1.0 + termFrequency) * (index.getN().get(tag) / (documentFrequency));
+        pathForN = pathForN + "/" + tag;
+
+        return Math.log(1.0 + termFrequency) * (index.getN(pathForN) / (documentFrequency));
     }
 
     private ArrayList<String> generatedPathsList(ArrayList<String> paths) {
@@ -79,13 +87,20 @@ public class LtnSmartElements extends ScoreElements {
         String[] splitedPath;
         String s;
         for (String p : paths) {
-            splitedPath = p.split("/");
-            for (int i = 1; i < splitedPath.length; i++) {
-                s = "";
-                for (int j = 1; j <= i; j++) {
-                    s = s + "/" + splitedPath[j]/*.replaceAll("\\[\\d+\\]", "")*/;
+            //System.out.println("Precision : "+this.precision +" p : "+p);
+            if (p.startsWith(this.precision)) {
+                p = this.precision;
+                splitedPath = p.split("/");
+                // System.out.println(splitedPath.toString());
+                for (int i = 1; i < splitedPath.length; i++) {
+                    s = "";
+                    for (int j = 1; j <= i; j++) {
+                        s = s + "/" + splitedPath[j]/*.replaceAll("\\[\\d+\\]", "")*/;
+                    }
+                    if (!pathsList.contains(s)) {
+                        pathsList.add(s);
+                    }
                 }
-                pathsList.add(s);
             }
         }
 
@@ -97,11 +112,12 @@ public class LtnSmartElements extends ScoreElements {
 
         String request = "Gottschalk";
 
-        System.out.println(index.getCollectionData().get(request) + "\n");
+        System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
 
-        LtnSmartElements score = new LtnSmartElements(request, index);
+        LtnSmartElements score = new LtnSmartElements(request, index, "/article");
 
         Map<String, Map<String, Double>> scores = score.getScores();
+        System.out.println(scores.get("10003934").toString());
 
         System.out.println("[main][scores]" + scores.toString());
     }

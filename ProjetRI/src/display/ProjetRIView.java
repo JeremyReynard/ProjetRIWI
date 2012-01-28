@@ -29,10 +29,13 @@ import parsers.ArticlesDirectoryXMLParser;
 import parsers.ArticlesDirectoryParser;
 import parsers.Stemmer;
 import scores.Bm25Articles;
+import scores.Bm25Elements;
 import scores.LtcSmartArticles;
 import scores.LtnSmartArticles;
+import scores.LtnSmartElements;
 import scores.MJMscore;
 import scores.Score;
+import scores.ScoreElements;
 import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
@@ -89,7 +92,13 @@ public class ProjetRIView extends FrameView {
         bLabel = new javax.swing.JLabel();
         k1TF = new javax.swing.JTextField();
         bTF = new javax.swing.JTextField();
+        bm25ArticleRadioButton = new javax.swing.JRadioButton();
+        bm25ElementsRadioButton = new javax.swing.JRadioButton();
+        bm25PathTextField = new javax.swing.JTextField();
         ltn = new javax.swing.JPanel();
+        ltnArticleRadioButton = new javax.swing.JRadioButton();
+        ltnElementsRadioButton = new javax.swing.JRadioButton();
+        ltnPathTextField = new javax.swing.JTextField();
         ltc = new javax.swing.JPanel();
         mjm = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -103,6 +112,8 @@ public class ProjetRIView extends FrameView {
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
@@ -286,22 +297,40 @@ public class ProjetRIView extends FrameView {
         bTF.setText(resourceMap.getString("bTF.text")); // NOI18N
         bTF.setName("bTF"); // NOI18N
 
+        buttonGroup2.add(bm25ArticleRadioButton);
+        bm25ArticleRadioButton.setSelected(true);
+        bm25ArticleRadioButton.setText(resourceMap.getString("bm25ArticleRadioButton.text")); // NOI18N
+        bm25ArticleRadioButton.setName("bm25ArticleRadioButton"); // NOI18N
+
+        buttonGroup2.add(bm25ElementsRadioButton);
+        bm25ElementsRadioButton.setText(resourceMap.getString("bm25ElementsRadioButton.text")); // NOI18N
+        bm25ElementsRadioButton.setName("bm25ElementsRadioButton"); // NOI18N
+
+        bm25PathTextField.setText(resourceMap.getString("bm25PathTextField.text")); // NOI18N
+        bm25PathTextField.setName("bm25PathTextField"); // NOI18N
+
         javax.swing.GroupLayout bm25Layout = new javax.swing.GroupLayout(bm25);
         bm25.setLayout(bm25Layout);
         bm25Layout.setHorizontalGroup(
             bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bm25Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bm25Layout.createSequentialGroup()
-                        .addComponent(k1label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bm25Layout.createSequentialGroup()
-                        .addComponent(bLabel)
+                        .addComponent(bm25ElementsRadioButton)
                         .addGap(18, 18, 18)
-                        .addComponent(bTF)))
-                .addContainerGap(399, Short.MAX_VALUE))
+                        .addComponent(bm25PathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                    .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(bm25Layout.createSequentialGroup()
+                            .addComponent(k1label)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(bm25Layout.createSequentialGroup()
+                            .addComponent(bLabel)
+                            .addGap(18, 18, 18)
+                            .addComponent(bTF)))
+                    .addComponent(bm25ArticleRadioButton))
+                .addContainerGap())
         );
         bm25Layout.setVerticalGroup(
             bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,22 +343,60 @@ public class ProjetRIView extends FrameView {
                 .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bLabel)
                     .addComponent(bTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(307, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bm25ArticleRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bm25ElementsRadioButton)
+                    .addComponent(bm25PathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
 
         searchTabbedPane.addTab(resourceMap.getString("bm25.TabConstraints.tabTitle"), bm25); // NOI18N
 
         ltn.setName("ltn"); // NOI18N
 
+        buttonGroup1.add(ltnArticleRadioButton);
+        ltnArticleRadioButton.setSelected(true);
+        ltnArticleRadioButton.setText(resourceMap.getString("ltnArticleRadioButton.text")); // NOI18N
+        ltnArticleRadioButton.setName("ltnArticleRadioButton"); // NOI18N
+
+        buttonGroup1.add(ltnElementsRadioButton);
+        ltnElementsRadioButton.setText(resourceMap.getString("ltnElementsRadioButton.text")); // NOI18N
+        ltnElementsRadioButton.setName("ltnElementsRadioButton"); // NOI18N
+
+        ltnPathTextField.setText(resourceMap.getString("ltnPathTextField.text")); // NOI18N
+        ltnPathTextField.setName("ltnPathTextField"); // NOI18N
+        ltnPathTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ltnPathTextFieldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ltnLayout = new javax.swing.GroupLayout(ltn);
         ltn.setLayout(ltnLayout);
         ltnLayout.setHorizontalGroup(
             ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
+            .addGroup(ltnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ltnArticleRadioButton)
+                    .addGroup(ltnLayout.createSequentialGroup()
+                        .addComponent(ltnElementsRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(ltnPathTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         ltnLayout.setVerticalGroup(
             ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGroup(ltnLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(ltnArticleRadioButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ltnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ltnElementsRadioButton)
+                    .addComponent(ltnPathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         searchTabbedPane.addTab(resourceMap.getString("ltn.TabConstraints.tabTitle"), ltn); // NOI18N
@@ -649,6 +716,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
             }
         };
         deserializationTh.start();
+        showIndexBrut.setEnabled(true);
     }
 }//GEN-LAST:event_indexFileChooseActionPerformed
 
@@ -662,82 +730,133 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                 String runs = "";
                 Component selectedTab = searchTabbedPane.getSelectedComponent();
                 Score score = null;
+                ScoreElements scoreElements = null;
                 Map<String, Double> scores = null;
+                Map<String, Map<String, Double>> scoresElements = null;
                 int k1;
                 Double b;
 
                 String request = null;
                 String id = null;
 
+                String precision = "/article";
+
                 int nbRequests = requestsMap.size();
                 int requestNumber = 0;
                 String requestStr = null;
 
                 for (Map.Entry<String, String> e : requestsMap.entrySet()) {
+                    System.out.println("Query : "+e.getKey());
                     request = e.getValue();
                     id = e.getKey();
                     runCreationPB.setValue((100 * requestNumber) / nbRequests);
                     requestNumber++;
 
                     if (selectedTab.equals(ltn)) {
-
+                        System.out.print("LTN : ");
                         requestStr = "[LTN] ";
                         requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
-
-                        score = new LtnSmartArticles(Stemmer.lemmeRequest(request), index);
-                        scores = ((LtnSmartArticles) score).getScores();
+                        if (ltnArticleRadioButton.isSelected()) {
+                            System.out.println("Article");
+                            score = new LtnSmartArticles(request, index);
+                            scores = ((LtnSmartArticles) score).getScores();
+                        } else if (ltnElementsRadioButton.isSelected()) {
+                            System.out.println("Elements");
+                            precision = ltnPathTextField.getText();
+                            scoreElements = new LtnSmartElements(request, index, precision);
+                            scoresElements = ((LtnSmartElements) scoreElements).getScores();
+                        }
                     } else if (selectedTab.equals(bm25)) {
+                        System.out.print("BM25 : ");
                         k1 = Integer.parseInt(k1TF.getText());
                         b = Double.parseDouble(bTF.getText());
-
                         requestStr = "[BM25] ";
                         requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
-
-                        score = new Bm25Articles(Stemmer.lemmeRequest(request), index, k1, b);
-                        scores = ((Bm25Articles) score).getScores();
-                    }else if (selectedTab.equals(ltc)) {
-
+                        if (bm25ArticleRadioButton.isSelected()) {
+                            System.out.println("Article");
+                            score = new Bm25Articles(request, index, k1, b);
+                            scores = ((Bm25Articles) score).getScores();
+                        } else if (bm25ElementsRadioButton.isSelected()) {
+                            System.out.print("Elements with precision :");
+                            precision = bm25PathTextField.getText();
+                            System.out.println(precision);
+                            scoreElements = new Bm25Elements(request, index, k1, b, precision);
+                            scoresElements = ((Bm25Elements) scoreElements).getScores();
+                        }
+                    } else if (selectedTab.equals(ltc)) {
+                        System.out.println("LTC");
                         requestStr = "[LTC] ";
                         requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
 
-                        score = new LtcSmartArticles(Stemmer.lemmeRequest(request), index);
+                        score = new LtcSmartArticles(request, index);
                         scores = ((LtcSmartArticles) score).getScores();
-                    } else if (selectedTab.equals(mjm)){
+                    } else if (selectedTab.equals(mjm)) {
+                        System.out.println("MJM");
                         requestStr = "[MJM] ";
                         requestStr += id + " - " + request;
-                        runCreationPB.setString(requestStr);  
-                        
-                        score = new MJMscore(Stemmer.lemmeRequest(request), index,  Integer.parseInt(kTextField.getText()));
+                        runCreationPB.setString(requestStr);
+
+                        score = new MJMscore(request, index, Integer.parseInt(kTextField.getText()));
                         scores = ((MJMscore) score).getScores();
                     }
-                                        
+
                     double maxValue;
                     String docNumber = "";
+                    String path = "";
                     String next;
+                    String nextPath;
 
                     String separator = " ";
 
+                    System.out.println("Begin of ordering scoring...");
                     for (int runIndice = 1; runIndice <= 1500; runIndice++) {
                         maxValue = Double.MIN_VALUE;
-                        for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
-                            next = (String) j.next();
-                            if (scores.get(next) > maxValue) {
-                                docNumber = next;
-                                maxValue = scores.get(next);
+                        if (selectedTab.equals(mjm)
+                                || selectedTab.equals(ltc)
+                                || (selectedTab.equals(ltn) && ltnArticleRadioButton.isSelected())
+                                || (selectedTab.equals(bm25) && bm25ArticleRadioButton.isSelected())) {
+                            for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
+                                next = (String) j.next();
+                                if (scores.get(next) > maxValue) {
+                                    docNumber = next;
+                                    maxValue = scores.get(next);
+                                }
                             }
-                        }
-                        scores.remove(docNumber);
+                            scores.remove(docNumber);
 
-                        runs += id + separator
-                                + "Q0" + separator
-                                + docNumber + separator
-                                + runIndice + separator
-                                + (1500 - runIndice + 1) + separator
-                                + "MichaelJeremyMickael" + separator
-                                + "/article[1]" + "\n";
+                            runs += id + separator
+                                    + "Q0" + separator
+                                    + docNumber + separator
+                                    + runIndice + separator
+                                    + (1500 - runIndice + 1) + separator
+                                    + "MichaelJeremyMickael" + separator
+                                    + "/article[1]" + "\n";
+                        } else {
+                            for (Iterator j = scoresElements.keySet().iterator(); j.hasNext();) {
+                                next = j.next().toString();
+                                for (Iterator k = scoresElements.get(next).keySet().iterator(); k.hasNext();) {
+                                    nextPath = k.next().toString();
+                                    if (scoresElements.get(next).get(nextPath) > maxValue) {
+                                        docNumber = next;
+                                        maxValue = scoresElements.get(next).get(nextPath);
+                                        path = nextPath;
+                                    }
+                                }
+                            }
+                            scoresElements.get(docNumber).remove(path);
+
+                            runs += id + separator
+                                    + "Q0" + separator
+                                    + docNumber + separator
+                                    + runIndice + separator
+                                    + (1500 - runIndice + 1) + separator
+                                    + "MichaelJeremyMickael" + separator
+                                    + path + "[1]" + "\n";
+                        }
+
                     }
                 }
                 Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickael" + ".txt");
@@ -755,10 +874,19 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         runCreationThread.start();
 
     }//GEN-LAST:event_exportRunButtonActionPerformed
+
+    private void ltnPathTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ltnPathTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ltnPathTextFieldActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bLabel;
     private javax.swing.JTextField bTF;
     private javax.swing.JPanel bm25;
+    private javax.swing.JRadioButton bm25ArticleRadioButton;
+    private javax.swing.JRadioButton bm25ElementsRadioButton;
+    private javax.swing.JTextField bm25PathTextField;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel creationPane;
     private javax.swing.JButton directoryChoose;
     private javax.swing.JButton exportRunButton;
@@ -777,6 +905,9 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JTextField kTextField;
     private javax.swing.JPanel ltc;
     private javax.swing.JPanel ltn;
+    private javax.swing.JRadioButton ltnArticleRadioButton;
+    private javax.swing.JRadioButton ltnElementsRadioButton;
+    private javax.swing.JTextField ltnPathTextField;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
@@ -789,7 +920,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JButton showIndexWord;
     private javax.swing.JButton startExtract;
     // End of variables declaration//GEN-END:variables
-    private JDialog aboutBox;   
+    private JDialog aboutBox;
     private String dirPath = "";
     private String indexPath = "";
     private ArticlesDirectoryParser indexator;
@@ -798,7 +929,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private final HashMap<String, String> requestsMap =
             new HashMap() {
 
-                {                   
+                {
                     put("2009011", "olive oil health benefit");
                     put("2009036", "notting hill film actors");
                     put("2009067", "probabilistic models in information retrieval");
@@ -806,6 +937,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                     put("2009074", "web ranking scoring algorithm");
                     put("2009078", "supervised machine learning algorithm");
                     put("2009085", "operating system +mutual +exclusion");
+
+
                 }
             };
 }

@@ -15,7 +15,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import parsers.Stemmer;
 import serialization.IndexDeserialization;
 
 /**
@@ -51,7 +50,7 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
         double score = 0;
         
         for (String word : this.request.split("[\\W]+")) {
-            int dl = index.getDlMap().get(documentNumber).intValue();
+            int dl = index.getDl(documentNumber,"/article");
             score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl,documentNumber);
         }
         
@@ -66,6 +65,8 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
     public double getDocumentWordScore(String word,float termFrequency,int documentLength, String documentNumber){
         
         int documentFrequency = getDocumentFrequency(index, word);
+        
+        int N = index.getN().get("/article");
         
         String termTemporary ="";
         int termTemporaryFrequency = 0;
@@ -85,20 +86,20 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
 
             
             //Formula
-            sommePonderations+=Math.pow((Math.log(1+termTemporaryFrequency)*(index.getN().get("article") /termTemporaryDocumentFrequency)),2);
+            sommePonderations+=Math.pow((Math.log(1+termTemporaryFrequency)*(N /termTemporaryDocumentFrequency)),2);
             
         }
         //Score formula
-        Double result = Math.log(1+ termFrequency)/Math.sqrt(sommePonderations)* (index.getN().get("article") /documentFrequency );
+        Double result = Math.log(1+ termFrequency)/Math.sqrt(sommePonderations)* (N/documentFrequency );
         
         return result;
     }
     
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
         String runs = "";
         System.out.println("Deserialized");
-        LtcSmartArticles score = new LtcSmartArticles(Stemmer.lemmeRequest("Algorithms for calculating variance"), index);
+        LtcSmartArticles score = new LtcSmartArticles(("Algorithms for calculating variance"), index);
         System.out.println("score");
         Map<String, Double> scores = score.getScores();
         

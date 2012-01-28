@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import parsers.Stemmer;
-import serialization.IndexDeserialization;
 
 /**
  *
@@ -77,15 +76,18 @@ public class ScoreElements {
         }
         String documentNumber;
         int df = 0;
+        boolean isFound;
         for (Iterator i = mapValue.keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
+            isFound = false;
             if (mapValue.get(documentNumber).contains(path)) {
                 df++;
             } else {
                 for (String p : mapValue.get(documentNumber)) {
                     //System.out.println(p);
-                    if (p.startsWith(path)) {
+                    if (p.startsWith(path) && !isFound) {
                         df++;
+                        isFound = true;
                     }
                 }
             }
@@ -147,7 +149,7 @@ public class ScoreElements {
     }
     
     
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
     Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
     
     LtnSmartElements score = new LtnSmartElements("Gottschalk", index);
@@ -158,5 +160,5 @@ public class ScoreElements {
     //System.out.println("[main][scores]"+scores.toString());
     
     
-    }
+    }*/
 }

@@ -52,7 +52,7 @@ public class MJMscore extends Score implements CommonsScoreInterface{
         int dl = 0;
         
         for (String word : this.request.split("\\W")) {
-            dl = index.getDlMap().get(documentNumber).intValue();
+            dl = index.getDl(documentNumber,"/article");
             
             score += wordCoeff * 
                     getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl);

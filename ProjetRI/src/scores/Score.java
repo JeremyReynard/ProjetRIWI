@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import parsers.Stemmer;
-import serialization.IndexDeserialization;
 
 /**
  *
