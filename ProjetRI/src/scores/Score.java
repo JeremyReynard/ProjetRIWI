@@ -34,7 +34,7 @@ public class Score {
      */
     public Score(String request, Index index) {
         this.index = index;
-        this.request = Stemmer.lemmeWord(request.toLowerCase());
+        this.request = request.toLowerCase();
         
     }
     

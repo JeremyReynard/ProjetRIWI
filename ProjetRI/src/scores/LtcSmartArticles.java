@@ -68,22 +68,20 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
         
         int N = index.getN().get("/article");
         
-        String termTemporary ="";
         int termTemporaryFrequency = 0;
         int termTemporaryDocumentFrequency = 0;
         int sommePonderations=0;
-        //For all word in the index
-        for(Iterator iteratorKeyMap = this.index.getCollectionData().keySet().iterator();iteratorKeyMap.hasNext();)
+        //For all word in the request
+        for(String requestWord :this.request.split("[\\W]+"))
         {
-            //Get an existing word
-            termTemporary = iteratorKeyMap.next().toString();
+            
             //Get the term frequency of an existing word
-            termTemporaryFrequency = getTermFrequency(index, termTemporary, documentNumber);
+            termTemporaryFrequency = getTermFrequency(index, requestWord, documentNumber);
             
             //Get the term frenquency of an existing word in a specific document
-
-            termTemporaryDocumentFrequency = getDocumentFrequency(index, termTemporary);
-
+            
+            termTemporaryDocumentFrequency = getDocumentFrequency(index, requestWord);
+            
             
             //Formula
             sommePonderations+=Math.pow((Math.log(1+termTemporaryFrequency)*(N /termTemporaryDocumentFrequency)),2);
@@ -96,40 +94,58 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
     }
     
     public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         String runs = "";
-        System.out.println("Deserialized");
-        LtcSmartArticles score = new LtcSmartArticles(("Algorithms for calculating variance"), index);
-        System.out.println("score");
-        Map<String, Double> scores = score.getScores();
         
-        double maxValue;
-        String docNumber = "";
-        String next;
-        
-        String separator = " ";
-        
-        for (int runIndice = 1; runIndice <= 1500; runIndice++) {
-            maxValue = Double.MIN_VALUE;
-            for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
-                next = (String) j.next();
-                if (scores.get(next) > maxValue) {
-                    docNumber = next;
-                    maxValue = scores.get(next);
-                }
-            }
-            scores.remove(docNumber);
+        HashMap<String, String> requestsMap = new HashMap() {
             
-            runs += "001LTC" + separator
-                    + "Q0" + separator
-                    + docNumber + separator
-                    + runIndice + separator
-                    + (1500 - runIndice + 1) + separator
-                    + "MichaelJeremyMickael" + separator
-                    + "/article[1]" + "\n";
+            {
+                put("2009011", "olive oil health benefit");
+                put("2009036", "notting hill film actors");
+                put("2009067", "probabilistic models in information retrieval");
+                put("2009073", "web link network analysis");
+                put("2009074", "web ranking scoring algorithm");
+                put("2009078", "supervised machine learning algorithm");
+                put("2009085", "operating system +mutual +exclusion");
+                
+                
+            }
+        };
+        
+        for(Iterator iter = requestsMap.keySet().iterator();iter.hasNext();){
+            System.out.println("Deserialized");
+            String requestNum = (String)iter.next();
+            LtcSmartArticles score = new LtcSmartArticles(requestsMap.get(requestNum), index);
+            System.out.println("score: "+requestNum);
+            Map<String, Double> scores = score.getScores();
+            
+            double maxValue;
+            String docNumber = "";
+            String next;
+            
+            String separator = " ";
+            
+            for (int runIndice = 1; runIndice <= 1500; runIndice++) {
+                maxValue = Double.MIN_VALUE;
+                for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
+                    next = (String) j.next();
+                    if (scores.get(next) > maxValue) {
+                        docNumber = next;
+                        maxValue = scores.get(next);
+                    }
+                }
+                scores.remove(docNumber);
+                
+                runs += requestNum + separator
+                        + "Q0" + separator
+                        + docNumber + separator
+                        + runIndice + separator
+                        + (1500 - runIndice + 1) + separator
+                        + "MichaelJeremyMickael" + separator
+                        + "/article[1]" + "\n";
+            }
+            
         }
-        
-        
         
         Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickaelLTC" + ".txt");
         try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"), StandardOpenOption.CREATE)) {
