@@ -74,12 +74,12 @@ public class ArticleXMLParser extends DefaultHandler {
                 // Get names and values for each attribute
                 nameAttribute = attributes.getQName(i);
                 
-                if(nameAttribute.equals("xlink:href")){
+                if(nameAttribute.equals("xlink:href") && false){
                     
                     value = attributes.getValue(i);
                     valueSplitted = value.split("/");
                     linkedDocIdWithXML = valueSplitted[valueSplitted.length-1];
-                    linkedDocIdWithoutXML = linkedDocIdWithXML.substring(0, linkedDocIdWithXML.length()-4);
+                 linkedDocIdWithoutXML = linkedDocIdWithXML.substring(0, linkedDocIdWithXML.length()-4);
                     
                     if(this.pagerank.containsKey(linkedDocIdWithoutXML)){
                         this.pagerank.get(linkedDocIdWithoutXML).add(currentDocId);
