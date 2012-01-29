@@ -93,12 +93,14 @@ public class Index implements Serializable {
         String key = "";
         String p = "";
 
+        Map<String, Integer> map = null;
         for (Iterator i = dlMap.keySet().iterator(); i.hasNext();) {
             key = i.next().toString();
-            for (Iterator j = dlMap.get(key).keySet().iterator(); j.hasNext();) {
+            map = dlMap.get(key);
+            for (Iterator j = map.keySet().iterator(); j.hasNext();) {
                 p = j.next().toString();
                 if (p.startsWith(path)) {
-                    dlSum += dlMap.get(key).get(p).intValue();
+                    dlSum += map.get(p).intValue();
                 }
             }
         }

@@ -68,7 +68,14 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         return wtd;
     }
 
+    @Override
+    public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
+        
+        return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);        
+    }
+    
     public static void main(String[] args) {
+        
         System.out.println("Begin of deserialization...");
         Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         System.out.println("End of deserialization.");
@@ -81,11 +88,5 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         Map<String, Double> scores = score.getScores();
 
         System.out.println("Scores : " + scores);
-
-    }
-
-    @Override
-    public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

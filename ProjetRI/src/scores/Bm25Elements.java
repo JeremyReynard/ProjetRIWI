@@ -47,12 +47,19 @@ public class Bm25Elements extends ScoreElements {
         ArrayList<String> paths;
         double score = 0;
 
+        // optimisation
+        Map<String, ArrayList<String>> map = null;
+        ArrayList<String> list = null;
+        int dl = 0;
+        
         for (String word : this.request.split("\\W")) {
-            if (index.getCollectionData().get(word) != null) {
-                if (index.getCollectionData().get(word).get(documentNumber) != null) {
-                    paths = generatedPathsList(index.getCollectionData().get(word).get(documentNumber));
+            map = index.getCollectionData().get(word);
+            if (map != null) {
+                list = map.get(documentNumber);
+                if (list != null) {
+                    paths = generatedPathsList(list);
                     for (String p : paths) {
-                        int dl = index.getDl(documentNumber, p);
+                        dl = index.getDl(documentNumber, p);
                         score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), dl, p);
                         if (!pathsScores.containsKey(p)) {
                             pathsScores.put(p, score);

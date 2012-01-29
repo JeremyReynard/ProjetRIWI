@@ -95,7 +95,7 @@ public class ArticleXMLParser extends DefaultHandler {
         }
         
         int n = 1;
-        for (int i = 0; i < this.XMLTree.size(); i++) {
+        for (int i = 0; i < this.XMLTree.size(); ++i) {
             if (this.currentXMLDepth == this.XMLTree.get(i).n && qName.equals(this.XMLTree.get(i).s)) {
                 n++;
             }
@@ -109,7 +109,7 @@ public class ArticleXMLParser extends DefaultHandler {
         
         String path = "";
         Couple c;
-        for (int i = 0; i < this.currentPath.size() && i < maximumDepth; i++) {
+        for (int i = 0; i < this.currentPath.size() && i < maximumDepth; ++i) {
             c = this.currentPath.get(i);
             path = path + "/" + c.s + "[" + c.n + "]";
         }
@@ -170,10 +170,12 @@ public class ArticleXMLParser extends DefaultHandler {
             }
         }
         
+        Integer integer = null;
         for (int i = 0; i < words.length; i++) {
             if (!words[i].isEmpty()) {
-                if (this.dlMap.get(path) != null) {
-                    this.dlMap.put(path, this.dlMap.get(path) + 1);
+                integer = this.dlMap.get(path);
+                if (integer != null) {
+                    this.dlMap.put(path, integer + 1);
                 } else {
                     this.dlMap.put(path, 1);
                 }
