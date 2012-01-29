@@ -105,7 +105,7 @@ public class ArticleXMLParser extends DefaultHandler {
         }
 
         int n = 1;
-        for (int i = 0; i < this.XMLTree.size(); i++) {
+        for (int i = 0; i < this.XMLTree.size(); ++i) {
             if (this.currentXMLDepth == this.XMLTree.get(i).n && qName.equals(this.XMLTree.get(i).s)) {
                 n++;
             }
@@ -132,12 +132,13 @@ public class ArticleXMLParser extends DefaultHandler {
                 break;
         }
 
+        String path = "";
+        Couple c;
+
         this.currentPath.add(new Couple(qName, n));
 
         if (!(isInArticle && !(isInHeader || isInBody)) || qName.equals("article")) {
-            String path = "";
             String compressedPath = "";
-            Couple c;
             int compressedN = 0;
             boolean found = false;
             if (!isInP) {
@@ -238,17 +239,26 @@ public class ArticleXMLParser extends DefaultHandler {
             c = this.currentCompressedPath.get(i);
             compressedPath = compressedPath + "/" + c.s + "[" + c.n + "]";
         }
+
         c = this.currentCompressedPath.get(this.currentCompressedPath.size() - 1);
         compressedPath = compressedPath + "/" + c.s;
+
+        Integer integer = null;
 
         for (int i = 0; i < words.length; i++) {
             if (!words[i].isEmpty()) {
                 if (this.dlMap.get(compressedPath) != null) {
                     this.dlMap.put(compressedPath, this.dlMap.get(compressedPath) + 1);
-                } else {
-                    this.dlMap.put(compressedPath, 1);
+                    if (!words[i].isEmpty()) {
+                        integer = this.dlMap.get(path);
+                        if (integer != null) {
+                            this.dlMap.put(path, integer + 1);
+                        } else {
+                            this.dlMap.put(compressedPath, 1);
+                        }
+                        this.paths.add(uncompressedPath);
+                    }
                 }
-                this.paths.add(uncompressedPath);
             }
         }
     }
@@ -275,6 +285,8 @@ public class ArticleXMLParser extends DefaultHandler {
 
     public Map<String, ArrayList<String>> getPagerank() {
         return pagerank;
+
+
     }
 
     private static class Couple {

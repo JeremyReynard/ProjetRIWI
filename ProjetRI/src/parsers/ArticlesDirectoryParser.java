@@ -39,7 +39,7 @@ public abstract class ArticlesDirectoryParser {
         result += "Indexation time " + sec + "sec \n";
         result += "N(articles) : " + index.getN().get("article") + "\n";
         result += "avdl : " + index.getAvdl("/article") + "\n";
-        result += "words : " + index.getNumberOfWords() + "\n";
+        //result += "words : " + index.getNumberOfWords() + "\n";
         result += "index size : " + index.getSize();
                  
         return result;

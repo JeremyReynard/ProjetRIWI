@@ -16,7 +16,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import parsers.Stemmer;
 
 /**
  *
@@ -26,6 +25,7 @@ public class Score {
     
     protected Index index;
     protected String request;
+    protected int pageRank;
     
     /*
      * Constructor

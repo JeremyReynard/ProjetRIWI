@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package scores;
 
 import index.Index;
@@ -8,21 +12,26 @@ import serialization.IndexDeserialization;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Lulu
  */
-public class Bm25Articles extends Score implements CommonsScoreInterface {
+public class Bm25fArticles extends Score implements CommonsScoreInterface {
 
-    double k1;
-    double b;
-    int N;
-    double avdl;
+    private double k1;
+    private double b;
+    private int N;
+    private double avdl;
+    
+    private double alphaTitle;
+    //private double alphaAbs;
 
-    public Bm25Articles(String request, Index index, double k1, double b) {
+    public Bm25fArticles(String request, Index index, double k1, double b, double alphaTitle) {
         super(request, index);
         this.b = b;
         this.k1 = k1;
+        this.alphaTitle = alphaTitle;
+        
         this.N = index.getN().get("/article");
-        this.avdl = index.getAvdl("/article");
+        this.avdl = index.getAvdl("/article");        
     }
 
     @Override
@@ -62,27 +71,30 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
             return 0;
         }
 
-        double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl / avdl)) + tf)) * Math.log((N - df + 0.5) / (df + 0.5));
+        double wtd = 
+                ((this.alphaTitle * tf * (k1 + 1)) / 
+                (k1 * ( (1 - b) + b * (dl / avdl)) + this.alphaTitle * tf))
+                * Math.log((N - df + 0.5) / (df + 0.5));
 
         return wtd;
     }
 
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
-        
-        return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);        
+
+        return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);
     }
-    
+
     public static void main(String[] args) {
-        
+
         System.out.println("Begin of deserialization...");
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         System.out.println("End of deserialization.");
 
         System.out.println("dlMap : " + index.getDlMap());
         System.out.println(" index " + index.getCollectionData().size());
 
-        Bm25Articles score = new Bm25Articles("states", index, 1, 0.5);
+        Bm25fArticles score = new Bm25fArticles("states", index, 1, 0.5, 2);
 
         Map<String, Double> scores = score.getScores();
 

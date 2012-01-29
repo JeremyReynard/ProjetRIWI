@@ -61,6 +61,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         Map<String, Map<String, Integer>> tempdlMap = new HashMap<>();
 
         long startTime = System.currentTimeMillis();
+        ArrayList<String> valueMapDoc = null;
+        Map<String, Integer> nMap = null;
+        
         for (File f : files) {
             System.out.println(f.getName());
             // JProgressBar
@@ -84,14 +87,15 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
                 for (Iterator i = articleParser.getN().keySet().iterator(); i.hasNext();) {
                     tag = i.next().toString();
-                    if (index.getN().containsKey(tag)) {
-                        index.getN().put(tag, index.getN().get(tag) + articleParser.getN().get(tag));
+                    nMap = index.getN();
+                    if (nMap.containsKey(tag)) {
+                        nMap.put(tag, nMap.get(tag) + articleParser.getN().get(tag));
                     } else {
-                        index.getN().put(tag, articleParser.getN().get(tag));
+                        nMap.put(tag, articleParser.getN().get(tag));
                     }
                 }
-
                 for (int i = 1; i < words.length; i++) {
+
                     w = words[i];
                     p = paths.get(i - 1);
 
@@ -112,8 +116,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                         if (valueMap != null) {
                             // the word has been already found in the current document
                             if (valueMap.containsKey(currentDocNum)) {
-                                valueMap.get(currentDocNum).add(p);
-                                valueMap.put(currentDocNum, valueMap.get(currentDocNum));
+                                valueMapDoc = valueMap.get(currentDocNum);
+                                valueMapDoc.add(p);
+                                valueMap.put(currentDocNum, valueMapDoc);
                             } else {
                                 //first occurrence of the word in this document
                                 pathsList = new ArrayList<>();

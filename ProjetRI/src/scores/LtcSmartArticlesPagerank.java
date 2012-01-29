@@ -17,31 +17,33 @@ import java.util.Iterator;
 import java.util.Map;
 import serialization.IndexDeserialization;
 
-
 /**
- *LtnSmartPagerank Algorithm
+ *
+ * @author Dje
  */
-public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInterface{
-    
-    public LtnSmartArticlesPagerank(String request, Index index) {
+public class LtcSmartArticlesPagerank  extends Score implements CommonsScoreInterface{
+        
+    public LtcSmartArticlesPagerank(String request, Index index) {
         super(request, index);
     }
     
     @Override
     public Map<String, Double> getScores() {
-        
         Map<String, Double> scores = new HashMap<>();
         
         String documentNumber;
-        
+        int ind=0;
+        int size = index.getDlMap().size();
+        //For all document
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
+            ind++;
+            System.out.println("Document traité:"+ind+"/"+size);
             documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
         
         return scores;
     }
-    
     
     @Override
     public double getRequestScore(String documentNumber) {
@@ -51,7 +53,7 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
         
         for (String word : this.request.split("[\\W]+")) {
             int dl = index.getDl(documentNumber,"/article");
-            score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl);
+            score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl,documentNumber);
         }
         
         return score;
@@ -59,19 +61,46 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
     
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public double getDocumentWordScore(String word,float termFrequency,int documentLength, String documentNumber){
         
         int documentFrequency = getDocumentFrequency(index, word);
         
-        return Math.log(1.0 + termFrequency)
-                * (index.getN().get("/article") /(documentFrequency) )
-                *this.pageRank;
+        int N = index.getN().get("/article");
+        
+        int termTemporaryFrequency = 0;
+        int termTemporaryDocumentFrequency = 0;
+        int sommePonderations=0;
+        //For all word in the request
+        for(String requestWord :this.request.split("[\\W]+"))
+        {
+            
+            //Get the term frequency of an existing word
+            termTemporaryFrequency = getTermFrequency(index, requestWord, documentNumber);
+            
+            //Get the term frenquency of an existing word in a specific document
+            
+            termTemporaryDocumentFrequency = getDocumentFrequency(index, requestWord);
+            
+            
+            //Formula
+            sommePonderations+=Math.pow((Math.log(1+termTemporaryFrequency)*(N /termTemporaryDocumentFrequency)),2);
+            
+        }
+        //Score formula
+        Double result = Math.log(1+ termFrequency)
+                / Math.sqrt(sommePonderations)
+                * (N/documentFrequency )
+                * this.pageRank;
+        
+        return result;
     }
     
     public static void main(String[] args) {
-        
         Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
         String runs = "";
-        System.out.println("Deserialized");
         
         HashMap<String, String> requestsMap = new HashMap() {
             
@@ -87,10 +116,11 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
                 
             }
         };
+        
         for(Iterator iter = requestsMap.keySet().iterator();iter.hasNext();){
-            
+            System.out.println("Deserialized");
             String requestNum = (String)iter.next();
-            LtnSmartArticles score = new LtnSmartArticles(requestsMap.get(requestNum), index);
+            LtcSmartArticles score = new LtcSmartArticles(requestsMap.get(requestNum), index);
             System.out.println("score: "+requestNum);
             Map<String, Double> scores = score.getScores();
             
@@ -120,28 +150,16 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
                         + "/article[1]" + "\n";
             }
             
-            
         }
-        Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickaelLTNPagerank" + ".txt");
+        
+        Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickaelLTC" + ".txt");
         try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"), StandardOpenOption.CREATE)) {
             writer.write(runs);
             writer.close();
         } catch (IOException e) {
             System.out.println("[Score][createRunFile] " + e);
         }
-        
-        /*  Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
-         *
-         * String request = "artificial";
-         *
-         * System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
-         *
-         * LtnSmartArticles score = new LtnSmartArticles(request, index);
-         *
-         * Map<String, Double> scores = score.getScores();
-         *
-         * System.out.println("[main][scores]" + scores.toString());
-         */
     }
+    
 
 }
