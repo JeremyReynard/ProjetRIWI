@@ -96,6 +96,12 @@ public class ProjetRIView extends FrameView {
         bm25ElementsRadioButton = new javax.swing.JRadioButton();
         bm25PathTextField = new javax.swing.JTextField();
         bm25f = new javax.swing.JPanel();
+        k1label1 = new javax.swing.JLabel();
+        k1TF1 = new javax.swing.JTextField();
+        bLabel1 = new javax.swing.JLabel();
+        bTF1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        alphaTitleTextField = new javax.swing.JTextField();
         ltn = new javax.swing.JPanel();
         ltnArticleRadioButton = new javax.swing.JRadioButton();
         ltnElementsRadioButton = new javax.swing.JRadioButton();
@@ -358,15 +364,57 @@ public class ProjetRIView extends FrameView {
 
         bm25f.setName("bm25f"); // NOI18N
 
+        k1label1.setText(resourceMap.getString("k1label1.text")); // NOI18N
+        k1label1.setName("k1label1"); // NOI18N
+
+        k1TF1.setText(resourceMap.getString("k1TF1.text")); // NOI18N
+        k1TF1.setName("k1TF1"); // NOI18N
+
+        bLabel1.setText(resourceMap.getString("bLabel1.text")); // NOI18N
+        bLabel1.setName("bLabel1"); // NOI18N
+
+        bTF1.setText(resourceMap.getString("bTF1.text")); // NOI18N
+        bTF1.setName("bTF1"); // NOI18N
+
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        alphaTitleTextField.setText(resourceMap.getString("alphaTitleTextField.text")); // NOI18N
+        alphaTitleTextField.setName("alphaTitleTextField"); // NOI18N
+
         javax.swing.GroupLayout bm25fLayout = new javax.swing.GroupLayout(bm25f);
         bm25f.setLayout(bm25fLayout);
         bm25fLayout.setHorizontalGroup(
             bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGroup(bm25fLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bLabel1)
+                    .addComponent(k1label1)
+                    .addComponent(jLabel2))
+                .addGap(21, 21, 21)
+                .addGroup(bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(alphaTitleTextField)
+                    .addComponent(bTF1)
+                    .addComponent(k1TF1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                .addContainerGap(372, Short.MAX_VALUE))
         );
         bm25fLayout.setVerticalGroup(
             bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGroup(bm25fLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(k1label1)
+                    .addComponent(k1TF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bLabel1)
+                    .addComponent(bTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bm25fLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(alphaTitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         searchTabbedPane.addTab(resourceMap.getString("bm25f.TabConstraints.tabTitle"), bm25f); // NOI18N
@@ -752,6 +800,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                 Map<String, Map<String, Double>> scoresElements = null;
                 int k1;
                 Double b;
+                double alphaTitle;
 
                 String request = null;
                 String id = null;
@@ -824,7 +873,11 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                         requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
                         
-                        score = new Bm25fArticles(request, index);
+                        k1 = Integer.parseInt(k1TF.getText());
+                        b = Double.parseDouble(bTF.getText());
+                        alphaTitle = Double.parseDouble(alphaTitleTextField.getText());
+                        
+                        score = new Bm25fArticles(request, index, k1, b, alphaTitle);
                         scores = ((Bm25fArticles) score).getScores();                    
                         
                     }
@@ -843,7 +896,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                         if (selectedTab.equals(mjm)
                                 || selectedTab.equals(ltc)
                                 || (selectedTab.equals(ltn) && ltnArticleRadioButton.isSelected())
-                                || (selectedTab.equals(bm25) && bm25ArticleRadioButton.isSelected())) {
+                                || (selectedTab.equals(bm25) && bm25ArticleRadioButton.isSelected())
+                                || (selectedTab.equals(bm25f))) {
                             for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
                                 next = (String) j.next();
                                 if (scores.get(next) > maxValue) {
@@ -905,8 +959,11 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         // TODO add your handling code here:
     }//GEN-LAST:event_ltnPathTextFieldActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField alphaTitleTextField;
     private javax.swing.JLabel bLabel;
+    private javax.swing.JLabel bLabel1;
     private javax.swing.JTextField bTF;
+    private javax.swing.JTextField bTF1;
     private javax.swing.JPanel bm25;
     private javax.swing.JRadioButton bm25ArticleRadioButton;
     private javax.swing.JRadioButton bm25ElementsRadioButton;
@@ -920,6 +977,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JButton indexFileChoose;
     private javax.swing.JPanel indexationPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JProgressBar jProgressBarFile;
     private javax.swing.JProgressBar jProgressBarGlobal;
     private javax.swing.JScrollPane jScrollPane1;
@@ -928,7 +986,9 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JProgressBar jpBarIndexFile;
     private javax.swing.JTextField k1TF;
+    private javax.swing.JTextField k1TF1;
     private javax.swing.JLabel k1label;
+    private javax.swing.JLabel k1label1;
     private javax.swing.JTextField kTextField;
     private javax.swing.JPanel ltc;
     private javax.swing.JPanel ltn;

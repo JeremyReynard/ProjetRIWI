@@ -23,7 +23,6 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         this.k1 = k1;
         this.N = index.getN().get("/article");
         this.avdl = index.getAvdl("/article");
-
     }
 
     @Override

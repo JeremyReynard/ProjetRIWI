@@ -458,15 +458,84 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="526" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="bLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="k1label1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="alphaTitleTextField" max="32767" attributes="1"/>
+                                      <Component id="bTF1" max="32767" attributes="1"/>
+                                      <Component id="k1TF1" alignment="0" pref="70" max="32767" attributes="1"/>
+                                  </Group>
+                                  <EmptySpace pref="372" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="364" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="k1label1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="k1TF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="bLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bTF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="alphaTitleTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="281" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JLabel" name="k1label1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1label1.text"/>
+                            <Property name="name" type="java.lang.String" value="k1label1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="k1TF1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="k1TF1.text"/>
+                            <Property name="name" type="java.lang.String" value="k1TF1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="bLabel1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bLabel1.text"/>
+                            <Property name="name" type="java.lang.String" value="bLabel1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="bTF1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="bTF1.text"/>
+                            <Property name="name" type="java.lang.String" value="bTF1" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="jLabel2">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="jLabel2.text"/>
+                            <Property name="name" type="java.lang.String" value="jLabel2" noResource="true"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="alphaTitleTextField">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" resourceKey="alphaTitleTextField.text"/>
+                            <Property name="name" type="java.lang.String" value="alphaTitleTextField" noResource="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="ltn">
                       <Properties>
