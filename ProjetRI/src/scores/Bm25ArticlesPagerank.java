@@ -16,7 +16,7 @@ public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface
     double b;
     int N;
     double avdl;
-
+   
     public Bm25ArticlesPagerank(String request, Index index, double k1, double b) {
         super(request, index);
         this.b = b;
@@ -47,6 +47,8 @@ public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface
         double score = 0;
 
         int dl = index.getDl(documentNumber, "/article");
+        
+        this.pageRank = this.index.getPagerank().get(documentNumber).size();
 
         for (String word : this.request.split("\\W")) {
             score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl, N, avdl,documentNumber);
@@ -65,7 +67,7 @@ public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface
 
         double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl / avdl)) + tf)) 
                 * Math.log((N - df + 0.5) / (df + 0.5))
-                * this.index.getPagerank().get(documentNumber).size();
+                * this.pageRank;
 
         return wtd;
     }

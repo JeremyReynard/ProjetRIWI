@@ -22,7 +22,7 @@ import serialization.IndexDeserialization;
  * @author Dje
  */
 public class LtcSmartArticlesPagerank  extends Score implements CommonsScoreInterface{
-    
+        
     public LtcSmartArticlesPagerank(String request, Index index) {
         super(request, index);
     }
@@ -48,6 +48,8 @@ public class LtcSmartArticlesPagerank  extends Score implements CommonsScoreInte
     @Override
     public double getRequestScore(String documentNumber) {
         double score = 0;
+        
+        this.pageRank = this.index.getPagerank().get(documentNumber).size();
         
         for (String word : this.request.split("[\\W]+")) {
             int dl = index.getDl(documentNumber,"/article");
@@ -91,7 +93,7 @@ public class LtcSmartArticlesPagerank  extends Score implements CommonsScoreInte
         Double result = Math.log(1+ termFrequency)
                 / Math.sqrt(sommePonderations)
                 * (N/documentFrequency )
-                * this.index.getPagerank().get(documentNumber).size();
+                * this.pageRank;
         
         return result;
     }

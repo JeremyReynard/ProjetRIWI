@@ -47,6 +47,8 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
     public double getRequestScore(String documentNumber) {
         double score = 0;
         
+        this.pageRank = this.index.getPagerank().get(documentNumber).size();
+        
         for (String word : this.request.split("[\\W]+")) {
             int dl = index.getDl(documentNumber,"/article");
             score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl);
@@ -62,7 +64,7 @@ public class LtnSmartArticlesPagerank extends Score implements CommonsScoreInter
         
         return Math.log(1.0 + termFrequency)
                 * (index.getN().get("/article") /(documentFrequency) )
-                *this.index.getPagerank().get(String.valueOf(documentLength)).size();
+                *this.pageRank;
     }
     
     public static void main(String[] args) {
