@@ -70,7 +70,7 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
     public static void main(String[] args) {
         System.out.println("Begin of deserialization...");
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
         System.out.println("End of deserialization.");
 
         System.out.println("dlMap : " + index.getDlMap());

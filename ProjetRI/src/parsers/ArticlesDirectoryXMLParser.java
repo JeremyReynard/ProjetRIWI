@@ -17,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
-import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
 /**
@@ -63,7 +62,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
         long startTime = System.currentTimeMillis();
         for (File f : files) {
-
+            System.out.println(f.getName());
             // JProgressBar
             jpBarFile.setString(f.getName());
             jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
@@ -92,7 +91,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                     }
                 }
 
-                for (int i = 1; i < words.length; i++) {;
+                for (int i = 1; i < words.length; i++) {
                     w = words[i];
                     p = paths.get(i - 1);
 
@@ -130,16 +129,54 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                         }
                     }
                 }
-                
+
                 tempdlMap.put(articleParser.getId().toString(), articleParser.getDlMap());
-                
+
                 this.index.getPagerank().putAll(articleParser.getPagerank());
-                
+
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 e.printStackTrace();
             }
         }
-        index.setDlMap(tempdlMap);
+
+        String docId, path;
+
+        //fill in the dlMap
+        for (Iterator i = tempdlMap.keySet().iterator(); i.hasNext();) {
+            docId = i.next().toString();
+            index.getDlMap().put(docId, new HashMap<String, Integer>());
+            for (Iterator j = index.getN().keySet().iterator(); j.hasNext();) {
+                path = j.next().toString();
+                for (Iterator k = tempdlMap.get(docId).keySet().iterator(); k.hasNext();) {
+                    p = k.next().toString();
+                    if (p.startsWith(path)) {
+                        if (index.getDlMap().get(docId).get(path) == null) {
+                            index.getDlMap().get(docId).put(path, tempdlMap.get(docId).get(p));
+                        } else {
+                            index.getDlMap().get(docId).put(path, index.getDlMap().get(docId).get(path) + tempdlMap.get(docId).get(p));
+                        }
+                    }
+                }
+            }
+        }
+
+         //fill in the avdlMap
+        for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
+            docId = i.next().toString();
+            for (Iterator j = index.getDlMap().get(docId).keySet().iterator(); j.hasNext();) {
+                path = j.next().toString();
+                if (index.getAvdlMap().get(path) == null) {
+                    index.getAvdlMap().put(path, index.getDlMap().get(docId).get(path).doubleValue());
+
+                } else {
+                    index.getAvdlMap().put(path, index.getAvdlMap().get(path) + index.getDlMap().get(docId).get(path).doubleValue());
+                }
+            }
+        }
+        for (Iterator i = index.getAvdlMap().keySet().iterator(); i.hasNext();) {
+            path = i.next().toString();
+            index.getAvdlMap().put(path, index.getAvdlMap().get(path).doubleValue() / index.getN(path));
+        }
 
         this.extractionTime = System.currentTimeMillis() - startTime;
         System.out.println("End of indexation.\n");
@@ -152,16 +189,17 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
 
-        Index index = new ArticlesDirectoryXMLParser("../../coll").parseDirectory(jp1, jp2);
+        Index index = new ArticlesDirectoryXMLParser("../../coll10").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexSerialized.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexXML10.serial");
 
         // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
 
         System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl("/article"));
         System.out.println("dl : " + index.getDlMap());
-        System.out.println("dl : " + index.getDl("717","/article"));
+        System.out.println("avdl : " + index.getAvdlMap());
+        System.out.println("avdl : " + index.getAvdl("/article"));
+
         //System.out.println("\n" + index.toString());
 
     }

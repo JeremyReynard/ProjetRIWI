@@ -29,6 +29,10 @@ public class Index implements Serializable {
      */
     private Map<String, Map<String, Integer>> dlMap;
     /*
+     * List of avdl
+     */
+    private Map<String, Double> avdlMap;
+    /*
      * Map of links
      */
     private Map<String, ArrayList<String>> pagerank;
@@ -45,6 +49,7 @@ public class Index implements Serializable {
         this.dlMap = new HashMap<>();
         this.N = new HashMap<>();
         this.pagerank = new HashMap<>();
+        this.avdlMap = new HashMap<>();
     }
 
     public Map<String, Map<String, ArrayList<String>>> getCollectionData() {
@@ -67,20 +72,12 @@ public class Index implements Serializable {
         this.N = N;
     }
 
-    public Map<String, Map<String, Integer>> getDlMap() {
-        return dlMap;
+    public int getDl(String documentId, String path) {
+        return dlMap.get(documentId).get(path).intValue();
     }
 
-    public int getDl(String documentId, String path) {
-        int dl = 0;
-        String p;
-        for (Iterator i = dlMap.get(documentId).keySet().iterator(); i.hasNext();) {
-            p = i.next().toString();
-            if (p.startsWith(path)) {
-                dl += dlMap.get(documentId).get(p).intValue();
-            }
-        }
-        return dl;
+    public Map<String, Map<String, Integer>> getDlMap() {
+        return dlMap;
     }
 
     public void setDlMap(Map<String, Map<String, Integer>> dlMap) {
@@ -88,22 +85,15 @@ public class Index implements Serializable {
     }
 
     public double getAvdl(String path) {
+        return avdlMap.get(path);
+    }
 
-        double dlSum = 0;
-        String key = "";
-        String p = "";
+    public Map<String, Double> getAvdlMap() {
+        return avdlMap;
+    }
 
-        for (Iterator i = dlMap.keySet().iterator(); i.hasNext();) {
-            key = i.next().toString();
-            for (Iterator j = dlMap.get(key).keySet().iterator(); j.hasNext();) {
-                p = j.next().toString();
-                if (p.startsWith(path)) {
-                    dlSum += dlMap.get(key).get(p).intValue();
-                }
-            }
-        }
-
-        return dlSum / getN(path);
+    public void setAvdlMap(Map<String, Double> avdlMap) {
+        this.avdlMap = avdlMap;
     }
 
     public int getNumberOfWords() {
@@ -143,5 +133,4 @@ public class Index implements Serializable {
     public void setPagerank(Map<String, ArrayList<String>> pagerank) {
         this.pagerank = pagerank;
     }
-
 }

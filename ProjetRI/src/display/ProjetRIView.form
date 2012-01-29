@@ -342,8 +342,8 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="bm25ElementsRadioButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                          <Component id="bm25PathTextField" pref="376" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="precisionComboBox" min="-2" pref="114" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -359,7 +359,7 @@
                                       </Group>
                                       <Component id="bm25ArticleRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace pref="250" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -379,11 +379,11 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="bm25ArticleRadioButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="bm25ElementsRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="bm25PathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="precisionComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bm25ElementsRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="248" max="32767" attributes="0"/>
+                                  <EmptySpace pref="247" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -432,10 +432,16 @@
                             <Property name="name" type="java.lang.String" value="bm25ElementsRadioButton" noResource="true"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="bm25PathTextField">
+                        <Component class="javax.swing.JComboBox" name="precisionComboBox">
                           <Properties>
-                            <Property name="text" type="java.lang.String" resourceKey="bm25PathTextField.text"/>
-                            <Property name="name" type="java.lang.String" value="bm25PathTextField" noResource="true"/>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="3">
+                                <StringItem index="0" value="article"/>
+                                <StringItem index="1" value="header"/>
+                                <StringItem index="2" value="bdy"/>
+                              </StringArray>
+                            </Property>
+                            <Property name="name" type="java.lang.String" value="precisionComboBox" noResource="true"/>
                           </Properties>
                         </Component>
                       </SubComponents>

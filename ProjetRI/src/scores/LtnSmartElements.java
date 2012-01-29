@@ -80,19 +80,44 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     private ArrayList<String> generatedPathsList(ArrayList<String> paths) {
+        System.out.println("Paths : " + paths);
+
+        boolean isInArticle = false;
+        boolean isInHeader = false;
+        boolean isInBody = false;
+
         ArrayList<String> pathsList = new ArrayList<>();
 
         String[] splitedPath;
         String s;
         for (String p : paths) {
-            if (p.startsWith(this.precision)) {
-                p = this.precision;
-                splitedPath = p.split("/");
-                for (int i = 1; i < splitedPath.length; i++) {
-                    s = "";
-                    for (int j = 1; j <= i; j++) {
+            System.out.println(p);
+            splitedPath = p.split("/");
+            for (int i = 1; i < splitedPath.length; i++) {
+
+                switch (splitedPath[i].replaceAll("\\[\\d+\\]", "")) {
+                    case "article":
+                        isInArticle = true;
+                        break;
+                    case "header":
+                        if (!isInBody) {
+                            isInHeader = true;
+                        }
+                        break;
+                    case "bdy":
+                        System.out.println("BODY");
+                        isInBody = true;
+                        break;
+                }
+                s = "";
+                for (int j = 1; j <= i; j++) {
+                    if (precision.contains("bdy") && isInBody) {
                         s = s + "/" + splitedPath[j];
                     }
+                }
+                System.out.println("s : " + s);
+                if (s.startsWith(this.precision)) {
+                    s = this.precision;
                     if (!pathsList.contains(s)) {
                         pathsList.add(s);
                     }
@@ -100,13 +125,16 @@ public class LtnSmartElements extends ScoreElements {
             }
         }
 
+        System.out.println(
+                "Paths list : " + pathsList);
+
         return pathsList;
     }
 
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
 
-        String request = "artificial";
+        String request = "almond";
 
         System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
 
