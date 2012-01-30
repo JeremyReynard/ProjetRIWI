@@ -47,75 +47,29 @@ public class ScoreElements {
                 }
             }
         }
+        System.out.println("TF : "+word+" "+tf);
         return tf;
     }
 
     /*
-     * @return the df
+     * Return the df 
      */
-    /*public Integer getDocumentFrequency(Index index, String word, String path) {
+    public Integer getDocumentFrequency(Index index, String word, String compressedPath) {
 
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
 
         String documentNumber;
-        int df = 0;
-        int splitedPathIndex, splitedWordIndex, pathsDocumentIndex;
-        boolean isFound;
-
-        String wordPath = "";
-
-        String[] splitedPath = path.split("/");
-        String[] splitedWordPath;
-
-        if (mapValue == null) {
-            // -1 because 0 make a divide by 0 error
-            return -1;
-        }
-
-        for (Iterator i = mapValue.keySet().iterator(); i.hasNext();) {
-            documentNumber = i.next().toString();
-            isFound = false;
-            if (mapValue.get(documentNumber).contains(path)) {
-                df++;
-            } else {
-                pathsDocumentIndex = 0;
-                //System.out.println(mapValue.get(documentNumber));
-                while (pathsDocumentIndex < mapValue.get(documentNumber).size() && !isFound) {
-                    wordPath = mapValue.get(documentNumber).get(pathsDocumentIndex);
-                    splitedPathIndex = 1;
-                    splitedWordIndex = 1;
-                    splitedWordPath = wordPath.split("/");
-
-                    while (splitedWordIndex < splitedWordPath.length && !isFound) {
-                        //System.out.println(splitedWordPath[splitedWordIndex] + " " + splitedPath[splitedPathIndex]);
-                        if (splitedPathIndex == splitedPath.length - 1) {
-                            if (splitedWordPath[splitedWordIndex].replaceAll("\\[\\d+\\]", "").equals(splitedPath[splitedPathIndex])) {
-                                splitedPathIndex++;
-                            }
-                        } else if (splitedWordPath[splitedWordIndex].equals(splitedPath[splitedPathIndex])) {
-                            splitedPathIndex++;
-                        }
-                        if (splitedPathIndex == splitedPath.length) {
-                            isFound = true;
-                            df++;
-                        }
-                        splitedWordIndex++;
-                    }
-                    pathsDocumentIndex++;
-                }
-            }
-        }
-        return df;
-    }*/
-    public Integer getDocumentFrequency(Index index, String word, String path) {
-
-        Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
+        int dfArticle,dfHeader,dfBdy;
+        boolean isInArticle;
+        boolean isInHeader;
+        boolean isInBdy;
         
-        String documentNumber;
-        int df = 0;
-        int k;
-        boolean isFound;
-        String p = "";
+        dfArticle = 0;
+        dfHeader = 0;
+        dfBdy = 0;
+        
+        String[] splitedCompressedPath = compressedPath.split("/");
+        String lastTag = splitedCompressedPath[splitedCompressedPath.length-1];
 
         if (mapValue == null) {
             // -1 because 0 make a divide by 0 error
@@ -124,22 +78,24 @@ public class ScoreElements {
 
         for (Iterator i = mapValue.keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
-            isFound = false;
-            if (mapValue.get(documentNumber).contains(path)) {
-                df++;
-            } else {
-                k = 0;
-                while(k < mapValue.get(documentNumber).size() && !isFound) {
-                    p = mapValue.get(documentNumber).get(k);
-                    if (p.startsWith(path) && !isFound) {
-                        df++;
-                        isFound = true;
-                    }
-                    k++;
+            isInArticle = false;
+            isInBdy = false;
+            isInHeader = false;
+            for (String p : mapValue.get(documentNumber)) {
+                if (p.contains("article") && !isInArticle) {
+                    isInArticle = true;
+                    dfArticle++;
+                } else if (p.contains("header") && !isInHeader && !lastTag.equals("bdy") && !lastTag.equals("article")) {
+                    isInHeader = true;
+                    dfHeader++;
+                } else if (p.contains("bdy") && !isInBdy && !lastTag.equals("header") && !lastTag.equals("article")) {
+                    isInBdy = true;
+                    dfBdy++;
                 }
             }
         }
-        return df;
+        System.out.println("DF de "+word+" "+(dfArticle+dfHeader+dfBdy));
+        return dfArticle+dfHeader+dfBdy;
     }
 
     //Getters

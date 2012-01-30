@@ -39,7 +39,7 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     public Map<String, Double> getRequestScore(String documentNumber) {
-        //System.out.println(documentNumber);
+        System.out.println(documentNumber);
         Map<String, Double> pathsScores = new HashMap<>();
         PathsCouple pathsCouple;
         double score;
@@ -52,7 +52,7 @@ public class LtnSmartElements extends ScoreElements {
                     for (int i = 0; i < pathsCouple.compressedPaths.size(); i++) {
                         p = pathsCouple.compressedPaths.get(i);
                         //System.out.println(p);
-                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p, pathsCouple.originalPaths.get(i));
+                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p);
                         if (!pathsScores.containsKey(p)) {
                             pathsScores.put(pathsCouple.originalPaths.get(i), score);
                         }
@@ -64,9 +64,9 @@ public class LtnSmartElements extends ScoreElements {
         return pathsScores;
     }
 
-    public double getDocumentWordScore(String word, float termFrequency, String path, String completePath) {
+    public double getDocumentWordScore(String word, float termFrequency, String path) {
 
-        int documentFrequency = getDocumentFrequency(index, word, completePath);
+        int documentFrequency = getDocumentFrequency(index, word, precision);
 
         String[] tags = path.split("/");
         String tag = tags[tags.length - 1].replaceAll("\\[\\d+\\]", "");
@@ -152,12 +152,11 @@ public class LtnSmartElements extends ScoreElements {
     public static void main(String[] args) {
         Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
 
-        String request = "almond";
+        String request = "analysis";
 
         //System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
 
         System.out.println("N : " + index.getN());
-
 
         LtnSmartElements score = new LtnSmartElements(request, index, "/article");
 

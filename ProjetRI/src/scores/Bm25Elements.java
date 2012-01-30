@@ -74,7 +74,7 @@ public class Bm25Elements extends ScoreElements {
 
     public double getDocumentWordScore(String word, float tf, int dl, int N, double avdl, String path) {
 
-        int df = getDocumentFrequency(index, word, path);
+        int df = 0/*getDocumentFrequency(index, word)*/;
 
 
 
@@ -89,7 +89,7 @@ public class Bm25Elements extends ScoreElements {
 
     public double getDocumentWordScore(String word, float tf, int dl, String path) {
 
-        int df = getDocumentFrequency(index, word, path);
+        int df = 0/*getDocumentFrequency(index, word)*/;
 
         /*  System.out.println("Avdl : "+index.getAvdl("/article"));
         System.out.println("df : "+df);

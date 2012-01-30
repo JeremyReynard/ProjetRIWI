@@ -934,7 +934,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                                     + runIndice + separator
                                     + (1500 - runIndice + 1) + separator
                                     + "MichaelJeremyMickael" + separator
-                                    + path + "[1]" + "\n";
+                                    + path + "\n";
                         }
 
                     }
@@ -1017,13 +1017,13 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
             new HashMap() {
 
                 {
-                    //put("2009011", "olive oil health benefit");
-                    put("2009036", "notting hill film actors");
+                    put("2009011", "olive oil health benefit");
+                    /*put("2009036", "notting hill film actors");
                     put("2009067", "probabilistic models in information retrieval");
                     put("2009073", "web link network analysis");
                     put("2009074", "web ranking scoring algorithm");
                     put("2009078", "supervised machine learning algorithm");
-                    put("2009085", "operating system +mutual +exclusion");
+                    put("2009085", "operating system +mutual +exclusion");*/
 
 
                 }
