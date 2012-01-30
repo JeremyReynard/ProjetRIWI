@@ -5,10 +5,7 @@
 package index;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Index Class that contains the data collection
@@ -35,8 +32,14 @@ public class Index implements Serializable {
     /*
      * Map of links
      */
-    private Map<String, ArrayList<String>> pagerank;
-
+    private Map<String, List<String>> pagerank;
+    
+    /**
+     * Vocabulary Map
+     * DocId <-> Vocabulary of Doc
+     */
+    private Map<String, List<String>> vocabulary;
+    
     /**
      * The constructor 
      */
@@ -50,6 +53,7 @@ public class Index implements Serializable {
         this.N = new HashMap<>();
         this.pagerank = new HashMap<>();
         this.avdlMap = new HashMap<>();
+        this.vocabulary = new HashMap<>();
     }
 
     public Map<String, Map<String, ArrayList<String>>> getCollectionData() {
@@ -126,11 +130,22 @@ public class Index implements Serializable {
         return s + "}";
     }
 
-    public Map<String, ArrayList<String>> getPagerank() {
+    public Map<String, List<String>> getPagerank() {
         return pagerank;
     }
 
-    public void setPagerank(Map<String, ArrayList<String>> pagerank) {
+    public void setPagerank(Map<String, List<String>> pagerank) {
         this.pagerank = pagerank;
     }
+
+    public Map<String, List<String>> getVocabulary() {
+        return vocabulary;
+    }
+
+    public void setVocabulary(Map<String, List<String>> vocabulary) {
+        this.vocabulary = vocabulary;
+    }
+
+
+    
 }
