@@ -94,10 +94,10 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
                         nMap.put(tag, articleParser.getN().get(tag));
                     }
                 }
-                for (int i = 1; i < words.length; i++) {
+                for (int i = 0; i < words.length; i++) {
 
                     w = words[i];
-                    p = paths.get(i - 1);
+                    p = paths.get(i);
 
                     // JProgressBar
                     percent = (100 * currentWordNumber) / words.length;
@@ -194,9 +194,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
 
-        Index index = new ArticlesDirectoryXMLParser("../../coll1000").parseDirectory(jp1, jp2);
+        Index index = new ArticlesDirectoryXMLParser("../../Test").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexXML1000.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexTest.serial");
 
         // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
 
@@ -204,7 +204,6 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         System.out.println("dl : " + index.getDlMap());
         System.out.println("avdl : " + index.getAvdlMap());
         System.out.println("avdl : " + index.getAvdl("/article"));
-
         //System.out.println("\n" + index.toString());
 
     }

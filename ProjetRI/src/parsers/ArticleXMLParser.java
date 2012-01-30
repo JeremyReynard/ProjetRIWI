@@ -244,9 +244,11 @@ public class ArticleXMLParser extends DefaultHandler {
         c = this.currentCompressedPath.get(this.currentCompressedPath.size() - 1);
         compressedPath = compressedPath + "/" + c.s;
 
-        //Fill in the dlMap for this document only
+
+        //Fill in the dlMap and paths for this document only
         Integer integer = null;
         for (int i = 0; i < words.length; i++) {
+            this.paths.add(uncompressedPath);
             if (!words[i].isEmpty()) {
                 integer = this.dlMap.get(uncompressedPath);
                 if (integer != null) {
@@ -254,7 +256,6 @@ public class ArticleXMLParser extends DefaultHandler {
                 } else {
                     this.dlMap.put(uncompressedPath, 1);
                 }
-                this.paths.add(uncompressedPath);
             }
         }
     }

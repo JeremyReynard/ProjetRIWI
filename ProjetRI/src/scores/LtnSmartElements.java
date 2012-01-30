@@ -44,12 +44,16 @@ public class LtnSmartElements extends ScoreElements {
         PathsCouple pathsCouple;
         double score;
         String p;
+        //For each word of request
         for (String word : this.request.split("[\\W]+")) {
-            //For each path
+            //For each path of the current word
             if (index.getCollectionData().get(word) != null) {
+                //If tf !=0
                 if (index.getCollectionData().get(word).get(documentNumber) != null) {
+                    //Generate all compressed paths
                     pathsCouple = generatePathsList(index.getCollectionData().get(word).get(documentNumber));
                     for (int i = 0; i < pathsCouple.compressedPaths.size(); i++) {
+                        ///System.out.println("compress path  : " + pathsCouple.compressedPaths.get(i));
                         p = pathsCouple.compressedPaths.get(i);
                         //System.out.println(p);
                         score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p);
@@ -93,6 +97,7 @@ public class LtnSmartElements extends ScoreElements {
 
         String[] splitedPath;
         String s;
+        String sEnd;
         for (String p : paths) {
             splitedPath = p.split("/");
             isInArticle = false;
@@ -119,6 +124,7 @@ public class LtnSmartElements extends ScoreElements {
                 }
             }
             if (s.startsWith(this.precision)) {
+                sEnd = s.split(precision.split("/")[precision.split("/").length - 1])[1].split("/")[0];
                 s = this.precision;
                 splitedPath = s.split("/");
                 s = "";
@@ -126,7 +132,7 @@ public class LtnSmartElements extends ScoreElements {
                     if (!pathsCouple.compressedPaths.contains(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""))) {
                         pathsCouple.compressedPaths.add(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""));
                         if (j == splitedPath.length - 1) {
-                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j] + "[" + p.split("\\[")[p.split("\\[").length - 1]);
+                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j] + sEnd);
                         } else {
                             pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j]);
                         }
@@ -134,6 +140,10 @@ public class LtnSmartElements extends ScoreElements {
                     s = s + "/" + splitedPath[j];
                 }
             }
+        }
+        if (!pathsCouple.compressedPaths.contains("/article")) {
+            pathsCouple.compressedPaths.add("/article");
+            pathsCouple.originalPaths.add("/article[1]");
         }
         return pathsCouple;
     }
@@ -158,7 +168,7 @@ public class LtnSmartElements extends ScoreElements {
 
         System.out.println("N : " + index.getN());
 
-        LtnSmartElements score = new LtnSmartElements(request, index, "/article");
+        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/bdy");
 
         Map<String, Map<String, Double>> scores = score.getScores();
 

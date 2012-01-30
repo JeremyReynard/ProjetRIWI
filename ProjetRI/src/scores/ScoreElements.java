@@ -28,19 +28,19 @@ public class ScoreElements {
      * @return the tf
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle, String originalPath) {
-
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
         int tf = 0;
         //If the word does not exist in the Map
         if (mapValue == null) {
             return 0;
         }
-        //If the word exist in the document
+        //If the word exist in the document  
         if (mapValue.containsKey(documentTitle)) {
             if (mapValue.get(documentTitle).contains(originalPath)) {
                 tf++;
             } else {
                 for (String p : mapValue.get(documentTitle)) {
+                    //BUGGE
                     if (p.startsWith(originalPath)) {
                         tf++;
                     }
