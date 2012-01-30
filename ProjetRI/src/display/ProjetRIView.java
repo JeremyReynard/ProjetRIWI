@@ -865,7 +865,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                         requestStr += id + " - " + request;
                         runCreationPB.setString(requestStr);
 
-                        score = new MJMscore(request, index, Integer.parseInt(kTextField.getText()));
+                        score = new MJMscore(request, index, Double.parseDouble(kTextField.getText()));
                         scores = ((MJMscore) score).getScores();
                     } else if (selectedTab.equals(bm25f)){
                         System.out.println("BM25FArticles");
