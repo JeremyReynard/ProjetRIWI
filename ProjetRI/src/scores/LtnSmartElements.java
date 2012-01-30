@@ -39,18 +39,22 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     public Map<String, Double> getRequestScore(String documentNumber) {
+        //System.out.println(documentNumber);
         Map<String, Double> pathsScores = new HashMap<>();
-        ArrayList<String> paths;
+        PathsCouple pathsCouple;
         double score;
+        String p;
         for (String word : this.request.split("[\\W]+")) {
             //For each path
             if (index.getCollectionData().get(word) != null) {
                 if (index.getCollectionData().get(word).get(documentNumber) != null) {
-                    paths = generatedPathsList(index.getCollectionData().get(word).get(documentNumber));
-                    for (String p : paths) {
-                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), p);
+                    pathsCouple = generatePathsList(index.getCollectionData().get(word).get(documentNumber));
+                    for (int i = 0; i < pathsCouple.compressedPaths.size(); i++) {
+                        p = pathsCouple.compressedPaths.get(i);
+                        //System.out.println(p);
+                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p, pathsCouple.originalPaths.get(i));
                         if (!pathsScores.containsKey(p)) {
-                            pathsScores.put(p, score);
+                            pathsScores.put(pathsCouple.originalPaths.get(i), score);
                         }
                     }
                 }
@@ -60,9 +64,9 @@ public class LtnSmartElements extends ScoreElements {
         return pathsScores;
     }
 
-    public double getDocumentWordScore(String word, float termFrequency, String path) {
+    public double getDocumentWordScore(String word, float termFrequency, String path, String completePath) {
 
-        int documentFrequency = getDocumentFrequency(index, word, path);
+        int documentFrequency = getDocumentFrequency(index, word, completePath);
 
         String[] tags = path.split("/");
         String tag = tags[tags.length - 1].replaceAll("\\[\\d+\\]", "");
@@ -79,22 +83,23 @@ public class LtnSmartElements extends ScoreElements {
         return Math.log(1.0 + termFrequency) * (index.getN(pathForN) / (documentFrequency));
     }
 
-    private ArrayList<String> generatedPathsList(ArrayList<String> paths) {
-        System.out.println("Paths : " + paths);
+    private PathsCouple generatePathsList(ArrayList<String> paths) {
 
         boolean isInArticle = false;
         boolean isInHeader = false;
         boolean isInBody = false;
 
-        ArrayList<String> pathsList = new ArrayList<>();
+        PathsCouple pathsCouple = new PathsCouple();
 
         String[] splitedPath;
         String s;
         for (String p : paths) {
-            System.out.println(p);
             splitedPath = p.split("/");
+            isInArticle = false;
+            isInHeader = false;
+            isInBody = false;
+            s = "";
             for (int i = 1; i < splitedPath.length; i++) {
-
                 switch (splitedPath[i].replaceAll("\\[\\d+\\]", "")) {
                     case "article":
                         isInArticle = true;
@@ -105,30 +110,43 @@ public class LtnSmartElements extends ScoreElements {
                         }
                         break;
                     case "bdy":
-                        System.out.println("BODY");
                         isInBody = true;
                         break;
                 }
-                s = "";
-                for (int j = 1; j <= i; j++) {
-                    if (precision.contains("bdy") && isInBody) {
-                        s = s + "/" + splitedPath[j];
-                    }
+                if (splitedPath[i].replaceAll("\\[\\d+\\]", "").equals("article")
+                        || (isInArticle && (isInHeader || isInBody))) {
+                    s = s + "/" + splitedPath[i];
                 }
-                System.out.println("s : " + s);
-                if (s.startsWith(this.precision)) {
-                    s = this.precision;
-                    if (!pathsList.contains(s)) {
-                        pathsList.add(s);
+            }
+            if (s.startsWith(this.precision)) {
+                s = this.precision;
+                splitedPath = s.split("/");
+                s = "";
+                for (int j = 1; j < splitedPath.length; j++) {
+                    if (!pathsCouple.compressedPaths.contains(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""))) {
+                        pathsCouple.compressedPaths.add(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""));
+                        if (j == splitedPath.length - 1) {
+                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j] + "[" + p.split("\\[")[p.split("\\[").length - 1]);
+                        } else {
+                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j]);
+                        }
                     }
+                    s = s + "/" + splitedPath[j];
                 }
             }
         }
+        return pathsCouple;
+    }
 
-        System.out.println(
-                "Paths list : " + pathsList);
+    private static class PathsCouple {
 
-        return pathsList;
+        ArrayList<String> originalPaths;
+        ArrayList<String> compressedPaths;
+
+        public PathsCouple() {
+            this.originalPaths = new ArrayList<>();
+            this.compressedPaths = new ArrayList<>();
+        }
     }
 
     public static void main(String[] args) {
@@ -136,9 +154,12 @@ public class LtnSmartElements extends ScoreElements {
 
         String request = "almond";
 
-        System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
+        //System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
 
-        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/bdy");
+        System.out.println("N : " + index.getN());
+
+
+        LtnSmartElements score = new LtnSmartElements(request, index, "/article");
 
         Map<String, Map<String, Double>> scores = score.getScores();
 

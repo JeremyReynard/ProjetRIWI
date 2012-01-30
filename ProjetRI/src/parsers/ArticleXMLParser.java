@@ -16,7 +16,7 @@ public class ArticleXMLParser extends DefaultHandler {
     private StringBuffer text;
     private ArrayList<String> paths;
     private StringBuffer id;
-    private ArrayList<Couple> currentPath;
+    private ArrayList<Couple> currentUncompressedPath;
     private ArrayList<Couple> currentCompressedPath;
     private int currentXMLDepth;
     private int isInIdTag;
@@ -42,7 +42,7 @@ public class ArticleXMLParser extends DefaultHandler {
         this.paths = new ArrayList<>();
         this.id = new StringBuffer();
 
-        this.currentPath = new ArrayList<>();
+        this.currentUncompressedPath = new ArrayList<>();
         this.currentCompressedPath = new ArrayList<>();
         this.currentXMLDepth = 1;
 
@@ -135,15 +135,15 @@ public class ArticleXMLParser extends DefaultHandler {
         String path = "";
         Couple c;
 
-        this.currentPath.add(new Couple(qName, n));
+        this.currentUncompressedPath.add(new Couple(qName, n));
 
         if (!(isInArticle && !(isInHeader || isInBody)) || qName.equals("article")) {
             String compressedPath = "";
             int compressedN = 0;
             boolean found = false;
             if (!isInP) {
-                for (int i = 0; i < this.currentPath.size(); i++) {
-                    c = this.currentPath.get(i);
+                for (int i = 0; i < this.currentUncompressedPath.size(); i++) {
+                    c = this.currentUncompressedPath.get(i);
                     path = path + "/" + c.s + "[" + c.n + "]";
                     if (c.s.equals(this.currentCompressedPath.get(this.currentCompressedPath.size() - 1).s) && !found) {
                         compressedN = c.n;
@@ -157,6 +157,7 @@ public class ArticleXMLParser extends DefaultHandler {
                 pathWithoutN = path.substring(0, path.length() - 2 - Integer.toString(n).length());
                 compressedPathWithoutN = compressedPath.substring(0, compressedPath.length() - 2 - Integer.toString(compressedN).length());;
 
+                //Fill in N map
                 if (this.N.containsKey(compressedPathWithoutN) && qName.equals("bdy") && qName.equals("article") && qName.equals("header")) {
                     this.N.put(compressedPathWithoutN, this.N.get(compressedPathWithoutN).intValue() + 1);
                 } else {
@@ -197,7 +198,7 @@ public class ArticleXMLParser extends DefaultHandler {
                 break;
         }
 
-        this.currentPath.remove(this.currentPath.size() - 1);
+        this.currentUncompressedPath.remove(this.currentUncompressedPath.size() - 1);
         this.currentXMLDepth--;
 
         for (int i = this.XMLTree.size() - 1; i >= 0; i--) {
@@ -230,8 +231,8 @@ public class ArticleXMLParser extends DefaultHandler {
         String uncompressedPath = "";
         Couple c;
 
-        for (int i = 0; i < this.currentPath.size(); i++) {
-            c = this.currentPath.get(i);
+        for (int i = 0; i < this.currentUncompressedPath.size(); i++) {
+            c = this.currentUncompressedPath.get(i);
             uncompressedPath = uncompressedPath + "/" + c.s + "[" + c.n + "]";
         }
 
@@ -243,22 +244,17 @@ public class ArticleXMLParser extends DefaultHandler {
         c = this.currentCompressedPath.get(this.currentCompressedPath.size() - 1);
         compressedPath = compressedPath + "/" + c.s;
 
+        //Fill in the dlMap for this document only
         Integer integer = null;
-
         for (int i = 0; i < words.length; i++) {
             if (!words[i].isEmpty()) {
-                if (this.dlMap.get(compressedPath) != null) {
-                    this.dlMap.put(compressedPath, this.dlMap.get(compressedPath) + 1);
-                    if (!words[i].isEmpty()) {
-                        integer = this.dlMap.get(path);
-                        if (integer != null) {
-                            this.dlMap.put(path, integer + 1);
-                        } else {
-                            this.dlMap.put(compressedPath, 1);
-                        }
-                        this.paths.add(uncompressedPath);
-                    }
+                integer = this.dlMap.get(uncompressedPath);
+                if (integer != null) {
+                    this.dlMap.put(uncompressedPath, integer + 1);
+                } else {
+                    this.dlMap.put(uncompressedPath, 1);
                 }
+                this.paths.add(uncompressedPath);
             }
         }
     }

@@ -94,9 +94,6 @@ public class ProjetRIView extends FrameView {
         bTF = new javax.swing.JTextField();
         bm25ArticleRadioButton = new javax.swing.JRadioButton();
         bm25ElementsRadioButton = new javax.swing.JRadioButton();
-<<<<<<< HEAD
-        precisionComboBox = new javax.swing.JComboBox();
-=======
         bm25PathTextField = new javax.swing.JTextField();
         bm25f = new javax.swing.JPanel();
         k1label1 = new javax.swing.JLabel();
@@ -105,7 +102,6 @@ public class ProjetRIView extends FrameView {
         bTF1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         alphaTitleTextField = new javax.swing.JTextField();
->>>>>>> 68ad897387349ec3415c487fa20e5c6bb1a0b515
         ltn = new javax.swing.JPanel();
         ltnArticleRadioButton = new javax.swing.JRadioButton();
         ltnElementsRadioButton = new javax.swing.JRadioButton();
@@ -317,8 +313,8 @@ public class ProjetRIView extends FrameView {
         bm25ElementsRadioButton.setText(resourceMap.getString("bm25ElementsRadioButton.text")); // NOI18N
         bm25ElementsRadioButton.setName("bm25ElementsRadioButton"); // NOI18N
 
-        precisionComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "article", "header", "bdy" }));
-        precisionComboBox.setName("precisionComboBox"); // NOI18N
+        bm25PathTextField.setText(resourceMap.getString("bm25PathTextField.text")); // NOI18N
+        bm25PathTextField.setName("bm25PathTextField"); // NOI18N
 
         javax.swing.GroupLayout bm25Layout = new javax.swing.GroupLayout(bm25);
         bm25.setLayout(bm25Layout);
@@ -329,22 +325,6 @@ public class ProjetRIView extends FrameView {
                 .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bm25ArticleRadioButton)
                     .addGroup(bm25Layout.createSequentialGroup()
-<<<<<<< HEAD
-                        .addComponent(bm25ElementsRadioButton)
-                        .addGap(40, 40, 40)
-                        .addComponent(precisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(bm25Layout.createSequentialGroup()
-                            .addComponent(k1label)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(k1TF, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(bm25Layout.createSequentialGroup()
-                            .addComponent(bLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(bTF)))
-                    .addComponent(bm25ArticleRadioButton))
-                .addContainerGap(250, Short.MAX_VALUE))
-=======
                         .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bm25ElementsRadioButton)
                             .addGroup(bm25Layout.createSequentialGroup()
@@ -359,7 +339,6 @@ public class ProjetRIView extends FrameView {
                                 .addComponent(bTF, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(k1TF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)))))
                 .addContainerGap())
->>>>>>> 68ad897387349ec3415c487fa20e5c6bb1a0b515
         );
         bm25Layout.setVerticalGroup(
             bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,10 +354,10 @@ public class ProjetRIView extends FrameView {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bm25ArticleRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precisionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bm25ElementsRadioButton))
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addGroup(bm25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bm25ElementsRadioButton)
+                    .addComponent(bm25PathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
 
         searchTabbedPane.addTab(resourceMap.getString("bm25.TabConstraints.tabTitle"), bm25); // NOI18N
@@ -867,7 +846,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                             scores = ((Bm25Articles) score).getScores();
                         } else if (bm25ElementsRadioButton.isSelected()) {
                             System.out.print("Elements with precision :");
-                            precision = precisionComboBox.getSelectedItem().toString();
+                            precision = bm25PathTextField.getText();
                             System.out.println(precision);
                             scoreElements = new Bm25Elements(request, index, k1, b, precision);
                             scoresElements = ((Bm25Elements) scoreElements).getScores();
@@ -955,7 +934,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                                     + runIndice + separator
                                     + (1500 - runIndice + 1) + separator
                                     + "MichaelJeremyMickael" + separator
-                                    + path + "\n";
+                                    + path + "[1]" + "\n";
                         }
 
                     }
@@ -988,11 +967,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JPanel bm25;
     private javax.swing.JRadioButton bm25ArticleRadioButton;
     private javax.swing.JRadioButton bm25ElementsRadioButton;
-<<<<<<< HEAD
-=======
     private javax.swing.JTextField bm25PathTextField;
     private javax.swing.JPanel bm25f;
->>>>>>> 68ad897387349ec3415c487fa20e5c6bb1a0b515
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel creationPane;
@@ -1023,7 +999,6 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JTabbedPane mainTabbedPane;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel mjm;
-    private javax.swing.JComboBox precisionComboBox;
     private javax.swing.JPanel recuperationPane;
     private javax.swing.JProgressBar runCreationPB;
     private javax.swing.JPanel searchPane;

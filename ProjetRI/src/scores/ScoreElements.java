@@ -1,17 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package scores;
 
 import index.Index;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,7 +27,7 @@ public class ScoreElements {
     /*
      * @return the tf
      */
-    public Integer getTermFrequency(Index index, String word, String documentTitle, String path) {
+    public Integer getTermFrequency(Index index, String word, String documentTitle, String originalPath) {
 
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
         int tf = 0;
@@ -48,11 +37,11 @@ public class ScoreElements {
         }
         //If the word exist in the document
         if (mapValue.containsKey(documentTitle)) {
-            if (mapValue.get(documentTitle).contains(path)) {
+            if (mapValue.get(documentTitle).contains(originalPath)) {
                 tf++;
             } else {
                 for (String p : mapValue.get(documentTitle)) {
-                    if (p.startsWith(path)) {
+                    if (p.startsWith(originalPath)) {
                         tf++;
                     }
                 }
@@ -64,6 +53,60 @@ public class ScoreElements {
     /*
      * @return the df
      */
+    /*public Integer getDocumentFrequency(Index index, String word, String path) {
+
+        Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
+
+        String documentNumber;
+        int df = 0;
+        int splitedPathIndex, splitedWordIndex, pathsDocumentIndex;
+        boolean isFound;
+
+        String wordPath = "";
+
+        String[] splitedPath = path.split("/");
+        String[] splitedWordPath;
+
+        if (mapValue == null) {
+            // -1 because 0 make a divide by 0 error
+            return -1;
+        }
+
+        for (Iterator i = mapValue.keySet().iterator(); i.hasNext();) {
+            documentNumber = i.next().toString();
+            isFound = false;
+            if (mapValue.get(documentNumber).contains(path)) {
+                df++;
+            } else {
+                pathsDocumentIndex = 0;
+                //System.out.println(mapValue.get(documentNumber));
+                while (pathsDocumentIndex < mapValue.get(documentNumber).size() && !isFound) {
+                    wordPath = mapValue.get(documentNumber).get(pathsDocumentIndex);
+                    splitedPathIndex = 1;
+                    splitedWordIndex = 1;
+                    splitedWordPath = wordPath.split("/");
+
+                    while (splitedWordIndex < splitedWordPath.length && !isFound) {
+                        //System.out.println(splitedWordPath[splitedWordIndex] + " " + splitedPath[splitedPathIndex]);
+                        if (splitedPathIndex == splitedPath.length - 1) {
+                            if (splitedWordPath[splitedWordIndex].replaceAll("\\[\\d+\\]", "").equals(splitedPath[splitedPathIndex])) {
+                                splitedPathIndex++;
+                            }
+                        } else if (splitedWordPath[splitedWordIndex].equals(splitedPath[splitedPathIndex])) {
+                            splitedPathIndex++;
+                        }
+                        if (splitedPathIndex == splitedPath.length) {
+                            isFound = true;
+                            df++;
+                        }
+                        splitedWordIndex++;
+                    }
+                    pathsDocumentIndex++;
+                }
+            }
+        }
+        return df;
+    }*/
     public Integer getDocumentFrequency(Index index, String word, String path) {
 
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
@@ -85,7 +128,6 @@ public class ScoreElements {
             if (mapValue.get(documentNumber).contains(path)) {
                 df++;
             } else {
-
                 k = 0;
                 while(k < mapValue.get(documentNumber).size() && !isFound) {
                     p = mapValue.get(documentNumber).get(k);
@@ -100,50 +142,6 @@ public class ScoreElements {
         return df;
     }
 
-    public void createRunFile(String fileName, String requestNumber, Map<String, Map<String, Double>> scores, int runNumber) {
-
-        double maxValue;
-        String maxValuePath = "";
-        String docNumber = "";
-        String nextDoc = "";
-        String nextPath;
-        String runs = " ";
-        String separator = " ";
-
-        for (int runIndice = 1; runIndice <= runNumber; runIndice++) {
-            maxValue = Double.MIN_VALUE;
-            for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
-                nextDoc = j.next().toString();
-                for (Iterator k = scores.get(nextDoc).keySet().iterator(); k.hasNext();) {
-                    nextPath  = k.next().toString();
-                    if (scores.get(nextDoc).get(nextPath) > maxValue) {
-                        docNumber = nextDoc;
-                        maxValue = scores.get(nextDoc).get(nextPath);
-                        maxValuePath = nextPath;
-                    }
-                }
-            }
-            scores.get(docNumber).remove(maxValuePath);
-
-            runs += requestNumber + separator
-                    + "Q0" + separator
-                    + docNumber + separator
-                    + runIndice + separator
-                    + (runNumber - runIndice + 1) + separator
-                    + "MichaelJeremyMickael" + separator
-                    + maxValuePath + "\n";
-        }
-
-        Path runPath = Paths.get("Runs/" + fileName + ".txt");
-
-        try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"), StandardOpenOption.CREATE)) {
-            writer.write(runs);
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("[Score][createRunFile] " + e);
-        }
-    }
-
     //Getters
     public Index getIndex() {
         return this.index;
@@ -152,18 +150,4 @@ public class ScoreElements {
     public String getRequest() {
         return this.request;
     }
-    
-    
-  /*  public static void main(String[] args) {
-    Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
-    
-    LtnSmartElements score = new LtnSmartElements("Gottschalk", index);
-    
-    Map<String, Map<String, Double>> scores = score.getScores();
-    score.createRunFile("runtest", "articleNumb", scores, 1500);
-    
-    //System.out.println("[main][scores]"+scores.toString());
-    
-    
-    }*/
 }

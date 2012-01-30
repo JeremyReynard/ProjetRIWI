@@ -194,9 +194,9 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         JProgressBar jp1 = new JProgressBar();
         JProgressBar jp2 = new JProgressBar();
 
-        Index index = new ArticlesDirectoryXMLParser("../../coll10").parseDirectory(jp1, jp2);
+        Index index = new ArticlesDirectoryXMLParser("../../coll1000").parseDirectory(jp1, jp2);
 
-        IndexSerialization.serialize(index, "fileSerialization/indexXML10.serial");
+        IndexSerialization.serialize(index, "fileSerialization/indexXML1000.serial");
 
         // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
 
