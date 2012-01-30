@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import serialization.IndexDeserialization;
 
@@ -49,9 +50,11 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
     public double getRequestScore(String documentNumber) {
         double score = 0;
         
+        List<String> vocabularyList = this.index.getVocabulary().get(documentNumber);
+        
         for (String word : this.request.split("[\\W]+")) {
             int dl = index.getDl(documentNumber,"/article");
-            score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl,documentNumber);
+            score += getDocumentWordScore(word,getTermFrequency(index, word, documentNumber) , dl,documentNumber,vocabularyList);
         }
         
         return score;
@@ -62,7 +65,7 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public double getDocumentWordScore(String word,float termFrequency,int documentLength, String documentNumber){
+    public double getDocumentWordScore(String word,float termFrequency,int documentLength, String documentNumber,List<String>vocabularyList){
         
         int documentFrequency = getDocumentFrequency(index, word);
         
@@ -71,16 +74,15 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
         int termTemporaryFrequency = 0;
         int termTemporaryDocumentFrequency = 0;
         int sommePonderations=0;
-        //For all word in the request
-        for(String requestWord :this.request.split("[\\W]+"))
+        //For all word in the vocabulary
+        for(String wordOfvocabulary : vocabularyList)
         {
             
             //Get the term frequency of an existing word
-            termTemporaryFrequency = getTermFrequency(index, requestWord, documentNumber);
+            termTemporaryFrequency = getTermFrequency(index, wordOfvocabulary, documentNumber);
             
             //Get the term frenquency of an existing word in a specific document
-            
-            termTemporaryDocumentFrequency = getDocumentFrequency(index, requestWord);
+            termTemporaryDocumentFrequency = getDocumentFrequency(index, wordOfvocabulary);
             
             
             //Formula
@@ -101,12 +103,12 @@ public class LtcSmartArticles  extends Score implements CommonsScoreInterface{
             
             {
                 put("2009011", "olive oil health benefit");
-                put("2009036", "notting hill film actors");
-                put("2009067", "probabilistic models in information retrieval");
-                put("2009073", "web link network analysis");
-                put("2009074", "web ranking scoring algorithm");
-                put("2009078", "supervised machine learning algorithm");
-                put("2009085", "operating system +mutual +exclusion");
+               // put("2009036", "notting hill film actors");
+               // put("2009067", "probabilistic models in information retrieval");
+               // put("2009073", "web link network analysis");
+               // put("2009074", "web ranking scoring algorithm");
+               // put("2009078", "supervised machine learning algorithm");
+               // put("2009085", "operating system +mutual +exclusion");
                 
                 
             }
