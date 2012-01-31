@@ -47,7 +47,7 @@ public class ScoreElements {
                 }
             }
         }
-        System.out.println("TF : "+word+" "+tf);
+        //System.out.println("TF : "+word+" "+tf);
         return tf;
     }
 
@@ -59,17 +59,18 @@ public class ScoreElements {
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
 
         String documentNumber;
-        int dfArticle,dfHeader,dfBdy;
+        int dfArticle, dfHeader, dfBdy;
         boolean isInArticle;
         boolean isInHeader;
         boolean isInBdy;
-        
+        boolean isInTitle;
+
         dfArticle = 0;
         dfHeader = 0;
         dfBdy = 0;
-        
+
         String[] splitedCompressedPath = compressedPath.split("/");
-        String lastTag = splitedCompressedPath[splitedCompressedPath.length-1];
+        String lastTag = splitedCompressedPath[splitedCompressedPath.length - 1];
 
         if (mapValue == null) {
             // -1 because 0 make a divide by 0 error
@@ -81,6 +82,7 @@ public class ScoreElements {
             isInArticle = false;
             isInBdy = false;
             isInHeader = false;
+            isInTitle = false;
             for (String p : mapValue.get(documentNumber)) {
                 if (p.contains("article") && !isInArticle) {
                     isInArticle = true;
@@ -91,11 +93,14 @@ public class ScoreElements {
                 } else if (p.contains("bdy") && !isInBdy && !lastTag.equals("header") && !lastTag.equals("article")) {
                     isInBdy = true;
                     dfBdy++;
+                } else if (p.contains("title") && isInHeader) {
+                    isInTitle = true;
+                    dfBdy++;
                 }
             }
         }
-        System.out.println("DF de "+word+" "+(dfArticle+dfHeader+dfBdy));
-        return dfArticle+dfHeader+dfBdy;
+        // System.out.println("DF de "+word+" "+(dfArticle+dfHeader+dfBdy));
+        return dfArticle + dfHeader + dfBdy;
     }
 
     //Getters

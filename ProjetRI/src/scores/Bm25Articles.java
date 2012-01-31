@@ -48,7 +48,9 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         int dl = index.getDl(documentNumber, "/article");
 
         for (String word : this.request.split("\\W")) {
+            //System.out.println(index.getCollectionData().get(word));
             score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl, N, avdl);
+            //System.out.println(word +" "+score+" /article " + dl + " " + N + " " + avdl);
         }
 
         return score;
@@ -69,12 +71,12 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
 
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
-        
-        return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);        
+
+        return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);
     }
-    
+
     public static void main(String[] args) {
-        
+
         System.out.println("Begin of deserialization...");
         Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
         System.out.println("End of deserialization.");
@@ -82,7 +84,7 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         System.out.println("dlMap : " + index.getDlMap());
         System.out.println(" index " + index.getCollectionData().size());
 
-        Bm25Articles score = new Bm25Articles("states", index, 1, 0.5);
+        Bm25Articles score = new Bm25Articles("intelligence artificial", index, 1, 0.5);
 
         Map<String, Double> scores = score.getScores();
 

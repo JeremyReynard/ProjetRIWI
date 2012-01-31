@@ -42,7 +42,7 @@ public class LtnSmartElements extends ScoreElements {
         System.out.println(documentNumber);
         Map<String, Double> pathsScores = new HashMap<>();
         PathsCouple pathsCouple;
-        double score;
+        double score = 0;
         String p;
         //For each word of request
         for (String word : this.request.split("[\\W]+")) {
@@ -56,7 +56,7 @@ public class LtnSmartElements extends ScoreElements {
                         ///System.out.println("compress path  : " + pathsCouple.compressedPaths.get(i));
                         p = pathsCouple.compressedPaths.get(i);
                         //System.out.println(p);
-                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p);
+                        score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p);
                         if (!pathsScores.containsKey(p)) {
                             pathsScores.put(pathsCouple.originalPaths.get(i), score);
                         }
@@ -92,6 +92,7 @@ public class LtnSmartElements extends ScoreElements {
         boolean isInArticle = false;
         boolean isInHeader = false;
         boolean isInBody = false;
+        boolean isInTitle = false;
 
         PathsCouple pathsCouple = new PathsCouple();
 
@@ -103,6 +104,7 @@ public class LtnSmartElements extends ScoreElements {
             isInArticle = false;
             isInHeader = false;
             isInBody = false;
+            isInTitle = false;
             s = "";
             for (int i = 1; i < splitedPath.length; i++) {
                 switch (splitedPath[i].replaceAll("\\[\\d+\\]", "")) {
@@ -116,6 +118,11 @@ public class LtnSmartElements extends ScoreElements {
                         break;
                     case "bdy":
                         isInBody = true;
+                        break;
+                    case "title":
+                        if (isInHeader) {
+                            isInTitle = true;
+                        }
                         break;
                 }
                 if (splitedPath[i].replaceAll("\\[\\d+\\]", "").equals("article")
@@ -168,7 +175,7 @@ public class LtnSmartElements extends ScoreElements {
 
         System.out.println("N : " + index.getN());
 
-        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/bdy");
+        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/header[1]/title");
 
         Map<String, Map<String, Double>> scores = score.getScores();
 

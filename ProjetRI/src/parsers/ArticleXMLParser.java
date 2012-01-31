@@ -27,6 +27,7 @@ public class ArticleXMLParser extends DefaultHandler {
     private Map<String, Integer> dlMap;
     private boolean isInArticle = false;
     private boolean isInHeader = false;
+    private boolean isInTitle = false;
     private boolean isInBody = false;
     private boolean isInSec = false;
     private boolean isInP = false;
@@ -130,6 +131,12 @@ public class ArticleXMLParser extends DefaultHandler {
                 isInBody = true;
                 this.currentCompressedPath.add(new Couple("bdy", n));
                 break;
+            case "title":
+                if (isInHeader) {
+                    isInTitle = true;
+                    this.currentCompressedPath.add(new Couple("title", n));
+                }
+                break;
         }
 
         String path = "";
@@ -195,6 +202,12 @@ public class ArticleXMLParser extends DefaultHandler {
             case "bdy":
                 isInBody = false;
                 this.currentCompressedPath.remove(this.currentCompressedPath.size() - 1);
+                break;
+            case "title":
+                if (isInHeader) {
+                    isInTitle = false;
+                    this.currentCompressedPath.remove(this.currentCompressedPath.size() - 1);
+                }
                 break;
         }
 

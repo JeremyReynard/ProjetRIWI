@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import serialization.IndexDeserialization;
 
 /**
  * Class Bm25Elements
@@ -44,39 +45,49 @@ public class Bm25Elements extends ScoreElements {
 
     public Map<String, Double> getRequestScore(String documentNumber) {
         Map<String, Double> pathsScores = new HashMap<>();
-        ArrayList<String> paths;
+        PathsCouple pathsCouple;
         double score = 0;
 
         // optimisation
-        Map<String, ArrayList<String>> map = null;
-        ArrayList<String> list = null;
         int dl = 0;
-        
+        int N = 0;
+        double avdl = 0;
+
+        String p;
+        //For each word of request
         for (String word : this.request.split("\\W")) {
-            map = index.getCollectionData().get(word);
-            if (map != null) {
-                list = map.get(documentNumber);
-                if (list != null) {
-                    paths = generatedPathsList(list);
-                    for (String p : paths) {
-                        dl = index.getDl(documentNumber, p);
-                        score = getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, p), dl, p);
+            //System.out.println("word : "+word);
+            //For each path of the current word
+            if (index.getCollectionData().get(word) != null) {
+                //If tf !=0
+                if (index.getCollectionData().get(word).get(documentNumber) != null) {
+                    //Generate all compressed paths
+                    pathsCouple = generatePathsList(index.getCollectionData().get(word).get(documentNumber));
+                    for (int i = 0; i < pathsCouple.compressedPaths.size(); i++) {
+                        p = pathsCouple.compressedPaths.get(i);
+                        try {
+                            dl = index.getDl(documentNumber, p);
+                            N = index.getN(p);
+                            avdl = index.getAvdl(p);
+                        } catch (NullPointerException e) {
+                           // System.out.println(word + "  compressedPath : " + p + " | documentNumber F" + documentNumber);
+                            e.printStackTrace();
+                            return null;
+                        }
+                        score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), dl, N, avdl, p);
                         if (!pathsScores.containsKey(p)) {
-                            pathsScores.put(p, score);
+                            pathsScores.put(pathsCouple.originalPaths.get(i), score);
                         }
                     }
                 }
             }
         }
-
         return pathsScores;
     }
 
     public double getDocumentWordScore(String word, float tf, int dl, int N, double avdl, String path) {
 
-        int df = 0/*getDocumentFrequency(index, word)*/;
-
-
+        int df = getDocumentFrequency(index, word, precision);
 
         if (df == -1) {
             return 0;
@@ -87,47 +98,103 @@ public class Bm25Elements extends ScoreElements {
         return wtd;
     }
 
-    public double getDocumentWordScore(String word, float tf, int dl, String path) {
+    private PathsCouple generatePathsList(ArrayList<String> paths) {
 
-        int df = 0/*getDocumentFrequency(index, word)*/;
+        boolean isInArticle = false;
+        boolean isInHeader = false;
+        boolean isInBody = false;
+        boolean isInTitle = false;
 
-        /*  System.out.println("Avdl : "+index.getAvdl("/article"));
-        System.out.println("df : "+df);
-        System.out.println("dl : "+documentLength);
-        System.out.println("tf : "+termFrequency);
-        System.out.println("N : "+index.getN().get("/article"));*/
-
-        if (df == -1) {
-            return 0;
-        }
-
-        double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl / index.getAvdl(path))) + tf))
-                * Math.log((index.getN(path) - df + 0.5) / (df + 0.5));
-
-        return wtd;
-    }
-
-    private ArrayList<String> generatedPathsList(ArrayList<String> paths) {
-        ArrayList<String> pathsList = new ArrayList<>();
+        PathsCouple pathsCouple = new PathsCouple();
 
         String[] splitedPath;
         String s;
+        String sEnd;
         for (String p : paths) {
-            if (p.startsWith(this.precision)) {
-                p = this.precision;
-                splitedPath = p.split("/");
-                for (int i = 1; i < splitedPath.length; i++) {
-                    s = "";
-                    for (int j = 1; j <= i; j++) {
-                        s = s + "/" + splitedPath[j];
+            splitedPath = p.split("/");
+            isInArticle = false;
+            isInHeader = false;
+            isInBody = false;
+            isInTitle = false;
+            s = "";
+            for (int i = 1; i < splitedPath.length; i++) {
+                switch (splitedPath[i].replaceAll("\\[\\d+\\]", "")) {
+                    case "article":
+                        isInArticle = true;
+                        break;
+                    case "header":
+                        if (!isInBody) {
+                            isInHeader = true;
+                        }
+                        break;
+                    case "bdy":
+                        isInBody = true;
+                        break;
+                    case "title":
+                        if (isInHeader) {
+                            isInTitle = true;
+                        }
+                        break;
+                }
+                if (splitedPath[i].replaceAll("\\[\\d+\\]", "").equals("article")
+                        || (isInArticle && (isInHeader || isInBody))) {
+                    s = s + "/" + splitedPath[i];
+                }
+            }
+            if (!pathsCouple.compressedPaths.contains("/article")) {
+                pathsCouple.compressedPaths.add("/article");
+                pathsCouple.originalPaths.add("/article[1]");
+            }
+
+            if (s.startsWith(this.precision)) {
+                sEnd = s.split(precision.split("/")[precision.split("/").length - 1])[1].split("/")[0];
+                s = this.precision;
+                splitedPath = s.split("/");
+                s = "";
+                for (int j = 1; j < splitedPath.length; j++) {
+                    if (!pathsCouple.compressedPaths.contains(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""))) {
+                        pathsCouple.compressedPaths.add(s + "/" + splitedPath[j].replaceAll("\\[\\d+\\]", ""));
+                        if (j == splitedPath.length - 1) {
+                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j] + sEnd);
+                        } else {
+                            pathsCouple.originalPaths.add(p.split(splitedPath[j].replaceAll("\\[\\d+\\]", ""))[0] + splitedPath[j]);
+                        }
                     }
-                    if (!pathsList.contains(s)) {
-                        pathsList.add(s);
-                    }
+                    s = s + "/" + splitedPath[j];
                 }
             }
         }
+       // System.out.println(pathsCouple.compressedPaths.toString());
+       // System.out.println(pathsCouple.originalPaths.toString());
+        return pathsCouple;
 
-        return pathsList;
+
+    }
+
+    private static class PathsCouple {
+
+        ArrayList<String> originalPaths;
+        ArrayList<String> compressedPaths;
+
+        public PathsCouple() {
+            this.originalPaths = new ArrayList<>();
+            this.compressedPaths = new ArrayList<>();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("Begin of deserialization...");
+        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1000.serial");
+        System.out.println("End of deserialization.");
+
+        System.out.println("dlMap : " + index.getDlMap());
+        System.out.println(" index " + index.getCollectionData().size());
+
+        Bm25Elements score = new Bm25Elements("olive oil health benefit", index, 1, 0.5, "/article[1]/header");
+
+        Map<String, Map<String, Double>> scores = score.getScores();
+
+        System.out.println("Scores : " + scores);
     }
 }
