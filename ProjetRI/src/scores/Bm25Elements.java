@@ -67,13 +67,12 @@ public class Bm25Elements extends ScoreElements {
                         p = pathsCouple.compressedPaths.get(i);
                         try {
                             dl = index.getDl(documentNumber, p);
-                            N = index.getN(p);
-                            avdl = index.getAvdl(p);
+
                         } catch (NullPointerException e) {
-                           // System.out.println(word + "  compressedPath : " + p + " | documentNumber F" + documentNumber);
-                            e.printStackTrace();
-                            return null;
+                            dl = 1;
                         }
+                        N = index.getN(p);
+                        avdl = index.getAvdl(p);
                         score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), dl, N, avdl, p);
                         if (!pathsScores.containsKey(p)) {
                             pathsScores.put(pathsCouple.originalPaths.get(i), score);
@@ -164,8 +163,8 @@ public class Bm25Elements extends ScoreElements {
                 }
             }
         }
-       // System.out.println(pathsCouple.compressedPaths.toString());
-       // System.out.println(pathsCouple.originalPaths.toString());
+        // System.out.println(pathsCouple.compressedPaths.toString());
+        // System.out.println(pathsCouple.originalPaths.toString());
         return pathsCouple;
 
 
