@@ -165,7 +165,7 @@ public class ArticleXMLParser extends DefaultHandler {
                 compressedPathWithoutN = compressedPath.substring(0, compressedPath.length() - 2 - Integer.toString(compressedN).length());;
 
                 //Fill in N map
-                if (this.N.containsKey(compressedPathWithoutN) && qName.equals("bdy") && qName.equals("article") && qName.equals("header")) {
+                if (this.N.containsKey(compressedPathWithoutN) && (qName.equals("bdy") || qName.equals("article") || qName.equals("header"))) {
                     this.N.put(compressedPathWithoutN, this.N.get(compressedPathWithoutN).intValue() + 1);
                 } else {
                     this.N.put(compressedPathWithoutN, 1);
