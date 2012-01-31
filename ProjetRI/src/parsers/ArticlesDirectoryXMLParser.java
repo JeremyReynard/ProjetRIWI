@@ -1,4 +1,4 @@
-/*
+*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -65,7 +65,7 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         Map<String, Integer> nMap = null;
         
         for (File f : files) {
-            System.out.println(f.getName());
+            //System.out.println(f.getName());
             // JProgressBar
             jpBarFile.setString(f.getName());
             jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
