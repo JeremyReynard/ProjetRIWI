@@ -39,7 +39,7 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     public Map<String, Double> getRequestScore(String documentNumber) {
-        System.out.println(documentNumber);
+        //System.out.println(documentNumber);
         Map<String, Double> pathsScores = new HashMap<>();
         PathsCouple pathsCouple;
         double score = 0;

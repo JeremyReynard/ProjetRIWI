@@ -785,6 +785,24 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     }
 }//GEN-LAST:event_indexFileChooseActionPerformed
 
+    
+    private boolean testRecouvrement(CoupleStringDouble newPath, ArrayList<CoupleStringDouble> pathsList){
+        
+        for (CoupleStringDouble existingPath : pathsList){            
+            if (newPath.stringValue.startsWith(existingPath.stringValue) 
+                    || existingPath.stringValue.startsWith(newPath.stringValue)){ // if (recouvrement)
+                
+                // maybe we have to switch value !
+                if(existingPath.doubleValue < newPath.doubleValue){
+                    pathsList.remove(existingPath);
+                    pathsList.add(newPath);
+                }                
+                return true;
+            } 
+        }        
+        return false;
+    }
+
     private void exportRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportRunButtonActionPerformed
 
         Thread runCreationThread = new Thread() {
@@ -793,11 +811,15 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
             public void run() {
 
                 String runs = "";
+                String paramsList = "";
                 Component selectedTab = searchTabbedPane.getSelectedComponent();
                 Score score = null;
-                ScoreElements scoreElements = null;
+                ScoreElements scoreElements = null;                
+                ScoreElements scoreElementsArticles = null;
+                
                 Map<String, Double> scores = null;
                 Map<String, Map<String, Double>> scoresElements = null;
+                Map<String, Map<String, Double>> scoresElementsArticles = null;
                 double k1;
                 Double b;
                 double alphaTitle;
@@ -827,11 +849,18 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                             System.out.println("Article");
                             score = new LtnSmartArticles(request, index);
                             scores = ((LtnSmartArticles) score).getScores();
+                            
+                            paramsList += "ltn_articles";
                         } else if (ltnElementsRadioButton.isSelected()) {
                             System.out.println("Elements");
                             precision = ltnPathTextField.getText();
                             scoreElements = new LtnSmartElements(request, index, precision);
                             scoresElements = ((LtnSmartElements) scoreElements).getScores();
+                            
+                            scoreElementsArticles = new LtnSmartElements(request, index, precision);
+                            scoresElementsArticles = ((LtnSmartElements) scoreElementsArticles).getScores();
+                            
+                            paramsList += "ltn_elements";
                         }
                     } else if (selectedTab.equals(bm25)) {
                         System.out.print("BM25 : ");
@@ -844,12 +873,19 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                             System.out.println("Article");
                             score = new Bm25Articles(request, index, k1, b);
                             scores = ((Bm25Articles) score).getScores();
+                            
+                            paramsList += "bm25_articles_k" + k1 + "_b" + b;
                         } else if (bm25ElementsRadioButton.isSelected()) {
                             System.out.print("Elements with precision :");
                             precision = bm25PathTextField.getText();
                             System.out.println(precision);
                             scoreElements = new Bm25Elements(request, index, k1, b, precision);
                             scoresElements = ((Bm25Elements) scoreElements).getScores();
+                            
+                            scoreElementsArticles = new Bm25Elements(request, index, k1, b, precision);
+                            scoresElementsArticles = ((Bm25Elements) scoreElementsArticles).getScores();
+                            
+                            paramsList += "bm25_elements_k" + k1 + "_b" + b;
                         }
                     } else if (selectedTab.equals(ltc)) {
                         System.out.println("LTC");
@@ -859,6 +895,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
                         score = new LtcSmartArticles(request, index);
                         scores = ((LtcSmartArticles) score).getScores();
+                        
+                        paramsList += "ltc_articles";
                     } else if (selectedTab.equals(mjm)) {
                         System.out.println("MJM");
                         requestStr = "[MJM] ";
@@ -867,6 +905,8 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
                         score = new MJMscore(request, index, Double.parseDouble(kTextField.getText()));
                         scores = ((MJMscore) score).getScores();
+                        
+                        paramsList += "mjmperso_articles_k" + kTextField.getText();
                     } else if (selectedTab.equals(bm25f)){
                         System.out.println("BM25FArticles");
                         requestStr = "[BM25F] ";
@@ -880,6 +920,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                         score = new Bm25fArticles(request, index, k1, b, alphaTitle);
                         scores = ((Bm25fArticles) score).getScores();
                         
+                        paramsList += "bm25f_articles_k" + k1 + "_b" + b + "_alpha" + alphaTitle;                        
                     }
 
                     double maxValue;
@@ -891,13 +932,16 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                     String separator = " ";
 
                     System.out.println("Begin of ordering scoring...");
-                    for (int runIndice = 1; runIndice <= 1500; runIndice++) {
-                        maxValue = Double.MIN_VALUE;
-                        if (selectedTab.equals(mjm)
-                                || selectedTab.equals(ltc)
-                                || (selectedTab.equals(ltn) && ltnArticleRadioButton.isSelected())
-                                || (selectedTab.equals(bm25) && bm25ArticleRadioButton.isSelected())
-                                || (selectedTab.equals(bm25f))) {
+                    
+                    // articles
+                    if (selectedTab.equals(mjm)
+                            || selectedTab.equals(ltc)
+                            || (selectedTab.equals(ltn) && ltnArticleRadioButton.isSelected())
+                            || (selectedTab.equals(bm25) && bm25ArticleRadioButton.isSelected())
+                            || (selectedTab.equals(bm25f))) {
+
+                        for (int runIndice = 1; runIndice <= 1500; runIndice++) {
+                            maxValue = Double.MIN_VALUE;
                             for (Iterator j = scores.keySet().iterator(); j.hasNext();) {
                                 next = (String) j.next();
                                 if (scores.get(next) > maxValue) {
@@ -914,32 +958,82 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                                     + (1500 - runIndice + 1) + separator
                                     + "MichaelJeremyMickael" + separator
                                     + "/article[1]" + "\n";
-                        } else {
-                            for (Iterator j = scoresElements.keySet().iterator(); j.hasNext();) {
+                        }
+                    }else {                        
+                        // ----- ELEMENTS
+                                                                                           
+                        // first, order by /article
+                        ArrayList<CoupleStringDouble> listArticles = new ArrayList<>(1500);
+                        for (int runIndice = 1; runIndice <= 1500; ++runIndice) {
+                            maxValue = Double.MIN_VALUE;
+                            for (Iterator j = scoresElementsArticles.keySet().iterator(); j.hasNext();) {
                                 next = j.next().toString();
-                                for (Iterator k = scoresElements.get(next).keySet().iterator(); k.hasNext();) {
+                                for (Iterator k = scoresElementsArticles.get(next).keySet().iterator(); k.hasNext();) {
                                     nextPath = k.next().toString();
-                                    if (scoresElements.get(next).get(nextPath) > maxValue) {
+                                    if ((scoresElementsArticles.get(next).get(nextPath) > maxValue)&&
+                                            (nextPath.equals("/article[1]"))){
                                         docNumber = next;
-                                        maxValue = scoresElements.get(next).get(nextPath);
+                                        maxValue = scoresElementsArticles.get(next).get(nextPath);
                                         path = nextPath;
                                     }
                                 }
                             }
-                            scoresElements.get(docNumber).remove(path);
-
-                            runs += id + separator
-                                    + "Q0" + separator
-                                    + docNumber + separator
-                                    + runIndice + separator
-                                    + (1500 - runIndice + 1) + separator
-                                    + "MichaelJeremyMickael" + separator
-                                    + path + "\n";
-                        }
-
-                    }
+                            listArticles.add(new CoupleStringDouble(docNumber, maxValue));
+                            scoresElementsArticles.remove(docNumber);                                                     
+                        }            
+                                                
+                        Map<String, Double> mapScore = null;
+                        CoupleStringDouble couple = null;
+                        boolean add = false;
+                        ArrayList<CoupleStringDouble> listPathsCurrentID = null;
+                        CoupleStringDouble newCouple = null;
+                                                
+                        for (int runIndice = 1; runIndice <= 1500;){
+                            add = false;
+                            
+                            listPathsCurrentID = new ArrayList<>();
+                            couple = listArticles.get(runIndice - 1);
+                            
+                            mapScore = scoresElements.get(couple.stringValue);
+                            
+                            for (Map.Entry<String, Double> m : mapScore.entrySet()) {
+                                newCouple = new CoupleStringDouble(m.getKey(), m.getValue());
+                                if ( m.getValue() > couple.doubleValue && 
+                                        !testRecouvrement(newCouple, listPathsCurrentID) ) { // TODO TEST RECOUVREMENT
+                                    listPathsCurrentID.add(newCouple);                                                                        
+                                    add = true;                                    
+                                }                                
+                            } 
+                                                        
+                            int iplist = 0;
+                            while (iplist < listPathsCurrentID.size()){                            
+                                runs += id + separator
+                                            + "Q0" + separator
+                                            + couple.stringValue + separator
+                                            + runIndice + separator
+                                            + (1500 - runIndice + 1) + separator
+                                            + "MichaelJeremyMickael" + separator
+                                            + (listPathsCurrentID.get(iplist)).stringValue + "\n";                              
+                                iplist++; 
+                                runIndice++;
+                            }                                                       
+                                                        
+                            if (!add) {
+                                runs += id + separator
+                                        + "Q0" + separator
+                                        + couple.stringValue + separator
+                                        + runIndice + separator
+                                        + (1500 - runIndice + 1) + separator
+                                        + "MichaelJeremyMickael" + separator
+                                        + "/article[1]" + "\n";
+                                
+                                add = false;
+                                runIndice++;
+                            }
+                        }                        
+                    }                    
                 }
-                Path runPath = Paths.get("Runs/" + "runsMichaelJeremyMickael" + ".txt");
+                Path runPath = Paths.get("Runs/" + "MichaelJeremyMickael_00_" + paramsList + ".txt");
                 try (BufferedWriter writer = Files.newBufferedWriter(runPath, Charset.forName("UTF8"), StandardOpenOption.CREATE)) {
                     writer.write(runs);
                     writer.close();
@@ -954,7 +1048,7 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         runCreationThread.start();
 
     }//GEN-LAST:event_exportRunButtonActionPerformed
-
+    
     private void ltnPathTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ltnPathTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ltnPathTextFieldActionPerformed
@@ -1028,4 +1122,25 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
 
                 }
             };
+
+    public class CoupleStringDouble{
+        
+        public String stringValue;
+        public double doubleValue;
+
+        public CoupleStringDouble(String stringValue, double doubleValue) {
+            
+            this.stringValue = stringValue;
+            this.doubleValue = doubleValue;
+        }
+        
+        @Override
+        public String toString(){
+            
+            return "(" + this.stringValue + ", " + this.doubleValue + ")";
+        }
+        
+    }
+
+
 }
