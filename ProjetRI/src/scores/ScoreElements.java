@@ -13,6 +13,7 @@ public class ScoreElements {
 
     protected Index index;
     protected String request;
+    protected int pagerank;
 
     /*
      * Constructor
