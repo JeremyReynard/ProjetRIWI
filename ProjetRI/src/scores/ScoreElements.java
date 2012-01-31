@@ -59,15 +59,18 @@ public class ScoreElements {
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
 
         String documentNumber;
-        int dfArticle, dfHeader, dfBdy;
+        int dfArticle, dfHeader, dfTitle, dfSec, dfBdy;
         boolean isInArticle;
         boolean isInHeader;
-        boolean isInBdy;
         boolean isInTitle;
-
+        boolean isInBdy;
+        boolean isInSec;
+        
         dfArticle = 0;
         dfHeader = 0;
         dfBdy = 0;
+        dfTitle = 0;
+        dfSec = 0;
 
         String[] splitedCompressedPath = compressedPath.split("/");
         String lastTag = splitedCompressedPath[splitedCompressedPath.length - 1];
@@ -83,6 +86,7 @@ public class ScoreElements {
             isInBdy = false;
             isInHeader = false;
             isInTitle = false;
+            isInSec = false ;
             for (String p : mapValue.get(documentNumber)) {
                 if (p.contains("article") && !isInArticle) {
                     isInArticle = true;
@@ -95,12 +99,15 @@ public class ScoreElements {
                     dfBdy++;
                 } else if (p.contains("title") && isInHeader) {
                     isInTitle = true;
-                    dfBdy++;
+                    dfTitle++;
+                } else if (p.contains("sec") && isInBdy) {
+                    isInSec = true;
+                    dfSec++;
                 }
             }
         }
         // System.out.println("DF de "+word+" "+(dfArticle+dfHeader+dfBdy));
-        return dfArticle + dfHeader + dfBdy;
+        return dfArticle + dfHeader + dfTitle + dfBdy + dfSec;
     }
 
     //Getters
