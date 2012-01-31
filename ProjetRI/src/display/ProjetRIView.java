@@ -1011,6 +1011,9 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
                         scoresElements = ((Bm25FElements) scoreElements).getScores();
 
                         paramsList += "bm25f_articles_k" + k1 + "_b" + b + "_alpha" + alphaTitle;
+                        
+                        scoreElementsArticles = new Bm25FElements(request, index, k1, b, precision, alphas);
+                        scoresElementsArticles = ((Bm25FElements) scoreElementsArticles).getScores();
                     }
 
                     double maxValue;
@@ -1212,13 +1215,13 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
             new HashMap() {
 
                 {
-                    put("2009011", "olive oil health benefit");
-                    /*put("2009036", "notting hill film actors");
+                    //put("2009011", "olive oil health benefit");
+                    put("2009036", "notting hill film actors");
                     put("2009067", "probabilistic models in information retrieval");
                     put("2009073", "web link network analysis");
                     put("2009074", "web ranking scoring algorithm");
                     put("2009078", "supervised machine learning algorithm");
-                    put("2009085", "operating system +mutual +exclusion");*/
+                    put("2009085", "operating system +mutual +exclusion");
 
 
                 }
