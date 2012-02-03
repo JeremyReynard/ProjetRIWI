@@ -4,11 +4,12 @@ import index.Index;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import serialization.IndexDeserialization;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface {
     
@@ -16,7 +17,13 @@ public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface
     double b;
     int N;
     double avdl;
-    
+    /**
+     * the constructor
+     * @param request the query
+     * @param index the index
+     * @param k1 the parameter k1 for BM25 ranking's function
+     * @param b  the parameter b for BM25 ranking's function
+     */
     public Bm25ArticlesPagerank(String request, Index index, double k1, double b) {
         super(request, index);
         this.b = b;
@@ -74,23 +81,7 @@ public class Bm25ArticlesPagerank extends Score implements CommonsScoreInterface
         
         return wtd;
     }
-    
-    public static void main(String[] args) {
-        System.out.println("Begin of deserialization...");
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
-        System.out.println("End of deserialization.");
-        
-        System.out.println("dlMap : " + index.getDlMap());
-        System.out.println(" index " + index.getCollectionData().size());
-        
-        Bm25Articles score = new Bm25Articles("states", index, 1, 0.5);
-        
-        Map<String, Double> scores = score.getScores();
-        
-        System.out.println("Scores : " + scores);
-        
-    }
-    
+
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
         throw new UnsupportedOperationException("Not supported yet.");

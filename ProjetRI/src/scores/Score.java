@@ -19,7 +19,9 @@ import java.util.Map;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class Score {
     
@@ -38,8 +40,12 @@ public class Score {
         
     }
     
-    /*
-     * @return the tf
+    /**
+     * Get the term fraquency of a term
+     * @param index the index
+     * @param word the term
+     * @param documentTitle the current document
+     * @return the term frequency
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle) {
         
@@ -56,8 +62,11 @@ public class Score {
         return integer;
     }
     
-    /*
-     * @return the df
+    /**
+     * get the document frequency
+     * @param index the index
+     * @param word the term
+     * @return the document frequency
      */
     public Integer getDocumentFrequency(Index index, String word) {
         
@@ -70,6 +79,14 @@ public class Score {
         return mapValue.entrySet().size();
     }
 
+    /**
+     * Create a run file
+     * @param fileName the futur run file name
+     * @param requestNumber the number of the request
+     * @param pathElement the element path
+     * @param scores the document scores
+     * @param runNumber the number of runs
+     */
     public void createRunFile(String fileName, String requestNumber, String pathElement,Map<String, Double> scores, int runNumber){
         
         double maxValue;
@@ -108,26 +125,20 @@ public class Score {
         }
     }
     
-    //Getters
+    /**
+     * Get the index
+     * @return the index
+     */
     public Index getIndex() {
         return this.index;
     }
-    
+    /**
+     * Get the request
+     * @return the request
+     */
     public String getRequest() {
         return this.request;
     }
-    
-    /*public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexSerialized.serial");
-        
-        LtnSmartArticles score = new LtnSmartArticles("states", index);
-        
-        Map<String, Double> scores = score.getScores();
-        score.createRunFile("runtest", "articleNumb", "/article[1]", scores, 1500);
-        
-        //System.out.println("[main][scores]"+scores.toString());
-        
-        
-    }*/
+
 
 }

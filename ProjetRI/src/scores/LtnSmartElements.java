@@ -9,16 +9,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import serialization.IndexDeserialization;
 
 /**
- * Class LtnSmartElements
- * @author Michaël Bard <michael.bard@laposte.net>
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class LtnSmartElements extends ScoreElements {
 
     String precision;
 
+    /**
+     * The constructor
+     * @param request the request
+     * @param index the index
+     * @param precision the granularity
+     */
     public LtnSmartElements(String request, Index index, String precision) {
         super(request, index);
         this.precision = precision;
@@ -39,7 +46,6 @@ public class LtnSmartElements extends ScoreElements {
     }
 
     public Map<String, Double> getRequestScore(String documentNumber) {
-        //System.out.println(documentNumber);
         Map<String, Double> pathsScores = new HashMap<>();
         PathsCouple pathsCouple;
         double score = 0;
@@ -53,9 +59,7 @@ public class LtnSmartElements extends ScoreElements {
                     //Generate all compressed paths
                     pathsCouple = generatePathsList(index.getCollectionData().get(word).get(documentNumber));
                     for (int i = 0; i < pathsCouple.compressedPaths.size(); i++) {
-                        ///System.out.println("compress path  : " + pathsCouple.compressedPaths.get(i));
                         p = pathsCouple.compressedPaths.get(i);
-                        //System.out.println(p);
                         score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber, pathsCouple.originalPaths.get(i)), p);
                         if (!pathsScores.containsKey(p)) {
                             pathsScores.put(pathsCouple.originalPaths.get(i), score);
@@ -166,19 +170,4 @@ public class LtnSmartElements extends ScoreElements {
         }
     }
 
-    public static void main(String[] args) {
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
-
-        String request = "analysis";
-
-        //System.out.println(index.getCollectionData().get(request.toLowerCase()) + "\n");
-
-        System.out.println("N : " + index.getN());
-
-        LtnSmartElements score = new LtnSmartElements(request, index, "/article[1]/header[1]/title");
-
-        Map<String, Map<String, Double>> scores = score.getScores();
-
-        System.out.println("[main][scores]" + scores.toString());
-    }
 }

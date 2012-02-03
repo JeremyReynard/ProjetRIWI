@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JProgressBar;
 
+/**
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
+ */
 public final class IndexSerialization {
 
     public static void serialize(Index index, String filePath) {
@@ -81,19 +87,4 @@ public final class IndexSerialization {
         }
     }
 
-    static public void main(String... args) {
-
-        Map<String, Map<String, ArrayList<String>>> collection = new HashMap<>();
-
-        Map<String, ArrayList<String>> valueMap = new HashMap<>();
-
-        ArrayList<String> list = new ArrayList<>();
-        list.add("path[1]");
-        valueMap.put("100", list);
-        collection.put("test", valueMap);
-
-        // create a new Index
-        Index index = new Index(collection);
-        IndexSerialization.serialize(index, "index.serial");
-    }
 }

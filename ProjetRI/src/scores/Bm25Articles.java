@@ -4,19 +4,26 @@ import index.Index;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import serialization.IndexDeserialization;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class Bm25Articles extends Score implements CommonsScoreInterface {
-
+    
     double k1;
     double b;
     int N;
     double avdl;
-
+    /**
+     * the constructor
+     * @param request the query
+     * @param index the index
+     * @param k1 the parameter k1 for BM25 ranking's function
+     * @param b  the parameter b for BM25 ranking's function
+     */
     public Bm25Articles(String request, Index index, double k1, double b) {
         super(request, index);
         this.b = b;
@@ -24,70 +31,53 @@ public class Bm25Articles extends Score implements CommonsScoreInterface {
         this.N = index.getN().get("/article");
         this.avdl = index.getAvdl("/article");
     }
-
+    
     @Override
     public Map<String, Double> getScores() {
-
+        
         Map<String, Double> scores = new HashMap<>();
-
+        
         String documentNumber;
-
+        
         for (Iterator i = index.getDlMap().keySet().iterator(); i.hasNext();) {
             documentNumber = i.next().toString();
             scores.put(documentNumber, getRequestScore(documentNumber));
         }
-
+        
         return scores;
-
+        
     }
-
+    
     @Override
     public double getRequestScore(String documentNumber) {
         double score = 0;
-
+        
         int dl = index.getDl(documentNumber, "/article");
-
+        
         for (String word : this.request.split("\\W")) {
-            //System.out.println(index.getCollectionData().get(word));
             score += getDocumentWordScore(word, getTermFrequency(index, word, documentNumber), dl, N, avdl);
-            //System.out.println(word +" "+score+" /article " + dl + " " + N + " " + avdl);
         }
-
+        
         return score;
     }
-
+    
     public double getDocumentWordScore(String word, float tf, int dl, int N, double avdl) {
-
+        
         int df = getDocumentFrequency(index, word);
-
+        
         if (df == -1) {
             return 0;
         }
-
+        
         double wtd = ((tf * (k1 + 1)) / (k1 * (1 - b + b * (dl / avdl)) + tf)) * Math.log((N - df + 0.5) / (df + 0.5));
-
+        
         return wtd;
     }
-
+    
     @Override
     public double getDocumentWordScore(String word, float termFrequency, int documentLength) {
-
+        
         return this.getDocumentWordScore(word, termFrequency, documentLength, this.N, this.avdl);
     }
 
-    public static void main(String[] args) {
-
-        System.out.println("Begin of deserialization...");
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML10.serial");
-        System.out.println("End of deserialization.");
-
-        System.out.println("dlMap : " + index.getDlMap());
-        System.out.println(" index " + index.getCollectionData().size());
-
-        Bm25Articles score = new Bm25Articles("intelligence artificial", index, 1, 0.5);
-
-        Map<String, Double> scores = score.getScores();
-
-        System.out.println("Scores : " + scores);
-    }
 }

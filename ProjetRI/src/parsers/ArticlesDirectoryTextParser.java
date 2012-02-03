@@ -2,7 +2,6 @@ package parsers;
 
 import index.Index;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -12,13 +11,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JProgressBar;
-import serialization.IndexDeserialization;
-import serialization.IndexSerialization;
-
+/**
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
+ */
 public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
 
+    /**
+     * Use to store all the file's name of the file containing in a specific directory
+     */
     private String[] filesList;
 
+    /**
+     * The constructor
+     * @param dirPath the directory path to parse
+     */
     public ArticlesDirectoryTextParser(String dirPath) {
 
         super(dirPath);
@@ -27,6 +36,12 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
         this.filesList = directory.toFile().list();
     }
 
+    /**
+     * The parse directory function
+     * @param jpBarFile used for JProgess Bar
+     * @param jpBarGlobal used for JProgess Bar
+     * @return the index
+     */
     @SuppressWarnings("CallToThreadDumpStack")
     @Override
     public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
@@ -135,8 +150,7 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
                 }
 
             } catch (IOException e) {
-                System.err.println("Parsing error !");
-                //e.printStackTrace();
+                System.err.println("Parsing error ! ");
             }
         }
         N.put("/article", n);
@@ -147,6 +161,11 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
         return (this.index);
     }
 
+    /**
+     * count the number of lines in a specific file
+     * @param path the file path
+     * @return the number of line of a file
+     */
     private int countNBLines(Path path) {
 
         int count = 0;
@@ -167,21 +186,5 @@ public class ArticlesDirectoryTextParser extends ArticlesDirectoryParser {
         return count;
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        JProgressBar jp1 = new JProgressBar();
-        JProgressBar jp2 = new JProgressBar();
-
-        Index index = new ArticlesDirectoryTextParser("../../TextOnly1").parseDirectory(jp1, jp2);
-
-        IndexSerialization.serialize(index, "fileSerialization/indexText1.serial");
-
-        index = IndexDeserialization.deserialize("fileSerialization/indexText1.serial");
-
-        System.out.println("N : " + index.getN());
-        System.out.println("avdl : " + index.getAvdl("/article"));
-        System.out.println("dl : " + index.getDlMap().toString());
-        System.out.println("\n" + index.toString());
-
-    }
 }

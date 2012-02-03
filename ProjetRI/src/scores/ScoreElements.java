@@ -7,7 +7,9 @@ import java.util.Map;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class ScoreElements {
 
@@ -25,8 +27,13 @@ public class ScoreElements {
         this.request = request.toLowerCase();
     }
 
-    /*
-     * @return the tf
+    /**
+     * Get the term frequency
+     * @param index the index
+     * @param word the term
+     * @param documentTitle the document id
+     * @param originalPath the granularity path
+     * @return the term frequency
      */
     public Integer getTermFrequency(Index index, String word, String documentTitle, String originalPath) {
         Map<String, ArrayList<String>> mapValue = this.index.getCollectionData().get(word);
@@ -41,19 +48,22 @@ public class ScoreElements {
                 tf++;
             } else {
                 for (String p : mapValue.get(documentTitle)) {
-                    //BUGGE
+
                     if (p.startsWith(originalPath)) {
                         tf++;
                     }
                 }
             }
         }
-        //System.out.println("TF : "+word+" "+tf);
         return tf;
     }
 
-    /*
-     * Return the df 
+    /**
+     * Get the document Frequency
+     * @param index the index
+     * @param word the term
+     * @param compressedPath the compressed path
+     * @return the document frequency of the term
      */
     public Integer getDocumentFrequency(Index index, String word, String compressedPath) {
 
@@ -107,15 +117,21 @@ public class ScoreElements {
                 }
             }
         }
-        // System.out.println("DF de "+word+" "+(dfArticle+dfHeader+dfBdy));
         return dfArticle + dfHeader + dfTitle + dfBdy + dfSec;
     }
 
-    //Getters
+    /**
+     * get the index
+     * @return  the index
+     */
     public Index getIndex() {
         return this.index;
     }
-
+    
+    /**
+     * get the request
+     * @return the request
+     */
     public String getRequest() {
         return this.request;
     }

@@ -11,7 +11,9 @@ import java.util.Map;
 
 /**
  *
- * @author mlh
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class MJMscore extends Score implements CommonsScoreInterface{
 
@@ -21,6 +23,12 @@ public class MJMscore extends Score implements CommonsScoreInterface{
     
     private double k;
         
+    /**
+     * The constructor
+     * @param request the request
+     * @param index the index
+     * @param k the double normalization
+     */
     public MJMscore(String request, Index index, double k) {
         super(request, index);
         

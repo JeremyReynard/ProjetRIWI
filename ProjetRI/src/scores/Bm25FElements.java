@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import serialization.IndexDeserialization;
 
 /**
- * Class Bm25FElements
- * @author Michaël Bard <michael.bard@laposte.net>
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class Bm25FElements extends ScoreElements{
 
@@ -18,7 +19,7 @@ public class Bm25FElements extends ScoreElements{
     
     private String precision;
     
-    /*
+    /**
      * alphas(0) : article
      * alphas(1) : header
      * alphas(2) : title
@@ -29,6 +30,15 @@ public class Bm25FElements extends ScoreElements{
      */
     private ArrayList<Double> alphas;
     
+    /**
+     * the constructor
+     * @param request the query
+     * @param index the index
+     * @param k1 the parameter k1 for BM25 ranking's function
+     * @param b  the parameter b for BM25 ranking's function
+     * @param precision the granulary of the ranking's function
+     * @param alphas used for the alpha
+     */
      public Bm25FElements(String request, Index index, double k1, double b, String precision, ArrayList<Double> alphas) {
         super(request, index);
         this.b = b;
@@ -107,7 +117,12 @@ public class Bm25FElements extends ScoreElements{
 
         return wtd;
     }
-
+    
+    /**
+     * Generate all the PathsCouple from a list of paths
+     * @param paths the list of paths
+     * @return the PathsCouple
+     */
     private PathsCouple generatePathsList(ArrayList<String> paths) {
 
         boolean isInArticle = false;
@@ -174,8 +189,6 @@ public class Bm25FElements extends ScoreElements{
                 }
             }
         }
-        // System.out.println(pathsCouple.compressedPaths.toString());
-        // System.out.println(pathsCouple.originalPaths.toString());
         return pathsCouple;
 
 
@@ -191,29 +204,5 @@ public class Bm25FElements extends ScoreElements{
             this.compressedPaths = new ArrayList<>();
         }
     }
-    
-     public static void main(String[] args) {
-
-        System.out.println("Begin of deserialization...");
-        Index index = IndexDeserialization.deserialize("fileSerialization/indexXML1000.serial");
-        System.out.println("End of deserialization.");
-
-        System.out.println("dlMap : " + index.getDlMap());
-        System.out.println(" index " + index.getCollectionData().size());
-
-        ArrayList<Double> alphas = new ArrayList<>();
         
-        alphas.add(0.9);
-        alphas.add(1.1);
-        alphas.add(1.5);
-        alphas.add(1.0);
-        
-        
-        Bm25FElements score = new Bm25FElements("olive oil health benefit", index, 1, 0.5, "/article[1]/header[1]/title",alphas);
-
-        Map<String, Map<String, Double>> scores = score.getScores();
-
-        System.out.println("Scores : " + scores);
-    }
-    
 }

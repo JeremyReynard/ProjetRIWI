@@ -6,6 +6,12 @@ package display;
 
 import org.jdesktop.application.Action;
 
+/**
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
+ */
 public class ProjetRIAboutBox extends javax.swing.JDialog {
 
     public ProjetRIAboutBox(java.awt.Frame parent) {

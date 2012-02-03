@@ -8,15 +8,15 @@ import java.util.Map;
 
 /**
  *
- * @author Dje
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public interface CommonsScoreInterface {
     
-    //TODO : javadoc
     /**
-     * 
-     *
-     * @return 
+     * Get the score's map of all documents
+     * @return the score's map
      */
     public Map<String, Double> getScores();
     
@@ -37,5 +37,5 @@ public interface CommonsScoreInterface {
     public double getDocumentWordScore(String word, float termFrequency, int documentLength);
     
     
-    
+
 }

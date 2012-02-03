@@ -10,10 +10,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
+ */
 public final class IndexDeserialization {
     
     public static Index deserialize(String fileName){
-        //System.out.println("Beginning of deserialization");
         Index index = new Index();
         try {
            //Open a InputStream linked "index.serial"
@@ -31,23 +36,12 @@ public final class IndexDeserialization {
                     fis.close();
                 }
             }
-        } catch(IOException ioe) {
+        } catch(IOException | ClassNotFoundException ioe) {
             ioe.printStackTrace();
-        } catch(ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
-        }
-        
-        /*if(index != null) {
-            System.out.println("End of deserialization");
-            return index;
-        }*/
+        } 
+
         return index;
     }
-    
-    static public void main(String ...args) {
-        Index index = IndexDeserialization.deserialize("index.serial");
-        
-        System.out.println(index.toString());
-    }
+
 }
 

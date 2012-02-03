@@ -1,9 +1,6 @@
 package parsers;
 
-/**
- *
- * @author Michaël Bard <michael.bard@laposte.net>
- */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +8,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
+ */
 public class ArticleXMLParser extends DefaultHandler {
 
     private StringBuffer text;
@@ -31,13 +34,19 @@ public class ArticleXMLParser extends DefaultHandler {
     private boolean isInBody = false;
     private boolean isInSec = false;
     private boolean isInP = false;
-    /*
+    /**
      * Map of links
      */
     private Map<String, ArrayList<String>> pagerank;
-    //1 if id has been already filled else 0
+    
+    /**
+     * 1 if id has been already filled else 0
+     */
     private int idIsSet;
 
+    /**
+     * the constructor
+     */
     public ArticleXMLParser() {
         this.text = new StringBuffer();
         this.paths = new ArrayList<>();
@@ -65,11 +74,9 @@ public class ArticleXMLParser extends DefaultHandler {
         String pathWithoutN = "";
         String compressedPathWithoutN = "";
 
-        //<header><id>
         if (qName.equalsIgnoreCase("id") && this.isInIdTag == 0) {
             this.isInIdTag = 1;
         } else if (qName.equalsIgnoreCase("link") && this.idIsSet == 1) {
-            //<link xlink:type="simple" xlink:href="../262/9262.xml">
             String currentDocId = this.id.toString();
             String nameAttribute = "";
             String value = "";
@@ -180,7 +187,6 @@ public class ArticleXMLParser extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        //<header></id>
         if (qName.equalsIgnoreCase("id")) {
             this.isInIdTag = 2;
             this.idIsSet = 1;

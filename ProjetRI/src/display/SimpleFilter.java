@@ -9,7 +9,9 @@ import javax.swing.filechooser.FileFilter;
 
 /**
  *
- * @author Lulu
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class SimpleFilter extends FileFilter{
 

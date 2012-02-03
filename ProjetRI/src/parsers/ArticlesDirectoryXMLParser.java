@@ -21,18 +21,29 @@ import serialization.IndexSerialization;
 
 /**
  *
- * @author Michaël Bard <michael.bard@laposte.net>
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
+    /**
+     * the constructor
+     * @param dirPath the path directory
+     */
     public ArticlesDirectoryXMLParser(String dirPath) {
 
         super(dirPath);
     }
 
+    /**
+     * the parse directory function
+     * @param jpBarFile used for JProgress bar
+     * @param jpBarGlobal used for JProgress bar
+     * @return the index
+     */
     @Override
     public Index parseDirectory(JProgressBar jpBarFile, JProgressBar jpBarGlobal) {
-        //System.out.println("Beginning of indexing.\n");
 
         File[] files = null;
         File directoryToScan = new File(this.directoryPath);
@@ -65,7 +76,6 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
         Map<String, Integer> nMap = null;
         
         for (File f : files) {
-            //System.out.println(f.getName());
             // JProgressBar
             jpBarFile.setString(f.getName());
             jpBarGlobal.setString("Global : " + (currentFileNumber + 1) + " / " + (nbFiles + 1));
@@ -189,22 +199,4 @@ public class ArticlesDirectoryXMLParser extends ArticlesDirectoryParser {
 
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-
-        JProgressBar jp1 = new JProgressBar();
-        JProgressBar jp2 = new JProgressBar();
-
-        Index index = new ArticlesDirectoryXMLParser("../../coll1000").parseDirectory(jp1, jp2);
-
-        IndexSerialization.serialize(index, "fileSerialization/indexXML1000.serial");
-
-        // index = IndexDeserialization.deserialize("fileSerialization/indexXML1.serial");
-
-        System.out.println("N : " + index.getN());
-        System.out.println("dl : " + index.getDlMap());
-        System.out.println("avdl : " + index.getAvdlMap());
-        System.out.println("avdl : " + index.getAvdl("/article"));
-        //System.out.println("\n" + index.toString());
-
-    }
 }

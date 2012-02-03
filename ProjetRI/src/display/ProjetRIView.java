@@ -40,10 +40,17 @@ import serialization.IndexDeserialization;
 import serialization.IndexSerialization;
 
 /**
- * The application's main frame.
+ *
+ * @author Michaël BARD
+ * @author Mickaël LHOSTE
+ * @author Jérémy REYNARD
  */
 public class ProjetRIView extends FrameView {
 
+    /**
+     * the constructor
+     * @param app the simple frame application
+     */
     public ProjetRIView(SingleFrameApplication app) {
         super(app);
 
@@ -51,6 +58,9 @@ public class ProjetRIView extends FrameView {
         initComponents();
     }
 
+    /**
+     * Show the About box
+     */
     @Action
     public void showAboutBox() {
         if (aboutBox == null) {
@@ -701,6 +711,10 @@ public class ProjetRIView extends FrameView {
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Show the Menu Item of the aout box
+     * @param evt 
+     */
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         JOptionPane.showMessageDialog(
                 this.mainPanel,
@@ -712,6 +726,10 @@ public class ProjetRIView extends FrameView {
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    /**
+     * The dialog box of the exit option
+     * @param evt 
+     */
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         if (JOptionPane.showConfirmDialog(
                 this.mainPanel,
@@ -722,6 +740,10 @@ public class ProjetRIView extends FrameView {
         }
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    /**
+     * Show all the stats of the index
+     * @param evt 
+     */
     private void showIndexBrutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexBrutActionPerformed
         if (this.indexator != null) {
             JOptionPane.showMessageDialog(
@@ -732,6 +754,10 @@ public class ProjetRIView extends FrameView {
         }
     }//GEN-LAST:event_showIndexBrutActionPerformed
 
+    /**
+     * Extraction 
+     * @param evt 
+     */
     private void startExtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startExtractActionPerformed
 
         this.showIndexBrut.setEnabled(false);
@@ -786,6 +812,10 @@ public class ProjetRIView extends FrameView {
         extractorThread.start();
     }//GEN-LAST:event_startExtractActionPerformed
 
+    /**
+     * Allow to choose a directory
+     * @param evt 
+     */
     private void directoryChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directoryChooseActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setLocale(Locale.ENGLISH);
@@ -799,6 +829,10 @@ public class ProjetRIView extends FrameView {
         }
     }//GEN-LAST:event_directoryChooseActionPerformed
 
+    /**
+     * Word searcher box
+     * @param evt 
+     */
     private void showIndexWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showIndexWordActionPerformed
 
         String word = JOptionPane.showInputDialog(
@@ -834,6 +868,10 @@ public class ProjetRIView extends FrameView {
 
     }//GEN-LAST:event_showIndexWordActionPerformed
 
+    /**
+     * Allow to load and index file
+     * @param evt 
+     */
 private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indexFileChooseActionPerformed
 
     JFileChooser chooser = new JFileChooser();
@@ -870,6 +908,12 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
     }
 }//GEN-LAST:event_indexFileChooseActionPerformed
 
+/**
+ * Test if something overlap another thing
+ * @param newPath the new Path
+ * @param pathsList all the paths existing
+ * @return true or false
+ */
     private boolean testRecouvrement(CoupleStringDouble newPath, ArrayList<CoupleStringDouble> pathsList) {
 
         for (CoupleStringDouble existingPath : pathsList) {
@@ -886,7 +930,10 @@ private void indexFileChooseActionPerformed(java.awt.event.ActionEvent evt) {//G
         }
         return false;
     }
-
+/**
+ * the run export button
+ * @param evt 
+ */
     private void exportRunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportRunButtonActionPerformed
 
         Thread runCreationThread = new Thread() {
